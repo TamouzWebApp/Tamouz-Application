@@ -124,6 +124,11 @@ class EventsService {
         
         try {
             console.log('📥 تحميل الأحداث...');
+            console.log('🔧 إعدادات API:', {
+                baseUrl: window.API_BASE_URL,
+                apiServiceAvailable: !!window.APIService,
+                isOnline: navigator.onLine
+            });
             
             // محاولة تحميل من API أولاً
             if (window.APIService?.getInstance) {
@@ -141,30 +146,49 @@ class EventsService {
                     throw apiError;
                 }
             } else {
-                throw new Error('API service غير متوفر');
+                console.warn('⚠️ API service غير متوفر');
+                throw new Error('خدمة API غير مهيأة');
             }
             
         } catch (error) {
-            console.warn('⚠️ فشل API، محاولة التحميل من JSON:', error.message);
+            console.warn('⚠️ فشل API، محاولة التحميل من JSON:', {
+                message: error.message,
+                baseUrl: window.API_BASE_URL,
+                isOnline: navigator.onLine
+            });
             
             try {
                 // محاولة تحميل من ملف JSON
-                const response = await fetch('./events.json');
+                const response = await fetch('./data/events.json');
                 if (response.ok) {
                     const jsonData = await response.json();
                     this.events = jsonData.events || [];
                     console.log(`📋 تم تحميل ${this.events.length} حدث من JSON`);
-                    this.showNotification('تم تحميل الأحداث من الملف المحلي', 'info');
+                    this.showNotification(`تم تحميل ${this.events.length} حدث من الملف المحلي`, 'info');
                 } else {
                     throw new Error('ملف JSON غير متاح');
                 }
             } catch (jsonError) {
-                console.warn('⚠️ فشل JSON، استخدام البيانات التجريبية:', jsonError.message);
+                console.warn('⚠️ فشل JSON، استخدام البيانات التجريبية:', {
+                    jsonError: jsonError.message,
+                    apiError: error.message
+                });
                 
                 // استخدام البيانات التجريبية كحل أخير
                 this.events = [...(window.DEMO_EVENTS || [])];
                 console.log(`📋 تم تحميل ${this.events.length} حدث من البيانات التجريبية`);
-                this.showNotification('استخدام البيانات التجريبية - API غير متوفر', 'warning');
+                
+                // رسالة تشخيص مفصلة
+                let diagnosticMessage = `استخدام البيانات التجريبية (${this.events.length} حدث)`;
+                if (!navigator.onLine) {
+                    diagnosticMessage += ' - لا يوجد اتصال بالإنترنت';
+                } else if (!window.API_BASE_URL) {
+                    diagnosticMessage += ' - لم يتم تعيين API URL';
+                } else {
+                    diagnosticMessage += ' - API غير متوفر';
+                }
+                
+                this.showNotification(diagnosticMessage, 'warning');
             }
         } finally {
             this.setLoading(false);
@@ -1025,6 +1049,8 @@ class EventsService {
      * عرض إشعار
      */
     showNotification(message, type = 'info') {
+        console.log(`📢 Notification: [${type.toUpperCase()}] ${message}`);
+        
         const notification = document.createElement('div');
         notification.className = `notification notification-${type}`;
         

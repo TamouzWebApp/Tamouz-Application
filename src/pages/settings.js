@@ -337,10 +337,23 @@ class SettingsService {
                 <div class="settings-item">
                     <div class="settings-item-info">
                         <h4>API Connection Test</h4>
-                        <p>Test the connection to the backend API</p>
+                        <p>اختبار الاتصال بـ API الخلفي</p>
                     </div>
                     <button class="btn btn-outline btn-sm" onclick="window.SettingsService.getInstance().testAPIConnection()">
-                        Test API
+                        اختبار API
+                    </button>
+                </div>
+                
+                <div class="settings-item">
+                    <div class="settings-item-info">
+                        <h4>API Configuration</h4>
+                        <p>عرض إعدادات API الحالية</p>
+                        <small style="color: var(--text-muted); font-size: var(--font-size-xs);">
+                            Base URL: ${window.API_BASE_URL || 'نفس النطاق'}
+                        </small>
+                    </div>
+                    <button class="btn btn-outline btn-sm" onclick="window.SettingsService.getInstance().showAPIConfig()">
+                        عرض الإعدادات
                     </button>
                 </div>
             </div>
@@ -506,24 +519,80 @@ class SettingsService {
     async testAPIConnection() {
         console.log('🔍 Testing API connection...');
         
+        // Show loading state
+        const testBtn = document.querySelector('button[onclick*="testAPIConnection"]');
+        if (testBtn) {
+            testBtn.innerHTML = '<div class="loading-spinner"></div> جاري الاختبار...';
+            testBtn.disabled = true;
+        }
+        
         if (!window.APIService?.getInstance) {
             this.showNotification('API Service not available', 'error');
+            this.resetTestButton(testBtn);
             return;
         }
 
         try {
+            console.log('🔗 API Configuration:', {
+                baseUrl: window.API_BASE_URL,
+                isOnline: navigator.onLine,
+                currentDomain: window.location.origin
+            });
+            
             const apiService = window.APIService.getInstance();
             const result = await apiService.testConnection();
             
             if (result.success) {
-                this.showNotification(`API connection successful! Found ${result.eventsCount} events.`, 'success');
+                this.showNotification(`✅ اتصال API ناجح! تم العثور على ${result.eventsCount} حدث.`, 'success');
             } else {
-                this.showNotification(`API connection failed: ${result.message}`, 'error');
+                this.showNotification(`❌ فشل اتصال API: ${result.message}`, 'error');
             }
         } catch (error) {
             console.error('❌ API test failed:', error);
-            this.showNotification(`API test failed: ${error.message}`, 'error');
+            this.showNotification(`❌ فشل اختبار API: ${error.message}`, 'error');
+        } finally {
+            this.resetTestButton(testBtn);
         }
+    }
+    
+    /**
+     * Reset Test Button
+     */
+    resetTestButton(btn) {
+        if (btn) {
+            btn.innerHTML = 'Test API';
+            btn.disabled = false;
+        }
+    }
+    
+    /**
+     * Show API Configuration
+     */
+    showAPIConfig() {
+        const apiInfo = {
+            baseUrl: window.API_BASE_URL || 'نفس النطاق',
+            isOnline: navigator.onLine,
+            currentDomain: window.location.origin,
+            apiServiceAvailable: !!window.APIService,
+            endpoints: {
+                read: './api/read.php',
+                write: './api/write.php'
+            }
+        };
+        
+        console.log('🔧 API Configuration:', apiInfo);
+        
+        const configText = `
+إعدادات API:
+- Base URL: ${apiInfo.baseUrl}
+- النطاق الحالي: ${apiInfo.currentDomain}
+- متصل بالإنترنت: ${apiInfo.isOnline ? 'نعم' : 'لا'}
+- خدمة API متوفرة: ${apiInfo.apiServiceAvailable ? 'نعم' : 'لا'}
+- نقطة القراءة: ${apiInfo.endpoints.read}
+- نقطة الكتابة: ${apiInfo.endpoints.write}
+        `;
+        
+        alert(configText);
     }
 
     // ===========================================

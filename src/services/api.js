@@ -15,8 +15,8 @@ const API_CONFIG = {
     baseUrl: window.API_BASE_URL || '', // سيتم تحديده من المتغير العام أو نفس النطاق
     securityToken: 'ScoutPlus(WebApp)',
     endpoints: {
-        read: '/PHP/read.php',
-        write: '/PHP/write.php'
+        read: '/read.php',
+        write: '/write.php'
     },
     timeout: 10000 // 10 seconds timeout
 };
@@ -94,7 +94,7 @@ class APIService {
                 const cleanUrl = url.startsWith('/') ? url.substring(1) : url;
                 fullUrl = this.baseUrl.endsWith('/') ? `${this.baseUrl}${cleanUrl}` : `${this.baseUrl}/${cleanUrl}`;
             } else {
-                fullUrl = url.startsWith('/') ? `.${url}` : url;
+                fullUrl = url.startsWith('/') ? `./api${url}` : `./api/${url}`;
             }
             
             console.log(`🔗 Making request to: ${fullUrl}`);
@@ -126,6 +126,8 @@ class APIService {
      */
     async readEvents() {
         console.log('📥 Reading events from API...');
+        console.log(`🔗 Base URL: ${this.baseUrl}`);
+        console.log(`🔗 Full endpoint: ${this.baseUrl}/read.php`);
         
         if (!this.isOnline) {
             throw new Error('No internet connection available');
@@ -133,7 +135,19 @@ class APIService {
         
         try {
             const url = this.endpoints.read;
-            console.log(`🔗 API URL: ${url}`);
+            
+            // Build the full URL properly
+            let fullUrl;
+            if (url.startsWith('http')) {
+                fullUrl = url;
+            } else if (this.baseUrl) {
+                const cleanUrl = url.startsWith('/') ? url.substring(1) : url;
+                fullUrl = this.baseUrl.endsWith('/') ? `${this.baseUrl}${cleanUrl}` : `${this.baseUrl}/${cleanUrl}`;
+            } else {
+                fullUrl = `./api${url}`;
+            }
+            
+            console.log(`🔗 Final API URL: ${fullUrl}`);
             
             const response = await this.fetchWithTimeout(url, {
                 method: 'GET',
@@ -144,12 +158,15 @@ class APIService {
             });
 
             if (!response.ok) {
+                console.error(`❌ HTTP Error: ${response.status} ${response.statusText}`);
+                console.error(`❌ Response URL: ${response.url}`);
                 throw new Error(`HTTP ${response.status}: ${response.statusText}`);
             }
 
             const result = await response.json();
             
             if (!result.success) {
+                console.error(`❌ API Error: ${result.error}`);
                 throw new Error(result.error || 'Failed to read events');
             }
 
@@ -161,7 +178,12 @@ class APIService {
             return result.data;
 
         } catch (error) {
-            console.error('❌ Error reading events:', error);
+            console.error('❌ Error reading events:', error.message);
+            console.error('❌ Error details:', {
+                name: error.name,
+                message: error.message,
+                stack: error.stack?.split('\n')[0]
+            });
             
             // Dispatch error event
             this.dispatchDataEvent('eventsLoadError', { error: error.message });

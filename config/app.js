@@ -9,7 +9,7 @@ SCOUTPLUSE - CONFIGURATION
 
 // إعداد الـ Base URL للـ API
 // يمكن تغيير هذا المتغير حسب البيئة
-window.API_BASE_URL = 'https://scoutplus.byethost3.com/'; // فارغ = نفس النطاق، أو ضع رابط موقعك
+window.API_BASE_URL = './api'; // استخدام مجلد API المحلي
 
 // إعدادات أخرى
 window.APP_CONFIG = {

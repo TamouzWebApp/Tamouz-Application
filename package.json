@@ -1,0 +1,41 @@
+{
+  "name": "scoutpluse",
+  "version": "1.0.0",
+  "description": "Modern scout management platform for troops, events, and member management",
+  "main": "public/index.html",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "dev": "python -m http.server 8000",
+    "serve": "npx serve .",
+    "build": "echo 'No build process needed for vanilla JS project'",
+    "test": "echo 'No tests specified yet'"
+  },
+  "keywords": [
+    "scout",
+    "management",
+    "platform",
+    "events",
+    "troops",
+    "javascript",
+    "php",
+    "responsive"
+  ],
+  "author": "ScoutPluse Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-repo/scoutpluse.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-repo/scoutpluse/issues"
+  },
+  "homepage": "https://github.com/your-repo/scoutpluse#readme",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}

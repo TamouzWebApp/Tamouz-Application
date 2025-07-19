@@ -120,9 +120,9 @@ if (empty($errors)) {
             <li>Upload your HTML/CSS/JS files to access the application</li>
           </ol>
           <h3>Your API URLs:</h3>
-          <pre>Read API: https://" . $_SERVER['HTTP_HOST'] . "/PHP/read.php
-Write API: https://" . $_SERVER['HTTP_HOST'] . "/PHP/write.php
-Test API: https://" . $_SERVER['HTTP_HOST'] . "/PHP/test-connection.php</pre>";
+          <pre>Read API: https://" . $_SERVER['HTTP_HOST'] . "/api/read.php
+Write API: https://" . $_SERVER['HTTP_HOST'] . "/api/write.php
+Test API: https://" . $_SERVER['HTTP_HOST'] . "/api/test-connection.php</pre>";
 } else {
     echo "<p class='error'>❌ Setup encountered " . count($errors) . " error(s). Please fix these issues before proceeding.</p>";
 }
@@ -137,7 +137,7 @@ echo "</div>
         <p>If you encounter permission issues, set these file permissions in your 000webhost file manager:</p>
         <pre>
 Files (.php, .json, .html): 644
-Directories (PHP/, backups/): 755
+Directories (api/, backups/): 755
         </pre>
       </div>
     </body>

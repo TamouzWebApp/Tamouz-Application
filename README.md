@@ -8,7 +8,7 @@
 
 ---
 
-## 📋 جدول المحتويات
+## 📋 جدول المحتوي
 
 - [🌟 المميزات](#-المميزات)
 - [🚀 البدء السريع](#-البدء-السريع)
@@ -82,11 +82,11 @@ git clone https://github.com/your-repo/scoutpluse.git
 cd scoutpluse
 
 # 2. فتح في المتصفح
-# افتح HTML/index.html في متصفحك المفضل
+# افتح public/index.html في متصفحك المفضل
 
 # 3. أو استخدم خادم محلي
 python -m http.server 8000
-# ثم اذهب إلى: http://localhost:8000/HTML/index.html
+# ثم اذهب إلى: http://localhost:8000/public/index.html
 ```
 
 ### 🌐 النشر على 000webhost
@@ -94,69 +94,78 @@ python -m http.server 8000
 ```bash
 # 1. إنشاء حساب على 000webhost.com
 # 2. رفع جميع الملفات إلى public_html/
-# 3. تحديث الـ base URL في JS/config.js:
+# 3. تحديث الـ base URL في config/app.js:
 
 window.API_BASE_URL = 'https://yoursite.000webhostapp.com';
 
 # 4. تشغيل الإعداد:
-# https://yoursite.000webhostapp.com/setup.php
+# https://yoursite.000webhostapp.com/api/setup.php
 
 # 5. اختبار التطبيق:
-# https://yoursite.000webhostapp.com/HTML/index.html
+# https://yoursite.000webhostapp.com/public/index.html
 ```
 
 ---
 
-## 📁 هيكل المشروع
+## 📁 هيكل المشروع الجديد
 
 ```
 ScoutPluse/
-├── 📄 index.html                    # صفحة التحويل الرئيسية
 ├── 📄 README.md                     # هذا الملف
-├── 📄 LICENSE                       # ترخيص MIT
+├── 📄 package.json                  # إعدادات المشروع
+├── 📄 .gitignore                    # ملفات Git المتجاهلة
 │
-├── 📁 HTML/                         # صفحات التطبيق
-│   ├── 📄 index.html               # التطبيق الرئيسي
-│   ├── 📄 events-new.html          # صفحة الأحداث الجديدة
-│   └── 📄 events-enhanced.html     # صفحة الأحداث المحسنة
+├── 📁 src/                          # مصدر التطبيق
+│   ├── 📁 styles/                   # ملفات التصميم
+│   │   ├── 📄 main.css             # الأنماط الأساسية
+│   │   ├── 📄 components.css       # أنماط المكونات
+│   │   ├── 📄 auth.css             # أنماط المصادقة
+│   │   ├── 📄 events.css           # أنماط الأحداث
+│   │   ├── 📄 responsive.css       # التصميم المتجاوب
+│   │   └── 📄 api-enhancements.css # تحسينات API
+│   │
+│   ├── 📁 services/                 # خدمات التطبيق
+│   │   ├── 📄 auth.js              # خدمة المصادقة
+│   │   ├── 📄 api.js               # خدمة API
+│   │   ├── 📄 theme.js             # إدارة المظاهر
+│   │   └── 📄 translations.js      # الترجمة والتدويل
+│   │
+│   ├── 📁 pages/                    # صفحات التطبيق
+│   │   ├── 📄 dashboard.js         # لوحة التحكم
+│   │   ├── 📄 events.js            # إدارة الأحداث
+│   │   ├── 📄 information.js       # مركز المعلومات
+│   │   ├── 📄 profile.js           # الملف الشخصي
+│   │   └── 📄 settings.js          # الإعدادات
+│   │
+│   ├── 📁 components/               # مكونات قابلة للإعادة
+│   │   └── 📄 navigation.js        # نظام التنقل
+│   │
+│   ├── 📁 utils/                    # أدوات مساعدة
+│   │   └── 📄 helpers.js           # دوال مساعدة
+│   │
+│   └── 📄 app.js                   # تحكم التطبيق الرئيسي
 │
-├── 📁 CSS/                          # ملفات التصميم
-│   ├── 📄 main.css                 # الأنماط الأساسية والمتغيرات
-│   ├── 📄 components.css           # أنماط المكونات
-│   ├── 📄 responsive.css           # التصميم المتجاوب
-│   ├── 📄 auth.css                 # أنماط المصادقة
-│   ├── 📄 events-new.css           # أنماط الأحداث الجديدة
-│   └── 📄 api-enhancements.css     # تحسينات API
+├── 📁 public/                       # الملفات العامة
+│   ├── 📄 index.html               # الصفحة الرئيسية
+│   │
+│   ├── 📁 data/                    # ملفات البيانات
+│   │   ├── 📄 events.json          # بيانات الأحداث
+│   │   └── 📄 users.json           # بيانات المستخدمين
+│   │
+│   └── 📁 api/                     # ملفات الخادم
+│       ├── 📄 read.php             # API قراءة البيانات
+│       ├── 📄 write.php            # API كتابة البيانات
+│       ├── 📄 data.json            # قاعدة بيانات الأحداث
+│       ├── 📄 setup.php            # إعداد أولي
+│       ├── 📄 test-connection.php  # اختبار الاتصال
+│       └── 📄 .htaccess            # إعدادات الخادم
 │
-├── 📁 JS/                           # ملفات JavaScript
-│   ├── 📄 config.js                # إعدادات التطبيق
-│   ├── 📄 main.js                  # تحكم التطبيق الرئيسي
-│   ├── 📄 auth.js                  # خدمة المصادقة
-│   ├── 📄 events.js                # إدارة الأحداث
-│   ├── 📄 events-enhanced.js       # نظام الأحداث المحسن
-│   ├── 📄 api-service.js           # خدمة API
-│   ├── 📄 dashboard.js             # وظائف لوحة التحكم
-│   ├── 📄 information.js           # مركز المعلومات
-│   ├── 📄 profile.js               # إدارة الملف الشخصي
-│   ├── 📄 settings.js              # إدارة الإعدادات
-│   ├── 📄 navigation.js            # نظام التنقل
-│   ├── 📄 theme.js                 # إدارة المظاهر
-│   ├── 📄 translations.js          # الترجمة والتدويل
-│   ├── 📄 data.js                  # البيانات التجريبية
-│   └── 📄 users.json               # قاعدة بيانات المستخدمين
-│
-├── 📁 PHP/                          # ملفات الخادم
-│   ├── 📄 read.php                 # API قراءة البيانات
-│   ├── 📄 write.php                # API كتابة البيانات
-│   ├── 📄 data.json                # قاعدة بيانات الأحداث
-│   ├── 📄 setup.php                # إعداد أولي
-│   ├── 📄 test-connection.php      # اختبار الاتصال
-│   └── 📄 .htaccess                # إعدادات الخادم
+├── 📁 config/                       # ملفات الإعدادات
+│   ├── 📄 app.js                   # إعدادات التطبيق
+│   └── 📄 demo-data.js             # البيانات التجريبية
 │
 └── 📁 docs/                         # الوثائق
-    ├── 📄 DEPLOYMENT-GUIDE-*.md    # أدلة النشر
-    ├── 📄 QUICK-SETUP-*.md         # الإعداد السريع
-    └── 📄 README-*.md              # أدلة متخصصة
+    └── 📄 deployment-guide.md      # دليل النشر
 ```
 
 ---
@@ -167,25 +176,25 @@ ScoutPluse/
 
 #### الطريقة 1: فتح مباشر
 ```bash
-# افتح HTML/index.html في المتصفح مباشرة
-open HTML/index.html  # macOS
-start HTML/index.html # Windows
-xdg-open HTML/index.html # Linux
+# افتح public/index.html في المتصفح مباشرة
+open public/index.html  # macOS
+start public/index.html # Windows
+xdg-open public/index.html # Linux
 ```
 
 #### الطريقة 2: خادم محلي
 ```bash
 # Python
 python -m http.server 8000
-# ثم: http://localhost:8000/HTML/index.html
+# ثم: http://localhost:8000/public/index.html
 
 # Node.js
 npx serve .
-# ثم: http://localhost:3000/HTML/index.html
+# ثم: http://localhost:3000/public/index.html
 
 # PHP
 php -S localhost:8000
-# ثم: http://localhost:8000/HTML/index.html
+# ثم: http://localhost:8000/public/index.html
 ```
 
 ### 🌐 النشر على 000webhost
@@ -199,17 +208,12 @@ php -S localhost:8000
 #### خطوة 2: رفع الملفات
 ```
 public_html/
-├── 📄 index.html              # صفحة التحويل
-├── 📄 read.php               # API قراءة
-├── 📄 write.php              # API كتابة
-├── 📄 data.json              # قاعدة البيانات
-├── 📄 setup.php              # الإعداد
-├── 📄 test-connection.php    # اختبار الاتصال
-├── 📄 .htaccess              # إعدادات الخادم
-├── 📁 HTML/                  # صفحات التطبيق
-├── 📁 CSS/                   # ملفات التصميم
-├── 📁 JS/                    # ملفات JavaScript
-└── 📁 backups/               # النسخ الاحتياطية (فارغ)
+├── 📄 index.html              # من public/
+├── 📁 src/                    # مجلد src كاملاً
+├── 📁 config/                 # مجلد config كاملاً
+├── 📁 api/                    # من public/api/
+├── 📁 data/                   # من public/data/
+└── 📁 backups/                # مجلد فارغ للنسخ الاحتياطية
 ```
 
 #### خطوة 3: ضبط الصلاحيات
@@ -217,56 +221,33 @@ public_html/
 # الملفات (.php, .json, .html, .css, .js)
 chmod 644
 
-# المجلدات (HTML/, CSS/, JS/, backups/)
+# المجلدات (src/, config/, api/, data/, backups/)
 chmod 755
 ```
 
 #### خطوة 4: تحديث الإعدادات
 ```javascript
-// في JS/config.js
+// في config/app.js
 window.API_BASE_URL = 'https://yoursite.000webhostapp.com';
 ```
 
 #### خطوة 5: تشغيل الإعداد
 ```
-🔗 https://yoursite.000webhostapp.com/setup.php
+🔗 https://yoursite.000webhostapp.com/api/setup.php
 ✅ تأكد من ظهور جميع الاختبارات بنجاح
 ```
 
 #### خطوة 6: اختبار التطبيق
 ```
 🔗 https://yoursite.000webhostapp.com/
-🔗 https://yoursite.000webhostapp.com/HTML/index.html
-```
-
-### 🚀 النشر على خوادم أخرى
-
-#### Netlify
-```bash
-# 1. ارفع مجلد HTML/ كموقع ثابت
-# 2. لا حاجة لملفات PHP
-# 3. سيعمل بالبيانات التجريبية فقط
-```
-
-#### Vercel
-```bash
-# 1. ارفع المشروع كاملاً
-# 2. اضبط build command: "cp -r HTML/* ."
-# 3. اضبط output directory: "."
-```
-
-#### GitHub Pages
-```bash
-# 1. ارفع المشروع إلى GitHub
-# 2. فعل GitHub Pages
-# 3. اضبط المجلد على HTML/
+🔗 https://yoursite.000webhostapp.com/public/index.html
 ```
 
 ---
 
 ## 🔧 الإعدادات
 
-### 📝 ملف الإعدادات الرئيسي (`JS/config.js`)
+### 📝 ملف الإعدادات الرئيسي (`config/app.js`)
 
 ```javascript
 // 🌐 إعداد الـ Base URL للـ API
@@ -290,37 +271,8 @@ window.APP_CONFIG = {
         theme: 'auto',            // light, dark, auto
         language: 'en',           // en, ar
         animations: true
-    },
-    
-    // إعدادات التخزين
-    storage: {
-        prefix: 'scoutpluse_',
-        expiry: 30 * 24 * 60 * 60 * 1000 // 30 يوم
     }
 };
-```
-
-### 🔄 تغيير الـ Base URL للبيئات المختلفة
-
-```javascript
-// 🏠 للتطوير المحلي
-window.API_BASE_URL = '';
-
-// 🌐 للنشر على 000webhost
-window.API_BASE_URL = 'https://scoutplus.000webhostapp.com';
-
-// 🏢 للنشر على خادم مخصص
-window.API_BASE_URL = 'https://scouts.yourorganization.com';
-
-// ☁️ للنشر على خدمة سحابية
-window.API_BASE_URL = 'https://api.scoutplus.app';
-```
-
-### 🔐 إعدادات الأمان
-
-```php
-// في ملفات PHP
-$SECURITY_TOKEN = 'ScoutPlus(WebApp)'; // يجب أن يطابق JavaScript
 ```
 
 ---
@@ -335,35 +287,6 @@ $SECURITY_TOKEN = 'ScoutPlus(WebApp)'; // يجب أن يطابق JavaScript
 | 🎖️ **قائد** | `leader@scouts.org` | `Bashar` | إدارة الأحداث والأعضاء |
 | 🏕️ **عضو** | `scout@scouts.org` | `scout123` | عرض والانضمام للأحداث |
 | 👤 **زائر** | `guest@scouts.org` | `password` | عرض فقط |
-
-### 🎭 أدوار المستخدمين
-
-#### 👑 المدير (Admin)
-- ✅ إنشاء وإدارة الأحداث
-- ✅ إدارة جميع الفرق
-- ✅ الوصول لجميع الإعدادات
-- ✅ تصدير البيانات والتقارير
-- ✅ إدارة المستخدمين
-
-#### 🎖️ القائد (Leader)
-- ✅ إنشاء وإدارة أحداث فرقته
-- ✅ عرض أعضاء فرقته
-- ✅ الوصول للمعلومات التعليمية
-- ✅ إدارة ملفه الشخصي
-- ❌ إعدادات النظام
-
-#### 🏕️ العضو (Member)
-- ✅ عرض والانضمام للأحداث
-- ✅ الوصول للمعلومات التعليمية
-- ✅ إدارة ملفه الشخصي
-- ❌ إنشاء الأحداث
-- ❌ الإعدادات
-
-#### 👤 الزائر (Guest)
-- ✅ عرض الأحداث فقط
-- ❌ الانضمام للأحداث
-- ❌ الوصول للمعلومات
-- ❌ إدارة الملف الشخصي
 
 ---
 
@@ -386,13 +309,6 @@ $SECURITY_TOKEN = 'ScoutPlus(WebApp)'; // يجب أن يطابق JavaScript
 --amber-500: #f59e0b      /* 🟡 تحذير */
 ```
 
-#### الألوان المحايدة
-```css
---gray-50: #f9fafb        /* خلفية فاتحة */
---gray-500: #6b7280       /* نص متوسط */
---gray-900: #111827       /* نص داكن */
-```
-
 ### 📏 نظام المسافات
 
 ```css
@@ -403,36 +319,6 @@ $SECURITY_TOKEN = 'ScoutPlus(WebApp)'; // يجب أن يطابق JavaScript
 --spacing-4: 1rem         /* 16px */
 --spacing-6: 1.5rem       /* 24px */
 --spacing-8: 2rem         /* 32px */
-```
-
-### 🔤 نظام الخطوط
-
-```css
-/* أحجام الخطوط */
---font-size-xs: 0.75rem   /* 12px */
---font-size-sm: 0.875rem  /* 14px */
---font-size-base: 1rem    /* 16px */
---font-size-lg: 1.125rem  /* 18px */
---font-size-xl: 1.25rem   /* 20px */
---font-size-2xl: 1.5rem   /* 24px */
-
-/* أوزان الخطوط */
---font-weight-normal: 400
---font-weight-medium: 500
---font-weight-semibold: 600
---font-weight-bold: 700
-```
-
-### 🔘 نظام الحدود
-
-```css
-/* نصف أقطار الحدود */
---radius-sm: 0.125rem     /* 2px */
---radius-md: 0.375rem     /* 6px */
---radius-lg: 0.5rem       /* 8px */
---radius-xl: 0.75rem      /* 12px */
---radius-2xl: 1rem        /* 16px */
---radius-full: 9999px     /* دائري كامل */
 ```
 
 ---
@@ -462,12 +348,6 @@ $SECURITY_TOKEN = 'ScoutPlus(WebApp)'; // يجب أن يطابق JavaScript
 - 🌙 تبديل المظهر
 - 👤 صورة المستخدم
 
-#### الشريط الجانبي المنزلق
-- 📱 يظهر من اليسار
-- 🎯 تنقل كامل
-- 👤 معلومات المستخدم
-- 🚪 زر تسجيل الخروج
-
 ---
 
 ## 🔐 نظام المصادقة
@@ -495,12 +375,6 @@ AuthService.logout();
 - 🛡️ التحقق من الصلاحيات
 - 🚫 منع الوصول غير المصرح
 - 🔐 رموز الأمان للـ API
-
-#### إدارة الجلسات
-- ⏰ انتهاء صلاحية تلقائي
-- 🔄 تحديث الجلسة
-- 📱 مزامنة بين التبويبات
-- 🚪 تسجيل خروج آمن
 
 ---
 
@@ -539,43 +413,6 @@ await eventsService.addEvent(eventData);
 await eventsService.joinEvent(eventId);
 ```
 
-#### البحث والتصفية
-- 🔍 البحث بالعنوان والوصف والموقع
-- 🏷️ التصفية حسب الفئة
-- 📅 ترتيب حسب التاريخ
-- 👥 تصفية حسب الفرقة
-
-### 🔄 تكامل PHP API
-
-#### قراءة البيانات
-```php
-// read.php
-GET /read.php
-Response: {
-    "success": true,
-    "data": {
-        "events": [...],
-        "totalEvents": 10
-    }
-}
-```
-
-#### كتابة البيانات
-```php
-// write.php
-POST /write.php
-Body: {
-    "token": "ScoutPlus(WebApp)",
-    "operation": "add|update|delete",
-    "data": {...}
-}
-```
-
-#### النسخ الاحتياطية التلقائية
-- 📁 نسخ احتياطية قبل كل تعديل
-- 🗂️ الاحتفاظ بـ 10 نسخ كحد أقصى
-- 🔄 تنظيف تلقائي للنسخ القديمة
-
 ---
 
 ## 🌐 الدعم متعدد اللغات
@@ -595,36 +432,6 @@ translationService.setLanguage('ar');
 
 // الحصول على ترجمة
 const text = translationService.t('dashboard.welcome');
-
-// ترجمة مع معاملات
-const welcome = translationService.t('welcome.message', { name: 'أحمد' });
-```
-
-### 📝 إضافة ترجمات جديدة
-
-```javascript
-// في translations.js
-const translations = {
-    ar: {
-        'nav.dashboard': 'لوحة التحكم',
-        'nav.events': 'الفعاليات',
-        'dashboard.welcome': 'مرحباً بعودتك'
-    }
-};
-```
-
-### 🔄 دعم RTL
-
-```css
-/* تلقائي للعربية */
-.rtl {
-    direction: rtl;
-}
-
-.rtl .sidebar {
-    right: 0;
-    left: auto;
-}
 ```
 
 ---
@@ -639,12 +446,6 @@ const translations = {
 - ✅ **قارئ الشاشة**: تسميات ARIA مناسبة
 - ✅ **إدارة التركيز**: مؤشرات تركيز واضحة
 
-#### مميزات إضافية
-- 🔍 **وضع التباين العالي**: رؤية محسنة
-- 🎭 **إدارة التركيز**: حبس التركيز في النوافذ المنبثقة
-- 📖 **HTML دلالي**: تسلسل عناوين مناسب ومعالم
-- 🖼️ **نص بديل**: نص بديل وصفي للصور
-
 ### ⌨️ اختصارات لوحة المفاتيح
 
 | الاختصار | الوظيفة |
@@ -654,25 +455,6 @@ const translations = {
 | `Enter` | تفعيل العنصر |
 | `Escape` | إغلاق النوافذ المنبثقة |
 | `Space` | تفعيل الأزرار |
-
-### 🎨 تفضيلات المستخدم
-
-```css
-/* احترام تفضيلات الحركة */
-@media (prefers-reduced-motion: reduce) {
-    * {
-        animation-duration: 0.01ms !important;
-        transition-duration: 0.01ms !important;
-    }
-}
-
-/* دعم وضع التباين العالي */
-@media (prefers-contrast: high) {
-    .btn {
-        border-width: 2px;
-    }
-}
-```
 
 ---
 
@@ -684,13 +466,13 @@ const translations = {
 ```bash
 # الأسباب المحتملة:
 ❌ ملفات PHP غير مرفوعة
-❌ base URL خاطئ في config.js
+❌ base URL خاطئ في config/app.js
 ❌ مشاكل CORS
 
 # الحلول:
-✅ تحقق من رفع read.php و write.php
+✅ تحقق من رفع public/api/read.php و write.php
 ✅ تأكد من صحة API_BASE_URL
-✅ شغل test-connection.php
+✅ شغل api/test-connection.php
 ```
 
 #### 🔐 "Permission Denied"
@@ -702,69 +484,21 @@ const translations = {
 # الحلول:
 ✅ اضبط صلاحيات الملفات على 644
 ✅ اضبط صلاحيات المجلدات على 755
-✅ أنشئ مجلد backups/
-```
-
-#### 📄 "Invalid JSON"
-```bash
-# الأسباب:
-❌ ملف data.json تالف
-❌ مشاكل ترميز UTF-8
-❌ BOM في بداية الملف
-
-# الحلول:
-✅ شغل setup.php لإعادة إنشاء الملف
-✅ تأكد من ترميز UTF-8
-✅ ملفات PHP تنظف BOM تلقائياً
-```
-
-#### 🌐 مشاكل CORS
-```bash
-# الأسباب:
-❌ ملف .htaccess غير مرفوع
-❌ headers غير مضبوطة
-
-# الحلول:
-✅ ارفع ملف .htaccess
-✅ تحقق من headers في ملفات PHP
+✅ أنشئ مجلد api/backups/
 ```
 
 ### 🔍 أدوات التشخيص
 
 #### اختبار الاتصال
 ```
-🔗 https://yoursite.com/test-connection.php
+🔗 https://yoursite.com/api/test-connection.php
 📊 يعرض حالة جميع المكونات
 ```
 
 #### إعداد النظام
 ```
-🔗 https://yoursite.com/setup.php
+🔗 https://yoursite.com/api/setup.php
 ⚙️ يتحقق من المتطلبات ويعد النظام
-```
-
-#### وحدة تحكم المتصفح
-```javascript
-// افتح أدوات المطور (F12)
-// تحقق من:
-console.log('🔍 JavaScript errors');
-console.log('🌐 Network requests');
-console.log('💾 localStorage data');
-```
-
-### 📊 مراقبة الأداء
-
-#### سجلات الأخطاء
-```php
-// في ملفات PHP
-error_log("API Error: " . $e->getMessage());
-```
-
-#### إحصائيات الاستخدام
-```javascript
-// في JavaScript
-console.log(`✅ Loaded ${events.length} events`);
-console.log(`👤 User: ${user.name} (${user.role})`);
 ```
 
 ---
@@ -775,7 +509,7 @@ console.log(`👤 User: ${user.name} (${user.role})`);
 
 #### إنشاء صفحة جديدة
 ```javascript
-// 1. أضف الصفحة في HTML
+// 1. أضف الصفحة في public/index.html
 <div id="newPage" class="page">
     <!-- محتوى الصفحة -->
 </div>
@@ -785,7 +519,7 @@ console.log(`👤 User: ${user.name} (${user.role})`);
     صفحة جديدة
 </a>
 
-// 3. أضف الصلاحيات في data.js
+// 3. أضف الصلاحيات في config/demo-data.js
 const ROLE_PERMISSIONS = {
     admin: ['dashboard', 'events', 'new'],
     // ...
@@ -794,7 +528,7 @@ const ROLE_PERMISSIONS = {
 
 #### إنشاء خدمة جديدة
 ```javascript
-// في JS/new-service.js
+// في src/services/new-service.js
 class NewService {
     constructor() {
         this.init();
@@ -819,33 +553,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 #### تغيير الألوان
 ```css
-/* في CSS/main.css */
+/* في src/styles/main.css */
 :root {
     --primary-500: #your-color;    /* لونك المفضل */
     --secondary-500: #your-color;  /* لون مكمل */
-}
-```
-
-#### إضافة مظهر جديد
-```javascript
-// في JS/theme.js
-const themes = {
-    light: { /* ألوان فاتحة */ },
-    dark: { /* ألوان داكنة */ },
-    custom: { /* مظهرك المخصص */ }
-};
-```
-
-### 🔌 تكامل APIs خارجية
-
-#### إضافة API جديد
-```javascript
-// في JS/api-service.js
-class ExternalAPIService {
-    async fetchExternalData() {
-        const response = await fetch('https://external-api.com/data');
-        return response.json();
-    }
 }
 ```
 
@@ -869,23 +580,6 @@ class ExternalAPIService {
 - [ ] عرض على موبايل
 - [ ] عرض على تابلت
 - [ ] عرض على ديسكتوب
-
-### 🔍 اختبار الأداء
-
-#### سرعة التحميل
-```javascript
-// قياس وقت التحميل
-console.time('Page Load');
-window.addEventListener('load', () => {
-    console.timeEnd('Page Load');
-});
-```
-
-#### استهلاك الذاكرة
-```javascript
-// مراقبة الذاكرة
-console.log('Memory:', performance.memory);
-```
 
 ---
 
@@ -921,42 +615,6 @@ git push origin feature/amazing-feature
 - 🧪 تأكد من اختبار التغييرات
 - 📚 حدث الوثائق إذا لزم الأمر
 
-### 📋 إرشادات المساهمة
-
-#### معايير الكود
-- 📏 **المسافات**: استخدم مسافتين للإزاحة
-- 📝 **التعليقات**: اكتب تعليقات واضحة
-- 🏷️ **التسمية**: استخدم أسماء وصفية
-- 🛡️ **معالجة الأخطاء**: استخدم try-catch مناسبة
-
-#### أفضل الممارسات
-- 🎯 **فصل الاهتمامات**: فصل HTML, CSS, JS
-- 🔄 **مبدأ DRY**: لا تكرر نفسك
-- 📈 **التحسين التدريجي**: الوظائف الأساسية أولاً
-- ♿ **إمكانية الوصول**: مميزات إمكانية الوصول مدمجة
-
-### 🐛 الإبلاغ عن الأخطاء
-
-#### قالب تقرير الخطأ
-```markdown
-## 🐛 وصف الخطأ
-وصف واضح ومختصر للخطأ.
-
-## 🔄 خطوات إعادة الإنتاج
-1. اذهب إلى '...'
-2. اضغط على '...'
-3. انتقل إلى '...'
-4. شاهد الخطأ
-
-## ✅ السلوك المتوقع
-وصف واضح لما كان متوقعاً أن يحدث.
-
-## 📱 البيئة
-- المتصفح: [مثل Chrome, Safari]
-- الإصدار: [مثل 22]
-- نظام التشغيل: [مثل iOS]
-```
-
 ---
 
 ## 📈 خارطة الطريق
@@ -973,12 +631,6 @@ git push origin feature/amazing-feature
 - [ ] 💬 نظام رسائل
 - [ ] 🎮 نظام الشارات والإنجازات
 
-### 🔮 الإصدار 2.0.0 (رؤية)
-- [ ] ☁️ نظام سحابي كامل
-- [ ] 🔗 تكامل مع منصات أخرى
-- [ ] 📈 تحليلات متقدمة
-- [ ] 🌍 دعم متعدد المنظمات
-
 ---
 
 ## 📞 الدعم والمساعدة
@@ -988,12 +640,7 @@ git push origin feature/amazing-feature
 #### 📚 الوثائق
 - 📖 [دليل المستخدم](docs/USER-GUIDE.md)
 - 🔧 [دليل المطور](docs/DEVELOPER-GUIDE.md)
-- 🚀 [دليل النشر](docs/DEPLOYMENT-GUIDE.md)
-
-#### 💬 المجتمع
-- 💬 [Discord Server](https://discord.gg/scoutpluse)
-- 📱 [Telegram Group](https://t.me/scoutpluse)
-- 🐦 [Twitter](https://twitter.com/scoutpluse)
+- 🚀 [دليل النشر](docs/deployment-guide.md)
 
 #### 🐛 الإبلاغ عن المشاكل
 - 🔗 [GitHub Issues](https://github.com/your-repo/scoutpluse/issues)
@@ -1011,7 +658,7 @@ git push origin feature/amazing-feature
 ج: الصفحات تظهر حسب دورك. الزوار يرون الأحداث فقط.
 
 #### س: كيف أحفظ البيانات على الخادم؟
-ج: ارفع ملفات PHP واضبط API_BASE_URL في config.js
+ج: ارفع ملفات public/api/ واضبط API_BASE_URL في config/app.js
 
 ---
 
@@ -1069,12 +716,12 @@ SOFTWARE.
 
 | المقياس | القيمة |
 |---------|--------|
-| 📁 **إجمالي الملفات** | 50+ ملف |
-| 📝 **أسطر الكود** | 15,000+ سطر |
+| 📁 **إجمالي الملفات** | 30+ ملف |
+| 📝 **أسطر الكود** | 12,000+ سطر |
 | 🎨 **ملفات CSS** | 6 ملفات |
-| ⚡ **ملفات JavaScript** | 15 ملف |
-| 🐘 **ملفات PHP** | 5 ملفات |
-| 🌐 **صفحات HTML** | 4 صفحات |
+| ⚡ **ملفات JavaScript** | 12 ملف |
+| 🐘 **ملفات PHP** | 4 ملفات |
+| 🌐 **صفحات HTML** | 1 صفحة |
 | 📱 **دعم الأجهزة** | جميع الأحجام |
 | 🌍 **اللغات** | الإنجليزية والعربية |
 

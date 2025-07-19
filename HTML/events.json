@@ -1,0 +1,73 @@
+{
+  "events": [
+    {
+      "id": "1",
+      "title": "Weekend Camping Trip",
+      "description": "Three-day camping adventure with hiking and campfire activities. Learn outdoor survival skills and enjoy nature.",
+      "date": "2025-01-20",
+      "time": "09:00",
+      "location": "Mountain View Campsite",
+      "attendees": ["1", "2"],
+      "maxAttendees": 25,
+      "category": "ramita",
+      "image": "https://images.pexels.com/photos/1061640/pexels-photo-1061640.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      "status": "upcoming",
+      "troop": "Ramita",
+      "createdBy": "1",
+      "createdAt": "2025-01-15T10:00:00Z",
+      "updatedAt": "2025-01-15T10:00:00Z"
+    },
+    {
+      "id": "2",
+      "title": "Community Service Project",
+      "description": "Help clean up the local park and plant new trees. Make a positive impact in our community.",
+      "date": "2025-01-25",
+      "time": "14:00",
+      "location": "Central Park",
+      "attendees": ["2", "3"],
+      "maxAttendees": 20,
+      "category": "ma3lola",
+      "image": "https://images.pexels.com/photos/2885320/pexels-photo-2885320.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      "status": "upcoming",
+      "troop": "Ma3lola",
+      "createdBy": "2",
+      "createdAt": "2025-01-14T15:30:00Z",
+      "updatedAt": "2025-01-14T15:30:00Z"
+    },
+    {
+      "id": "3",
+      "title": "First Aid Workshop",
+      "description": "Learn essential first aid skills. Certified instructors will guide you through practical exercises.",
+      "date": "2025-01-28",
+      "time": "10:00",
+      "location": "Scout Hall",
+      "attendees": ["1", "2", "3"],
+      "maxAttendees": 15,
+      "category": "Sergila",
+      "image": "https://images.pexels.com/photos/1170979/pexels-photo-1170979.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      "status": "upcoming",
+      "troop": "Sergila",
+      "createdBy": "1",
+      "createdAt": "2025-01-13T09:15:00Z",
+      "updatedAt": "2025-01-13T09:15:00Z"
+    },
+    {
+      "id": "4",
+      "title": "Annual Scout Games",
+      "description": "Traditional games and competitions between troops. Show your skills and team spirit.",
+      "date": "2025-01-10",
+      "time": "09:00",
+      "location": "Sports Complex",
+      "attendees": ["1", "2", "3"],
+      "maxAttendees": 50,
+      "category": "Bousra",
+      "image": "https://images.pexels.com/photos/163403/box-sport-men-training-163403.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      "status": "past",
+      "troop": "Bousra",
+      "createdBy": "1",
+      "createdAt": "2025-01-05T12:00:00Z",
+      "updatedAt": "2025-01-10T18:00:00Z"
+    }
+  ],
+  "lastUpdated": "2025-01-15T12:00:00Z"
+}

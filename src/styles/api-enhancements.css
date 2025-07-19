@@ -347,6 +347,54 @@ Additional styles for API integration features
     background: var(--red-500);
 }
 
+/* API Status Indicator */
+.api-status-indicator {
+    position: fixed;
+    bottom: var(--spacing-4);
+    right: var(--spacing-4);
+    padding: var(--spacing-2) var(--spacing-3);
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-xs);
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    box-shadow: var(--shadow-sm);
+    z-index: var(--z-fixed);
+    backdrop-filter: blur(10px);
+    transition: all var(--transition-fast);
+}
+
+.api-status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--amber-500);
+    animation: pulse 2s infinite;
+}
+
+.api-status-indicator.connected .api-status-dot {
+    background: var(--green-500);
+    animation: none;
+}
+
+.api-status-indicator.disconnected .api-status-dot {
+    background: var(--red-500);
+    animation: blink 1s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.7; transform: scale(1.2); }
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0.3; }
+}
+
 /* Responsive Adjustments */
 @media (max-width: 768px) {
     .form-row {
@@ -367,6 +415,11 @@ Additional styles for API integration features
     
     .connection-status {
         bottom: calc(var(--bottom-nav-height) + var(--spacing-4));
+    }
+    
+    .api-status-indicator {
+        bottom: calc(var(--bottom-nav-height) + var(--spacing-4));
+        right: var(--spacing-4);
     }
 }
 

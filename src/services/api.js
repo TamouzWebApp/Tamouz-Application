@@ -278,6 +278,15 @@ class APIService {
         try {
             const url = this.endpoints.write;
             
+            // إضافة معرف فريد إذا لم يكن موجود
+            if (!eventData.id) {
+                eventData.id = `event_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+            }
+            
+            // إضافة الطوابع الزمنية
+            eventData.createdAt = eventData.createdAt || new Date().toISOString();
+            eventData.updatedAt = new Date().toISOString();
+            
             const requestData = {
                 token: this.token,
                 operation: 'add',
@@ -293,7 +302,16 @@ class APIService {
                 throw new Error(`HTTP ${response.status}: ${response.statusText}`);
             }
 
-            const result = await response.json();
+            const responseText = await response.text();
+            console.log('📥 Add event response:', responseText);
+            
+            let result;
+            try {
+                result = JSON.parse(responseText);
+            } catch (parseError) {
+                console.error('❌ JSON Parse Error:', parseError);
+                throw new Error(`Invalid JSON response: ${responseText.substring(0, 200)}`);
+            }
             
             if (!result.success) {
                 throw new Error(result.error || 'Failed to add event');

@@ -19,6 +19,7 @@ class EventsService {
         this.searchQuery = '';
         this.isLoading = false;
         this.lastSync = null;
+        this.hasShownDemoMessage = false;
         
         // نظام الفئات
         this.categories = [
@@ -46,6 +47,7 @@ class EventsService {
         await this.loadEvents();
         this.setupEventListeners();
         this.renderEventsPage();
+        this.updateAPIStatus();
         
         console.log('✅ تم تهيئة خدمة الأحداث بنجاح');
     }
@@ -124,11 +126,6 @@ class EventsService {
         
         try {
             console.log('📥 تحميل الأحداث...');
-            console.log('🔧 إعدادات API:', {
-                baseUrl: window.API_BASE_URL,
-                apiServiceAvailable: !!window.APIService,
-                isOnline: navigator.onLine
-            });
             
             // محاولة تحميل من API أولاً
             if (window.APIService?.getInstance) {
@@ -139,23 +136,19 @@ class EventsService {
                     this.lastSync = new Date().toISOString();
                     
                     console.log(`✅ تم تحميل ${this.events.length} حدث من API`);
-                    this.showNotification(`تم تحميل ${this.events.length} حدث من الخادم`, 'success');
+                    // لا نظهر إشعار للتحميل الناجح لتجنب الإزعاج
                     
                 } catch (apiError) {
-                    console.warn('⚠️ فشل API، محاولة التحميل من JSON:', apiError.message);
+                    console.warn('⚠️ فشل API، محاولة التحميل من JSON');
                     throw apiError;
                 }
             } else {
-                console.warn('⚠️ API service غير متوفر');
+                console.warn('⚠️ خدمة API غير متوفرة');
                 throw new Error('خدمة API غير مهيأة');
             }
             
         } catch (error) {
-            console.warn('⚠️ فشل API، محاولة التحميل من JSON:', {
-                message: error.message,
-                baseUrl: window.API_BASE_URL,
-                isOnline: navigator.onLine
-            });
+            console.warn('⚠️ فشل API، محاولة التحميل من JSON');
             
             try {
                 // محاولة تحميل من ملف JSON
@@ -164,31 +157,22 @@ class EventsService {
                     const jsonData = await response.json();
                     this.events = jsonData.events || [];
                     console.log(`📋 تم تحميل ${this.events.length} حدث من JSON`);
-                    this.showNotification(`تم تحميل ${this.events.length} حدث من الملف المحلي`, 'info');
+                    // لا نظهر إشعار للتحميل من JSON
                 } else {
                     throw new Error('ملف JSON غير متاح');
                 }
             } catch (jsonError) {
-                console.warn('⚠️ فشل JSON، استخدام البيانات التجريبية:', {
-                    jsonError: jsonError.message,
-                    apiError: error.message
-                });
+                console.warn('⚠️ فشل JSON، استخدام البيانات التجريبية');
                 
                 // استخدام البيانات التجريبية كحل أخير
                 this.events = [...(window.DEMO_EVENTS || [])];
                 console.log(`📋 تم تحميل ${this.events.length} حدث من البيانات التجريبية`);
                 
-                // رسالة تشخيص مفصلة
-                let diagnosticMessage = `استخدام البيانات التجريبية (${this.events.length} حدث)`;
-                if (!navigator.onLine) {
-                    diagnosticMessage += ' - لا يوجد اتصال بالإنترنت';
-                } else if (!window.API_BASE_URL) {
-                    diagnosticMessage += ' - لم يتم تعيين API URL';
-                } else {
-                    diagnosticMessage += ' - API غير متوفر';
+                // إظهار رسالة واحدة فقط عند أول تحميل
+                if (!this.hasShownDemoMessage) {
+                    this.showNotification(`تم تحميل ${this.events.length} حدث تجريبي`, 'info');
+                    this.hasShownDemoMessage = true;
                 }
-                
-                this.showNotification(diagnosticMessage, 'warning');
             }
         } finally {
             this.setLoading(false);
@@ -200,7 +184,7 @@ class EventsService {
      */
     async saveEvents() {
         if (!window.APIService?.getInstance) {
-            console.warn('⚠️ خدمة API غير متوفرة');
+            console.log('ℹ️ خدمة API غير متوفرة - حفظ محلي فقط');
             return false;
         }
 
@@ -212,12 +196,12 @@ class EventsService {
             this.lastSync = new Date().toISOString();
             
             console.log('✅ تم حفظ الأحداث بنجاح');
-            this.showNotification('تم حفظ الأحداث بنجاح!', 'success');
+            // لا نظهر إشعار للحفظ الناجح لتجنب الإزعاج
             return true;
             
         } catch (error) {
             console.error('❌ فشل حفظ الأحداث:', error);
-            this.showNotification(`فشل الحفظ: ${error.message}`, 'error');
+            console.log('ℹ️ سيتم الحفظ محلياً فقط');
             return false;
         }
     }
@@ -241,16 +225,27 @@ class EventsService {
                 updatedAt: new Date().toISOString()
             };
 
-            // إضافة محلياً
-            this.events.unshift(newEvent);
-            
-            // محاولة الحفظ في API
-            const saved = await this.saveEvents();
-            
-            if (saved) {
-                this.showNotification(`تم إنشاء الحدث "${newEvent.title}" بنجاح!`, 'success');
+            // محاولة الحفظ في API أولاً
+            if (window.APIService?.getInstance && navigator.onLine) {
+                try {
+                    const apiService = window.APIService.getInstance();
+                    await apiService.addEvent(newEvent);
+                    
+                    // إضافة محلياً بعد نجاح API
+                    this.events.unshift(newEvent);
+                    this.showNotification(`تم إنشاء الحدث "${newEvent.title}" بنجاح!`, 'success');
+                    
+                } catch (apiError) {
+                    console.warn('⚠️ فشل API، حفظ محلي:', apiError.message);
+                    
+                    // إضافة محلياً في حالة فشل API
+                    this.events.unshift(newEvent);
+                    this.showNotification(`تم إنشاء الحدث "${newEvent.title}" محلياً`, 'success');
+                }
             } else {
-                this.showNotification(`تم إنشاء الحدث محلياً - سيتم المزامنة لاحقاً`, 'warning');
+                // إضافة محلياً فقط إذا لم يكن API متوفر
+                this.events.unshift(newEvent);
+                this.showNotification(`تم إنشاء الحدث "${newEvent.title}" محلياً`, 'success');
             }
 
             return true;
@@ -300,14 +295,17 @@ class EventsService {
             this.currentUser.joinedEvents.push(eventId);
             window.AuthService?.updateUser(this.currentUser);
 
-            // محاولة المزامنة مع API
-            const saved = await this.saveEvents();
-            
-            if (saved) {
-                this.showNotification(`تم الانضمام لـ "${event.title}" بنجاح!`, 'success');
-            } else {
-                this.showNotification(`تم الانضمام لـ "${event.title}" - سيتم المزامنة لاحقاً`, 'warning');
+            // محاولة المزامنة مع API (اختيارية)
+            if (window.APIService?.getInstance && navigator.onLine) {
+                try {
+                    await this.saveEvents();
+                    console.log('✅ تم حفظ الانضمام في API');
+                } catch (apiError) {
+                    console.warn('⚠️ فشل حفظ الانضمام في API:', apiError.message);
+                }
             }
+            
+            this.showNotification(`تم الانضمام لـ "${event.title}" بنجاح!`, 'success');
 
             this.renderEventsPage();
             
@@ -1078,6 +1076,42 @@ class EventsService {
             warning: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>'
         };
         return icons[type] || icons.info;
+    }
+
+    /**
+     * تحديث مؤشر حالة API
+     */
+    updateAPIStatus() {
+        const indicator = document.getElementById('apiStatusIndicator');
+        if (!indicator) return;
+        
+        const dot = indicator.querySelector('.api-status-dot');
+        const text = indicator.querySelector('.api-status-text');
+        
+        if (window.APIService?.getInstance && navigator.onLine) {
+            // محاولة اختبار API
+            window.APIService.getInstance().testConnection()
+                .then(result => {
+                    if (result.success) {
+                        indicator.className = 'api-status-indicator connected';
+                        text.textContent = 'متصل';
+                        indicator.style.display = 'none'; // إخفاء عند الاتصال الناجح
+                    } else {
+                        indicator.className = 'api-status-indicator disconnected';
+                        text.textContent = 'منقطع';
+                        indicator.style.display = 'flex';
+                    }
+                })
+                .catch(() => {
+                    indicator.className = 'api-status-indicator disconnected';
+                    text.textContent = 'محلي';
+                    indicator.style.display = 'flex';
+                });
+        } else {
+            indicator.className = 'api-status-indicator disconnected';
+            text.textContent = 'محلي';
+            indicator.style.display = 'flex';
+        }
     }
 
     // ===========================================

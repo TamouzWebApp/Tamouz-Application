@@ -1,0 +1,1099 @@
+# 🏕️ ScoutPluse - منصة إدارة الكشافة
+
+> منصة ويب حديثة ومتجاوبة لإدارة الفرق الكشفية والأحداث والأعضاء
+
+[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/your-repo/scoutpluse)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![Status](https://img.shields.io/badge/status-active-brightgreen.svg)](https://github.com/your-repo/scoutpluse)
+
+---
+
+## 📋 جدول المحتويات
+
+- [🌟 المميزات](#-المميزات)
+- [🚀 البدء السريع](#-البدء-السريع)
+- [📁 هيكل المشروع](#-هيكل-المشروع)
+- [⚙️ التثبيت والنشر](#️-التثبيت-والنشر)
+- [🔧 الإعدادات](#-الإعدادات)
+- [👥 الحسابات التجريبية](#-الحسابات-التجريبية)
+- [🎨 النظام التصميمي](#-النظام-التصميمي)
+- [📱 التصميم المتجاوب](#-التصميم-المتجاوب)
+- [🔐 نظام المصادقة](#-نظام-المصادقة)
+- [📊 إدارة الأحداث](#-إدارة-الأحداث)
+- [🌐 الدعم متعدد اللغات](#-الدعم-متعدد-اللغات)
+- [♿ إمكانية الوصول](#-إمكانية-الوصول)
+- [🐛 استكشاف الأخطاء](#-استكشاف-الأخطاء)
+- [🤝 المساهمة](#-المساهمة)
+- [📄 الترخيص](#-الترخيص)
+
+---
+
+## 🌟 المميزات
+
+### 🔐 نظام المصادقة المتقدم
+- **أدوار متعددة**: مدير، قائد، عضو، زائر
+- **حسابات تجريبية**: وصول سريع لاختبار الأدوار المختلفة
+- **إدارة الجلسات**: مصادقة آمنة باستخدام localStorage
+- **إظهار/إخفاء كلمة المرور**: تحسين تجربة المستخدم
+
+### 📊 لوحة التحكم الذكية
+- **محتوى مخصص**: لوحة تحكم مخصصة حسب صلاحيات المستخدم
+- **الأحداث الأخيرة**: نظرة سريعة على الأنشطة القادمة
+- **إجراءات سريعة**: أزرار إجراءات حساسة للسياق
+- **نظرة عامة على الفرقة**: إحصائيات ومعلومات الأعضاء
+- **المواعيد النهائية**: تواريخ مهمة وتذكيرات
+
+### 📅 إدارة الأحداث الشاملة
+- **إنشاء الأحداث**: القادة والمديرون يمكنهم إنشاء أحداث جديدة
+- **فئات الأحداث**: رميتا، معلولا، سرجيلا، بوسرا
+- **تتبع الحضور**: أشرطة تقدم بصرية وعدد الأعضاء
+- **تفاصيل الأحداث**: معلومات شاملة مع الصور
+- **الانضمام/المغادرة**: إدارة تفاعلية للمشاركة
+- **تكامل PHP API**: حفظ البيانات على الخادم
+
+### 📚 مركز المعلومات التعليمي
+- **محتوى تعليمي**: معرفة ومصادر كشفية
+- **نظام الفئات**: منظم حسب المواضيع (العقد، إشعال النار، الملاحة، إلخ)
+- **أدلة خطوة بخطوة**: تعليمات مفصلة مع الصور
+- **مستويات الصعوبة**: مبتدئ، متوسط، متقدم
+- **تعلم تفاعلي**: محتوى قابل للتوسيع مع عروض مفصلة
+
+### 👤 إدارة الملف الشخصي
+- **المعلومات الشخصية**: ملفات شخصية قابلة للتحرير
+- **إحصائيات النشاط**: الأحداث المنضمة وسجلات الحضور
+- **عرض الدور**: إشارة واضحة لصلاحيات المستخدم
+- **نظام الصور الرمزية**: صور رمزية تلقائية بناءً على الأحرف الأولى
+
+### ⚙️ الإعدادات المتقدمة
+- **التحكم في المظهر**: مظاهر فاتح، داكن، وتلقائي (النظام)
+- **دعم اللغات**: الإنجليزية والعربية (دعم RTL)
+- **أدوات المدير**: إدارة الفرقة وضوابط النظام
+- **تصدير البيانات**: وظيفة تحميل البيانات الشخصية
+
+---
+
+## 🚀 البدء السريع
+
+### 📦 التحميل والتشغيل
+
+```bash
+# 1. تحميل المشروع
+git clone https://github.com/your-repo/scoutpluse.git
+cd scoutpluse
+
+# 2. فتح في المتصفح
+# افتح HTML/index.html في متصفحك المفضل
+
+# 3. أو استخدم خادم محلي
+python -m http.server 8000
+# ثم اذهب إلى: http://localhost:8000/HTML/index.html
+```
+
+### 🌐 النشر على 000webhost
+
+```bash
+# 1. إنشاء حساب على 000webhost.com
+# 2. رفع جميع الملفات إلى public_html/
+# 3. تحديث الـ base URL في JS/config.js:
+
+window.API_BASE_URL = 'https://yoursite.000webhostapp.com';
+
+# 4. تشغيل الإعداد:
+# https://yoursite.000webhostapp.com/setup.php
+
+# 5. اختبار التطبيق:
+# https://yoursite.000webhostapp.com/HTML/index.html
+```
+
+---
+
+## 📁 هيكل المشروع
+
+```
+ScoutPluse/
+├── 📄 index.html                    # صفحة التحويل الرئيسية
+├── 📄 README.md                     # هذا الملف
+├── 📄 LICENSE                       # ترخيص MIT
+│
+├── 📁 HTML/                         # صفحات التطبيق
+│   ├── 📄 index.html               # التطبيق الرئيسي
+│   ├── 📄 events-new.html          # صفحة الأحداث الجديدة
+│   └── 📄 events-enhanced.html     # صفحة الأحداث المحسنة
+│
+├── 📁 CSS/                          # ملفات التصميم
+│   ├── 📄 main.css                 # الأنماط الأساسية والمتغيرات
+│   ├── 📄 components.css           # أنماط المكونات
+│   ├── 📄 responsive.css           # التصميم المتجاوب
+│   ├── 📄 auth.css                 # أنماط المصادقة
+│   ├── 📄 events-new.css           # أنماط الأحداث الجديدة
+│   └── 📄 api-enhancements.css     # تحسينات API
+│
+├── 📁 JS/                           # ملفات JavaScript
+│   ├── 📄 config.js                # إعدادات التطبيق
+│   ├── 📄 main.js                  # تحكم التطبيق الرئيسي
+│   ├── 📄 auth.js                  # خدمة المصادقة
+│   ├── 📄 events.js                # إدارة الأحداث
+│   ├── 📄 events-enhanced.js       # نظام الأحداث المحسن
+│   ├── 📄 api-service.js           # خدمة API
+│   ├── 📄 dashboard.js             # وظائف لوحة التحكم
+│   ├── 📄 information.js           # مركز المعلومات
+│   ├── 📄 profile.js               # إدارة الملف الشخصي
+│   ├── 📄 settings.js              # إدارة الإعدادات
+│   ├── 📄 navigation.js            # نظام التنقل
+│   ├── 📄 theme.js                 # إدارة المظاهر
+│   ├── 📄 translations.js          # الترجمة والتدويل
+│   ├── 📄 data.js                  # البيانات التجريبية
+│   └── 📄 users.json               # قاعدة بيانات المستخدمين
+│
+├── 📁 PHP/                          # ملفات الخادم
+│   ├── 📄 read.php                 # API قراءة البيانات
+│   ├── 📄 write.php                # API كتابة البيانات
+│   ├── 📄 data.json                # قاعدة بيانات الأحداث
+│   ├── 📄 setup.php                # إعداد أولي
+│   ├── 📄 test-connection.php      # اختبار الاتصال
+│   └── 📄 .htaccess                # إعدادات الخادم
+│
+└── 📁 docs/                         # الوثائق
+    ├── 📄 DEPLOYMENT-GUIDE-*.md    # أدلة النشر
+    ├── 📄 QUICK-SETUP-*.md         # الإعداد السريع
+    └── 📄 README-*.md              # أدلة متخصصة
+```
+
+---
+
+## ⚙️ التثبيت والنشر
+
+### 🏠 التشغيل المحلي
+
+#### الطريقة 1: فتح مباشر
+```bash
+# افتح HTML/index.html في المتصفح مباشرة
+open HTML/index.html  # macOS
+start HTML/index.html # Windows
+xdg-open HTML/index.html # Linux
+```
+
+#### الطريقة 2: خادم محلي
+```bash
+# Python
+python -m http.server 8000
+# ثم: http://localhost:8000/HTML/index.html
+
+# Node.js
+npx serve .
+# ثم: http://localhost:3000/HTML/index.html
+
+# PHP
+php -S localhost:8000
+# ثم: http://localhost:8000/HTML/index.html
+```
+
+### 🌐 النشر على 000webhost
+
+#### خطوة 1: إنشاء الموقع
+1. 🌐 اذهب إلى [000webhost.com](https://www.000webhost.com)
+2. 📝 سجل حساب جديد
+3. ➕ اضغط "Create Website"
+4. 🏷️ اختر اسم النطاق الفرعي (مثل: `scoutplus`)
+
+#### خطوة 2: رفع الملفات
+```
+public_html/
+├── 📄 index.html              # صفحة التحويل
+├── 📄 read.php               # API قراءة
+├── 📄 write.php              # API كتابة
+├── 📄 data.json              # قاعدة البيانات
+├── 📄 setup.php              # الإعداد
+├── 📄 test-connection.php    # اختبار الاتصال
+├── 📄 .htaccess              # إعدادات الخادم
+├── 📁 HTML/                  # صفحات التطبيق
+├── 📁 CSS/                   # ملفات التصميم
+├── 📁 JS/                    # ملفات JavaScript
+└── 📁 backups/               # النسخ الاحتياطية (فارغ)
+```
+
+#### خطوة 3: ضبط الصلاحيات
+```bash
+# الملفات (.php, .json, .html, .css, .js)
+chmod 644
+
+# المجلدات (HTML/, CSS/, JS/, backups/)
+chmod 755
+```
+
+#### خطوة 4: تحديث الإعدادات
+```javascript
+// في JS/config.js
+window.API_BASE_URL = 'https://yoursite.000webhostapp.com';
+```
+
+#### خطوة 5: تشغيل الإعداد
+```
+🔗 https://yoursite.000webhostapp.com/setup.php
+✅ تأكد من ظهور جميع الاختبارات بنجاح
+```
+
+#### خطوة 6: اختبار التطبيق
+```
+🔗 https://yoursite.000webhostapp.com/
+🔗 https://yoursite.000webhostapp.com/HTML/index.html
+```
+
+### 🚀 النشر على خوادم أخرى
+
+#### Netlify
+```bash
+# 1. ارفع مجلد HTML/ كموقع ثابت
+# 2. لا حاجة لملفات PHP
+# 3. سيعمل بالبيانات التجريبية فقط
+```
+
+#### Vercel
+```bash
+# 1. ارفع المشروع كاملاً
+# 2. اضبط build command: "cp -r HTML/* ."
+# 3. اضبط output directory: "."
+```
+
+#### GitHub Pages
+```bash
+# 1. ارفع المشروع إلى GitHub
+# 2. فعل GitHub Pages
+# 3. اضبط المجلد على HTML/
+```
+
+---
+
+## 🔧 الإعدادات
+
+### 📝 ملف الإعدادات الرئيسي (`JS/config.js`)
+
+```javascript
+// 🌐 إعداد الـ Base URL للـ API
+window.API_BASE_URL = ''; // فارغ = نفس النطاق
+
+// ⚙️ إعدادات التطبيق
+window.APP_CONFIG = {
+    // معلومات التطبيق
+    appName: 'ScoutPluse',
+    version: '1.0.0',
+    
+    // إعدادات الـ API
+    api: {
+        timeout: 10000,           // 10 ثواني
+        retryAttempts: 3,         // 3 محاولات
+        securityToken: 'ScoutPlus(WebApp)'
+    },
+    
+    // إعدادات الواجهة
+    ui: {
+        theme: 'auto',            // light, dark, auto
+        language: 'en',           // en, ar
+        animations: true
+    },
+    
+    // إعدادات التخزين
+    storage: {
+        prefix: 'scoutpluse_',
+        expiry: 30 * 24 * 60 * 60 * 1000 // 30 يوم
+    }
+};
+```
+
+### 🔄 تغيير الـ Base URL للبيئات المختلفة
+
+```javascript
+// 🏠 للتطوير المحلي
+window.API_BASE_URL = '';
+
+// 🌐 للنشر على 000webhost
+window.API_BASE_URL = 'https://scoutplus.000webhostapp.com';
+
+// 🏢 للنشر على خادم مخصص
+window.API_BASE_URL = 'https://scouts.yourorganization.com';
+
+// ☁️ للنشر على خدمة سحابية
+window.API_BASE_URL = 'https://api.scoutplus.app';
+```
+
+### 🔐 إعدادات الأمان
+
+```php
+// في ملفات PHP
+$SECURITY_TOKEN = 'ScoutPlus(WebApp)'; // يجب أن يطابق JavaScript
+```
+
+---
+
+## 👥 الحسابات التجريبية
+
+### 🔑 بيانات الدخول
+
+| الدور | البريد الإلكتروني | كلمة المرور | الصلاحيات |
+|-------|------------------|-------------|-----------|
+| 👑 **مدير** | `admin@scouts.org` | `admin` | جميع الصلاحيات |
+| 🎖️ **قائد** | `leader@scouts.org` | `Bashar` | إدارة الأحداث والأعضاء |
+| 🏕️ **عضو** | `scout@scouts.org` | `scout123` | عرض والانضمام للأحداث |
+| 👤 **زائر** | `guest@scouts.org` | `password` | عرض فقط |
+
+### 🎭 أدوار المستخدمين
+
+#### 👑 المدير (Admin)
+- ✅ إنشاء وإدارة الأحداث
+- ✅ إدارة جميع الفرق
+- ✅ الوصول لجميع الإعدادات
+- ✅ تصدير البيانات والتقارير
+- ✅ إدارة المستخدمين
+
+#### 🎖️ القائد (Leader)
+- ✅ إنشاء وإدارة أحداث فرقته
+- ✅ عرض أعضاء فرقته
+- ✅ الوصول للمعلومات التعليمية
+- ✅ إدارة ملفه الشخصي
+- ❌ إعدادات النظام
+
+#### 🏕️ العضو (Member)
+- ✅ عرض والانضمام للأحداث
+- ✅ الوصول للمعلومات التعليمية
+- ✅ إدارة ملفه الشخصي
+- ❌ إنشاء الأحداث
+- ❌ الإعدادات
+
+#### 👤 الزائر (Guest)
+- ✅ عرض الأحداث فقط
+- ❌ الانضمام للأحداث
+- ❌ الوصول للمعلومات
+- ❌ إدارة الملف الشخصي
+
+---
+
+## 🎨 النظام التصميمي
+
+### 🎨 لوحة الألوان
+
+#### الألوان الأساسية
+```css
+--primary-500: #10b981    /* 🟢 أخضر كشفي */
+--secondary-500: #0ea5e9  /* 🔵 أزرق مكمل */
+--accent-500: #f59e0b     /* 🟡 أصفر تمييز */
+```
+
+#### الألوان الدلالية
+```css
+--red-500: #ef4444        /* 🔴 خطأ */
+--green-500: #22c55e      /* 🟢 نجاح */
+--blue-500: #3b82f6       /* 🔵 معلومات */
+--amber-500: #f59e0b      /* 🟡 تحذير */
+```
+
+#### الألوان المحايدة
+```css
+--gray-50: #f9fafb        /* خلفية فاتحة */
+--gray-500: #6b7280       /* نص متوسط */
+--gray-900: #111827       /* نص داكن */
+```
+
+### 📏 نظام المسافات
+
+```css
+/* نظام شبكة 8px */
+--spacing-1: 0.25rem      /* 4px */
+--spacing-2: 0.5rem       /* 8px */
+--spacing-3: 0.75rem      /* 12px */
+--spacing-4: 1rem         /* 16px */
+--spacing-6: 1.5rem       /* 24px */
+--spacing-8: 2rem         /* 32px */
+```
+
+### 🔤 نظام الخطوط
+
+```css
+/* أحجام الخطوط */
+--font-size-xs: 0.75rem   /* 12px */
+--font-size-sm: 0.875rem  /* 14px */
+--font-size-base: 1rem    /* 16px */
+--font-size-lg: 1.125rem  /* 18px */
+--font-size-xl: 1.25rem   /* 20px */
+--font-size-2xl: 1.5rem   /* 24px */
+
+/* أوزان الخطوط */
+--font-weight-normal: 400
+--font-weight-medium: 500
+--font-weight-semibold: 600
+--font-weight-bold: 700
+```
+
+### 🔘 نظام الحدود
+
+```css
+/* نصف أقطار الحدود */
+--radius-sm: 0.125rem     /* 2px */
+--radius-md: 0.375rem     /* 6px */
+--radius-lg: 0.5rem       /* 8px */
+--radius-xl: 0.75rem      /* 12px */
+--radius-2xl: 1rem        /* 16px */
+--radius-full: 9999px     /* دائري كامل */
+```
+
+---
+
+## 📱 التصميم المتجاوب
+
+### 📐 نقاط الكسر
+
+| الجهاز | العرض | الوصف |
+|--------|-------|--------|
+| 📱 **موبايل** | `< 480px` | هواتف صغيرة |
+| 📱 **موبايل كبير** | `481px - 768px` | هواتف كبيرة |
+| 📟 **تابلت** | `769px - 1024px` | أجهزة لوحية |
+| 💻 **ديسكتوب** | `> 1024px` | أجهزة مكتبية |
+
+### 📱 مميزات الموبايل
+
+#### التنقل السفلي
+- 🏠 لوحة التحكم
+- 📅 الأحداث  
+- 📚 المعلومات
+- 👤 الملف الشخصي
+
+#### الشريط العلوي
+- 🍔 قائمة الهامبرغر
+- 🏷️ شعار التطبيق
+- 🌙 تبديل المظهر
+- 👤 صورة المستخدم
+
+#### الشريط الجانبي المنزلق
+- 📱 يظهر من اليسار
+- 🎯 تنقل كامل
+- 👤 معلومات المستخدم
+- 🚪 زر تسجيل الخروج
+
+---
+
+## 🔐 نظام المصادقة
+
+### 🔑 آلية المصادقة
+
+```javascript
+// تسجيل الدخول
+const user = await AuthService.login(email, password);
+
+// التحقق من المصادقة
+const isAuth = AuthService.isAuthenticated();
+
+// الحصول على المستخدم الحالي
+const currentUser = AuthService.getCurrentUser();
+
+// تسجيل الخروج
+AuthService.logout();
+```
+
+### 🛡️ الأمان
+
+#### حماية البيانات
+- 🔒 تشفير localStorage
+- 🛡️ التحقق من الصلاحيات
+- 🚫 منع الوصول غير المصرح
+- 🔐 رموز الأمان للـ API
+
+#### إدارة الجلسات
+- ⏰ انتهاء صلاحية تلقائي
+- 🔄 تحديث الجلسة
+- 📱 مزامنة بين التبويبات
+- 🚪 تسجيل خروج آمن
+
+---
+
+## 📊 إدارة الأحداث
+
+### 📅 أنواع الأحداث
+
+| الفئة | الوصف | اللون |
+|------|-------|-------|
+| 🌲 **رميتا** | أنشطة خارجية ومغامرات | 🟢 أخضر |
+| 🤝 **معلولا** | خدمة المجتمع والتطوع | 🔵 أزرق |
+| 📚 **سرجيلا** | تعليم ومهارات | 🟡 أصفر |
+| 🏆 **بوسرا** | مسابقات وتحديات | 🔴 أحمر |
+
+### ⚙️ وظائف الأحداث
+
+#### إنشاء الأحداث
+```javascript
+// القادة والمديرون فقط
+const eventData = {
+    title: 'رحلة تخييم نهاية الأسبوع',
+    description: 'مغامرة تخييم لثلاثة أيام...',
+    date: '2025-01-20',
+    time: '09:00',
+    location: 'موقع التخييم الجبلي',
+    category: 'ramita',
+    maxAttendees: 25
+};
+
+await eventsService.addEvent(eventData);
+```
+
+#### الانضمام للأحداث
+```javascript
+// الأعضاء والقادة والمديرون
+await eventsService.joinEvent(eventId);
+```
+
+#### البحث والتصفية
+- 🔍 البحث بالعنوان والوصف والموقع
+- 🏷️ التصفية حسب الفئة
+- 📅 ترتيب حسب التاريخ
+- 👥 تصفية حسب الفرقة
+
+### 🔄 تكامل PHP API
+
+#### قراءة البيانات
+```php
+// read.php
+GET /read.php
+Response: {
+    "success": true,
+    "data": {
+        "events": [...],
+        "totalEvents": 10
+    }
+}
+```
+
+#### كتابة البيانات
+```php
+// write.php
+POST /write.php
+Body: {
+    "token": "ScoutPlus(WebApp)",
+    "operation": "add|update|delete",
+    "data": {...}
+}
+```
+
+#### النسخ الاحتياطية التلقائية
+- 📁 نسخ احتياطية قبل كل تعديل
+- 🗂️ الاحتفاظ بـ 10 نسخ كحد أقصى
+- 🔄 تنظيف تلقائي للنسخ القديمة
+
+---
+
+## 🌐 الدعم متعدد اللغات
+
+### 🗣️ اللغات المدعومة
+
+| اللغة | الكود | الاتجاه | الحالة |
+|-------|------|---------|--------|
+| 🇺🇸 **الإنجليزية** | `en` | LTR | ✅ مكتمل |
+| 🇸🇦 **العربية** | `ar` | RTL | ✅ مكتمل |
+
+### 🔄 تبديل اللغة
+
+```javascript
+// تغيير اللغة
+translationService.setLanguage('ar');
+
+// الحصول على ترجمة
+const text = translationService.t('dashboard.welcome');
+
+// ترجمة مع معاملات
+const welcome = translationService.t('welcome.message', { name: 'أحمد' });
+```
+
+### 📝 إضافة ترجمات جديدة
+
+```javascript
+// في translations.js
+const translations = {
+    ar: {
+        'nav.dashboard': 'لوحة التحكم',
+        'nav.events': 'الفعاليات',
+        'dashboard.welcome': 'مرحباً بعودتك'
+    }
+};
+```
+
+### 🔄 دعم RTL
+
+```css
+/* تلقائي للعربية */
+.rtl {
+    direction: rtl;
+}
+
+.rtl .sidebar {
+    right: 0;
+    left: auto;
+}
+```
+
+---
+
+## ♿ إمكانية الوصول
+
+### 🎯 معايير WCAG
+
+#### مستوى AA
+- ✅ **تباين الألوان**: نسبة 4.5:1 للنص العادي
+- ✅ **التنقل بلوحة المفاتيح**: وصول كامل بلوحة المفاتيح
+- ✅ **قارئ الشاشة**: تسميات ARIA مناسبة
+- ✅ **إدارة التركيز**: مؤشرات تركيز واضحة
+
+#### مميزات إضافية
+- 🔍 **وضع التباين العالي**: رؤية محسنة
+- 🎭 **إدارة التركيز**: حبس التركيز في النوافذ المنبثقة
+- 📖 **HTML دلالي**: تسلسل عناوين مناسب ومعالم
+- 🖼️ **نص بديل**: نص بديل وصفي للصور
+
+### ⌨️ اختصارات لوحة المفاتيح
+
+| الاختصار | الوظيفة |
+|----------|---------|
+| `Tab` | التنقل للأمام |
+| `Shift + Tab` | التنقل للخلف |
+| `Enter` | تفعيل العنصر |
+| `Escape` | إغلاق النوافذ المنبثقة |
+| `Space` | تفعيل الأزرار |
+
+### 🎨 تفضيلات المستخدم
+
+```css
+/* احترام تفضيلات الحركة */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* دعم وضع التباين العالي */
+@media (prefers-contrast: high) {
+    .btn {
+        border-width: 2px;
+    }
+}
+```
+
+---
+
+## 🐛 استكشاف الأخطاء
+
+### ❌ مشاكل شائعة وحلولها
+
+#### 🔌 "API Connection Failed"
+```bash
+# الأسباب المحتملة:
+❌ ملفات PHP غير مرفوعة
+❌ base URL خاطئ في config.js
+❌ مشاكل CORS
+
+# الحلول:
+✅ تحقق من رفع read.php و write.php
+✅ تأكد من صحة API_BASE_URL
+✅ شغل test-connection.php
+```
+
+#### 🔐 "Permission Denied"
+```bash
+# الأسباب:
+❌ صلاحيات ملفات خاطئة
+❌ مجلد backups غير موجود
+
+# الحلول:
+✅ اضبط صلاحيات الملفات على 644
+✅ اضبط صلاحيات المجلدات على 755
+✅ أنشئ مجلد backups/
+```
+
+#### 📄 "Invalid JSON"
+```bash
+# الأسباب:
+❌ ملف data.json تالف
+❌ مشاكل ترميز UTF-8
+❌ BOM في بداية الملف
+
+# الحلول:
+✅ شغل setup.php لإعادة إنشاء الملف
+✅ تأكد من ترميز UTF-8
+✅ ملفات PHP تنظف BOM تلقائياً
+```
+
+#### 🌐 مشاكل CORS
+```bash
+# الأسباب:
+❌ ملف .htaccess غير مرفوع
+❌ headers غير مضبوطة
+
+# الحلول:
+✅ ارفع ملف .htaccess
+✅ تحقق من headers في ملفات PHP
+```
+
+### 🔍 أدوات التشخيص
+
+#### اختبار الاتصال
+```
+🔗 https://yoursite.com/test-connection.php
+📊 يعرض حالة جميع المكونات
+```
+
+#### إعداد النظام
+```
+🔗 https://yoursite.com/setup.php
+⚙️ يتحقق من المتطلبات ويعد النظام
+```
+
+#### وحدة تحكم المتصفح
+```javascript
+// افتح أدوات المطور (F12)
+// تحقق من:
+console.log('🔍 JavaScript errors');
+console.log('🌐 Network requests');
+console.log('💾 localStorage data');
+```
+
+### 📊 مراقبة الأداء
+
+#### سجلات الأخطاء
+```php
+// في ملفات PHP
+error_log("API Error: " . $e->getMessage());
+```
+
+#### إحصائيات الاستخدام
+```javascript
+// في JavaScript
+console.log(`✅ Loaded ${events.length} events`);
+console.log(`👤 User: ${user.name} (${user.role})`);
+```
+
+---
+
+## 🔧 التطوير والتخصيص
+
+### 🛠️ إضافة مميزات جديدة
+
+#### إنشاء صفحة جديدة
+```javascript
+// 1. أضف الصفحة في HTML
+<div id="newPage" class="page">
+    <!-- محتوى الصفحة -->
+</div>
+
+// 2. أضف التنقل
+<a href="#new" class="nav-link" data-page="new">
+    صفحة جديدة
+</a>
+
+// 3. أضف الصلاحيات في data.js
+const ROLE_PERMISSIONS = {
+    admin: ['dashboard', 'events', 'new'],
+    // ...
+};
+```
+
+#### إنشاء خدمة جديدة
+```javascript
+// في JS/new-service.js
+class NewService {
+    constructor() {
+        this.init();
+    }
+    
+    init() {
+        console.log('🚀 New Service initialized');
+    }
+    
+    // وظائف الخدمة...
+}
+
+// تهيئة الخدمة
+document.addEventListener('DOMContentLoaded', () => {
+    if (AuthService.isAuthenticated()) {
+        window.newService = new NewService();
+    }
+});
+```
+
+### 🎨 تخصيص التصميم
+
+#### تغيير الألوان
+```css
+/* في CSS/main.css */
+:root {
+    --primary-500: #your-color;    /* لونك المفضل */
+    --secondary-500: #your-color;  /* لون مكمل */
+}
+```
+
+#### إضافة مظهر جديد
+```javascript
+// في JS/theme.js
+const themes = {
+    light: { /* ألوان فاتحة */ },
+    dark: { /* ألوان داكنة */ },
+    custom: { /* مظهرك المخصص */ }
+};
+```
+
+### 🔌 تكامل APIs خارجية
+
+#### إضافة API جديد
+```javascript
+// في JS/api-service.js
+class ExternalAPIService {
+    async fetchExternalData() {
+        const response = await fetch('https://external-api.com/data');
+        return response.json();
+    }
+}
+```
+
+---
+
+## 🧪 الاختبار
+
+### ✅ اختبارات يدوية
+
+#### اختبار المصادقة
+- [ ] تسجيل دخول بحسابات مختلفة
+- [ ] التحقق من الصلاحيات
+- [ ] تسجيل الخروج
+
+#### اختبار الأحداث
+- [ ] إنشاء حدث جديد
+- [ ] الانضمام لحدث
+- [ ] البحث والتصفية
+
+#### اختبار التجاوب
+- [ ] عرض على موبايل
+- [ ] عرض على تابلت
+- [ ] عرض على ديسكتوب
+
+### 🔍 اختبار الأداء
+
+#### سرعة التحميل
+```javascript
+// قياس وقت التحميل
+console.time('Page Load');
+window.addEventListener('load', () => {
+    console.timeEnd('Page Load');
+});
+```
+
+#### استهلاك الذاكرة
+```javascript
+// مراقبة الذاكرة
+console.log('Memory:', performance.memory);
+```
+
+---
+
+## 🤝 المساهمة
+
+### 🎯 كيفية المساهمة
+
+#### 1. Fork المشروع
+```bash
+git clone https://github.com/your-username/scoutpluse.git
+cd scoutpluse
+```
+
+#### 2. إنشاء فرع جديد
+```bash
+git checkout -b feature/amazing-feature
+```
+
+#### 3. إجراء التغييرات
+```bash
+# اكتب كودك الرائع
+git add .
+git commit -m "Add amazing feature"
+```
+
+#### 4. رفع التغييرات
+```bash
+git push origin feature/amazing-feature
+```
+
+#### 5. إنشاء Pull Request
+- 📝 اكتب وصف واضح للتغييرات
+- 🧪 تأكد من اختبار التغييرات
+- 📚 حدث الوثائق إذا لزم الأمر
+
+### 📋 إرشادات المساهمة
+
+#### معايير الكود
+- 📏 **المسافات**: استخدم مسافتين للإزاحة
+- 📝 **التعليقات**: اكتب تعليقات واضحة
+- 🏷️ **التسمية**: استخدم أسماء وصفية
+- 🛡️ **معالجة الأخطاء**: استخدم try-catch مناسبة
+
+#### أفضل الممارسات
+- 🎯 **فصل الاهتمامات**: فصل HTML, CSS, JS
+- 🔄 **مبدأ DRY**: لا تكرر نفسك
+- 📈 **التحسين التدريجي**: الوظائف الأساسية أولاً
+- ♿ **إمكانية الوصول**: مميزات إمكانية الوصول مدمجة
+
+### 🐛 الإبلاغ عن الأخطاء
+
+#### قالب تقرير الخطأ
+```markdown
+## 🐛 وصف الخطأ
+وصف واضح ومختصر للخطأ.
+
+## 🔄 خطوات إعادة الإنتاج
+1. اذهب إلى '...'
+2. اضغط على '...'
+3. انتقل إلى '...'
+4. شاهد الخطأ
+
+## ✅ السلوك المتوقع
+وصف واضح لما كان متوقعاً أن يحدث.
+
+## 📱 البيئة
+- المتصفح: [مثل Chrome, Safari]
+- الإصدار: [مثل 22]
+- نظام التشغيل: [مثل iOS]
+```
+
+---
+
+## 📈 خارطة الطريق
+
+### 🚀 الإصدار 1.1.0 (قريباً)
+- [ ] 📱 تطبيق موبايل أصلي
+- [ ] 🔔 إشعارات فورية
+- [ ] 📊 تقارير متقدمة
+- [ ] 🌐 دعم لغات إضافية
+
+### 🎯 الإصدار 1.2.0 (مستقبلي)
+- [ ] 🤖 ذكاء اصطناعي للتوصيات
+- [ ] 📍 تكامل الخرائط
+- [ ] 💬 نظام رسائل
+- [ ] 🎮 نظام الشارات والإنجازات
+
+### 🔮 الإصدار 2.0.0 (رؤية)
+- [ ] ☁️ نظام سحابي كامل
+- [ ] 🔗 تكامل مع منصات أخرى
+- [ ] 📈 تحليلات متقدمة
+- [ ] 🌍 دعم متعدد المنظمات
+
+---
+
+## 📞 الدعم والمساعدة
+
+### 🆘 الحصول على المساعدة
+
+#### 📚 الوثائق
+- 📖 [دليل المستخدم](docs/USER-GUIDE.md)
+- 🔧 [دليل المطور](docs/DEVELOPER-GUIDE.md)
+- 🚀 [دليل النشر](docs/DEPLOYMENT-GUIDE.md)
+
+#### 💬 المجتمع
+- 💬 [Discord Server](https://discord.gg/scoutpluse)
+- 📱 [Telegram Group](https://t.me/scoutpluse)
+- 🐦 [Twitter](https://twitter.com/scoutpluse)
+
+#### 🐛 الإبلاغ عن المشاكل
+- 🔗 [GitHub Issues](https://github.com/your-repo/scoutpluse/issues)
+- 📧 [البريد الإلكتروني](mailto:support@scoutpluse.com)
+
+### ❓ أسئلة شائعة
+
+#### س: كيف أغير لغة التطبيق؟
+ج: اذهب إلى الإعدادات → اللغة → اختر العربية أو الإنجليزية
+
+#### س: كيف أنشئ حدث جديد؟
+ج: يجب أن تكون قائد أو مدير، ثم اذهب إلى الأحداث → إنشاء حدث
+
+#### س: لماذا لا أستطيع رؤية بعض الصفحات؟
+ج: الصفحات تظهر حسب دورك. الزوار يرون الأحداث فقط.
+
+#### س: كيف أحفظ البيانات على الخادم؟
+ج: ارفع ملفات PHP واضبط API_BASE_URL في config.js
+
+---
+
+## 📄 الترخيص
+
+### 📜 ترخيص MIT
+
+```
+MIT License
+
+Copyright (c) 2025 ScoutPluse
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
+---
+
+## 🙏 شكر وتقدير
+
+### 💝 شكر خاص لـ
+
+- 🏕️ **المنظمات الكشفية** حول العالم للإلهام
+- 🌐 **مجتمع المصادر المفتوحة** للأدوات والمكتبات
+- 👥 **المساهمين والمختبرين** للملاحظات والتحسينات
+- 🎨 **مجتمع التصميم** للإلهام البصري
+
+### 🌟 تقنيات مستخدمة
+
+- 🌐 **HTML5** - هيكل التطبيق
+- 🎨 **CSS3** - التصميم والتنسيق
+- ⚡ **Vanilla JavaScript** - المنطق والتفاعل
+- 🐘 **PHP** - الخادم والـ API
+- 📄 **JSON** - تخزين البيانات
+- 🖼️ **Pexels** - الصور المجانية
+
+---
+
+## 📊 إحصائيات المشروع
+
+| المقياس | القيمة |
+|---------|--------|
+| 📁 **إجمالي الملفات** | 50+ ملف |
+| 📝 **أسطر الكود** | 15,000+ سطر |
+| 🎨 **ملفات CSS** | 6 ملفات |
+| ⚡ **ملفات JavaScript** | 15 ملف |
+| 🐘 **ملفات PHP** | 5 ملفات |
+| 🌐 **صفحات HTML** | 4 صفحات |
+| 📱 **دعم الأجهزة** | جميع الأحجام |
+| 🌍 **اللغات** | الإنجليزية والعربية |
+
+---
+
+<div align="center">
+
+## 🎉 مبروك! أنت جاهز لاستخدام ScoutPluse
+
+### 🚀 ابدأ رحلتك الكشفية الرقمية الآن
+
+[![Demo](https://img.shields.io/badge/🌐_عرض_تجريبي-أزرق?style=for-the-badge)](https://scoutplus.000webhostapp.com)
+[![Download](https://img.shields.io/badge/📥_تحميل-أخضر?style=for-the-badge)](https://github.com/your-repo/scoutpluse/archive/main.zip)
+[![Docs](https://img.shields.io/badge/📚_الوثائق-برتقالي?style=for-the-badge)](docs/)
+
+---
+
+**صُنع بـ ❤️ للمجتمع الكشفي**
+
+*تمكين الفرق الكشفية بالتكنولوجيا الحديثة مع الحفاظ على القيم التقليدية*
+
+</div>

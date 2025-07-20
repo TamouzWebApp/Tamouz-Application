@@ -1,0 +1,17 @@
+{
+  "rules": {
+    ".read": "auth != null",
+    ".write": "auth != null",
+    "events": {
+      ".read": "auth != null",
+      ".write": "auth != null",
+      "$eventId": {
+        ".validate": "newData.hasChildren(['id', 'title', 'date', 'time', 'location', 'description', 'category', 'priority', 'status', 'createdAt'])"
+      }
+    },
+    "settings": {
+      ".read": "auth != null",
+      ".write": "auth != null"
+    }
+  }
+}

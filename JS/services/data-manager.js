@@ -514,6 +514,22 @@ class DataManagerService {
             provider: this.currentProvider,
             isInitialized: this.isInitialized,
             lastUpdate: new Date().toISOString()
+        // التحقق من المصادقة قبل الكتابة
+        if (this.currentProvider === 'firebase') {
+          const status = this.firebaseService.getConnectionStatus();
+          if (!status.authenticated) {
+            throw new Error('المستخدم غير مصادق. يرجى إعادة تحميل الصفحة والمحاولة مرة أخرى.');
+          }
+        }
+        
+        // التحقق من المصادقة قبل الإضافة
+        if (this.currentProvider === 'firebase') {
+          const status = this.firebaseService.getConnectionStatus();
+          if (!status.authenticated) {
+            throw new Error('المستخدم غير مصادق. يرجى إعادة تحميل الصفحة والمحاولة مرة أخرى.');
+          }
+        }
+        
         };
 
         switch (this.currentProvider) {

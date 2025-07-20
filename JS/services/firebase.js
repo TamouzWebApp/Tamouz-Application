@@ -7,566 +7,359 @@ SCOUTPLUSE - FIREBASE SERVICE
 تحل محل نظام PHP السابق
 */
 
-/**
- * Firebase Service Class
- * إدارة جميع عمليات Firebase
- */
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-analytics.js";
+import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+import { 
+  getDatabase, 
+  ref, 
+  set, 
+  get, 
+  push, 
+  remove, 
+  onValue, 
+  off,
+  connectDatabaseEmulator
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyCmRC2JPD_nR1kHKU3ksuH6OfnFJutO5_I",
+  authDomain: "tamouz-webapp.firebaseapp.com",
+  databaseURL: "https://tamouz-webapp-default-rtdb.firebaseio.com",
+  projectId: "tamouz-webapp",
+  storageBucket: "tamouz-webapp.firebasestorage.app",
+  messagingSenderId: "959471265726",
+  appId: "1:959471265726:web:faf9d1a7e645d92354fbef",
+  measurementId: "G-7WGDJ5B2P5"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+const auth = getAuth(app);
+const database = getDatabase(app);
+
 class FirebaseService {
-    constructor() {
-        this.app = null;
-        this.database = null;
-        this.analytics = null;
-        this.isInitialized = false;
-        this.isOnline = navigator.onLine;
-        
-        this.init();
+  constructor() {
+    this.database = database;
+    this.auth = auth;
+    this.isConnected = false;
+    this.isAuthenticated = false;
+    this.listeners = new Map();
+    this.connectionListeners = new Set();
+    
+    this.initializeConnection();
+    this.initializeAuth();
+  }
+
+  async initializeAuth() {
+    try {
+      // تسجيل دخول مجهول
+      await signInAnonymously(this.auth);
+      console.log('✅ تم تسجيل الدخول بنجاح');
+      
+      // مراقبة حالة المصادقة
+      onAuthStateChanged(this.auth, (user) => {
+        this.isAuthenticated = !!user;
+        if (user) {
+          console.log('✅ المستخدم مصادق:', user.uid);
+        } else {
+          console.log('❌ المستخدم غير مصادق');
+        }
+        this.notifyConnectionListeners();
+      });
+    } catch (error) {
+      console.error('❌ خطأ في المصادقة:', error);
+      this.isAuthenticated = false;
+    }
+  }
+
+  initializeConnection() {
+    // مراقبة حالة الاتصال
+    const connectedRef = ref(this.database, '.info/connected');
+    onValue(connectedRef, (snapshot) => {
+      this.isConnected = snapshot.val() === true;
+      console.log(this.isConnected ? '✅ متصل بـ Firebase' : '❌ غير متصل بـ Firebase');
+      this.notifyConnectionListeners();
+    });
+  }
+
+  notifyConnectionListeners() {
+    const status = { 
+      connected: this.isConnected,
+      authenticated: this.isAuthenticated 
+    };
+    this.connectionListeners.forEach(callback => {
+      try {
+        callback(status);
+      } catch (error) {
+        console.error('خطأ في استدعاء مستمع الاتصال:', error);
+      }
+    });
+  }
+
+  onConnectionChange(callback) {
+    this.connectionListeners.add(callback);
+    // استدعاء فوري بالحالة الحالية
+    callback({ connected: this.isConnected });
+    
+    // إرجاع دالة لإلغاء الاشتراك
+    return () => {
+      this.connectionListeners.delete(callback);
+    };
+  }
+
+  async readEvents() {
+    if (!this.isConnected) {
+      throw new Error('غير متصل بـ Firebase');
     }
 
-    /**
-     * تهيئة Firebase
-     */
-    async init() {
-        console.log('🔥 Initializing Firebase Service...');
-        
-        try {
-            // تكوين Firebase
-            const firebaseConfig = {
-                apiKey: "AIzaSyCmRC2JPD_nR1kHKU3ksuH6OfnFJutO5_I",
-                authDomain: "tamouz-webapp.firebaseapp.com",
-                databaseURL: "https://tamouz-webapp-default-rtdb.firebaseio.com",
-                projectId: "tamouz-webapp",
-                storageBucket: "tamouz-webapp.firebasestorage.app",
-                messagingSenderId: "959471265726",
-                appId: "1:959471265726:web:faf9d1a7e645d92354fbef",
-                measurementId: "G-7WGDJ5B2P5"
-            };
-
-            // تحميل Firebase modules
-            const { initializeApp } = await import('https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js');
-            const { getDatabase, ref, set, get, push, remove, onValue, off } = await import('https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js');
-            const { getAnalytics } = await import('https://www.gstatic.com/firebasejs/12.0.0/firebase-analytics.js');
-
-            // تهيئة Firebase
-            this.app = initializeApp(firebaseConfig);
-            this.database = getDatabase(this.app);
-            this.analytics = getAnalytics(this.app);
-
-            // حفظ Firebase functions للاستخدام لاحقاً
-            this.firebaseFunctions = {
-                ref, set, get, push, remove, onValue, off
-            };
-
-            this.isInitialized = true;
-            this.setupNetworkMonitoring();
-            
-            console.log('✅ Firebase Service initialized successfully');
-            
-            // إرسال حدث التهيئة
-            this.dispatchEvent('firebaseInitialized', { success: true });
-            
-        } catch (error) {
-            console.error('❌ Firebase initialization failed:', error);
-            this.dispatchEvent('firebaseInitialized', { success: false, error: error.message });
-            throw error;
-        }
-    }
-
-    /**
-     * مراقبة حالة الشبكة
-     */
-    setupNetworkMonitoring() {
-        window.addEventListener('online', () => {
-            this.isOnline = true;
-            console.log('🌐 Firebase: Network connection restored');
-            this.dispatchEvent('networkStatusChanged', { status: 'online' });
-        });
-
-        window.addEventListener('offline', () => {
-            this.isOnline = false;
-            console.log('📡 Firebase: Network connection lost');
-            this.dispatchEvent('networkStatusChanged', { status: 'offline' });
-        });
-    }
-
-    /**
-     * قراءة جميع الأحداث
-     */
-    async readEvents() {
-        console.log('📥 Reading events from Firebase...');
-        
-        if (!this.isInitialized) {
-            throw new Error('Firebase not initialized');
-        }
-
-        if (!this.isOnline) {
-            throw new Error('No internet connection available');
-        }
-
-        try {
-            const { ref, get } = this.firebaseFunctions;
-            const eventsRef = ref(this.database, 'events');
-            const snapshot = await get(eventsRef);
-            
-            if (snapshot.exists()) {
-                const eventsData = snapshot.val();
-                
-                // تحويل البيانات إلى مصفوفة
-                const events = Object.keys(eventsData).map(key => ({
-                    id: key,
-                    ...eventsData[key]
-                }));
-
-                console.log(`✅ Successfully loaded ${events.length} events from Firebase`);
-                
-                const result = {
-                    events: events,
-                    totalEvents: events.length,
-                    lastUpdated: new Date().toISOString()
-                };
-
-                // إرسال حدث تحميل البيانات
-                this.dispatchEvent('eventsLoaded', result);
-                
-                return result;
-            } else {
-                console.log('📋 No events found in Firebase');
-                
-                const result = {
-                    events: [],
-                    totalEvents: 0,
-                    lastUpdated: new Date().toISOString()
-                };
-
-                this.dispatchEvent('eventsLoaded', result);
-                return result;
-            }
-            
-        } catch (error) {
-            console.error('❌ Error reading events from Firebase:', error);
-            this.dispatchEvent('eventsLoadError', { error: error.message });
-            throw new Error(`Failed to load events: ${error.message}`);
-        }
-    }
-
-    /**
-     * كتابة/تحديث جميع الأحداث
-     */
-    async writeEvents(eventsArray) {
-        console.log('📤 Writing events to Firebase...');
-        console.log(`📊 Events to save: ${eventsArray.length}`);
-        
-        if (!this.isInitialized) {
-            throw new Error('Firebase not initialized');
-        }
-
-        if (!this.isOnline) {
-            throw new Error('No internet connection available');
-        }
-
-        try {
-            const { ref, set } = this.firebaseFunctions;
-            
-            // تحويل المصفوفة إلى كائن بمعرفات فريدة
-            const eventsObject = {};
-            eventsArray.forEach(event => {
-                const eventId = event.id || this.generateEventId();
-                eventsObject[eventId] = {
-                    ...event,
-                    id: eventId,
-                    updatedAt: new Date().toISOString()
-                };
-            });
-
-            // حفظ البيانات في Firebase
-            const eventsRef = ref(this.database, 'events');
-            await set(eventsRef, eventsObject);
-
-            // حفظ metadata
-            const metadataRef = ref(this.database, 'metadata');
-            await set(metadataRef, {
-                lastUpdated: new Date().toISOString(),
-                totalEvents: eventsArray.length,
-                version: '1.0.0'
-            });
-
-            console.log(`✅ Successfully saved ${eventsArray.length} events to Firebase`);
-            
-            const result = {
-                totalEvents: eventsArray.length,
-                lastUpdated: new Date().toISOString(),
-                operation: 'update'
-            };
-
-            // إرسال حدث حفظ البيانات
-            this.dispatchEvent('eventsSaved', result);
-            
-            return result;
-
-        } catch (error) {
-            console.error('❌ Error writing events to Firebase:', error);
-            this.dispatchEvent('eventsSaveError', { error: error.message });
-            throw new Error(`Failed to save events: ${error.message}`);
-        }
-    }
-
-    /**
-     * إضافة حدث جديد
-     */
-    async addEvent(eventData) {
-        console.log('➕ Adding new event to Firebase...');
-        
-        if (!this.isInitialized) {
-            throw new Error('Firebase not initialized');
-        }
-
-        if (!this.isOnline) {
-            throw new Error('No internet connection available');
-        }
-
-        try {
-            const { ref, push, set } = this.firebaseFunctions;
-            
-            // إعداد بيانات الحدث
-            const newEvent = {
-                ...eventData,
-                id: this.generateEventId(),
-                createdAt: new Date().toISOString(),
-                updatedAt: new Date().toISOString()
-            };
-
-            // إضافة الحدث إلى Firebase
-            const eventsRef = ref(this.database, `events/${newEvent.id}`);
-            await set(eventsRef, newEvent);
-
-            // تحديث metadata
-            await this.updateMetadata();
-
-            console.log(`✅ Successfully added event: ${newEvent.title}`);
-            
-            const result = {
-                event: newEvent,
-                operation: 'add',
-                timestamp: new Date().toISOString()
-            };
-
-            // إرسال حدث إضافة الحدث
-            this.dispatchEvent('eventAdded', result);
-            
-            return result;
-
-        } catch (error) {
-            console.error('❌ Error adding event to Firebase:', error);
-            this.dispatchEvent('eventAddError', { error: error.message });
-            throw new Error(`Failed to add event: ${error.message}`);
-        }
-    }
-
-    /**
-     * تحديث حدث موجود
-     */
-    async updateEvent(eventId, eventData) {
-        console.log(`📝 Updating event ${eventId} in Firebase...`);
-        
-        if (!this.isInitialized) {
-            throw new Error('Firebase not initialized');
-        }
-
-        if (!this.isOnline) {
-            throw new Error('No internet connection available');
-        }
-
-        try {
-            const { ref, set } = this.firebaseFunctions;
-            
-            // تحديث بيانات الحدث
-            const updatedEvent = {
-                ...eventData,
-                id: eventId,
-                updatedAt: new Date().toISOString()
-            };
-
-            // تحديث الحدث في Firebase
-            const eventRef = ref(this.database, `events/${eventId}`);
-            await set(eventRef, updatedEvent);
-
-            console.log(`✅ Successfully updated event: ${eventId}`);
-            
-            const result = {
-                event: updatedEvent,
-                operation: 'update',
-                timestamp: new Date().toISOString()
-            };
-
-            // إرسال حدث تحديث الحدث
-            this.dispatchEvent('eventUpdated', result);
-            
-            return result;
-
-        } catch (error) {
-            console.error('❌ Error updating event in Firebase:', error);
-            this.dispatchEvent('eventUpdateError', { error: error.message });
-            throw new Error(`Failed to update event: ${error.message}`);
-        }
-    }
-
-    /**
-     * حذف حدث
-     */
-    async deleteEvent(eventId) {
-        console.log(`🗑️ Deleting event ${eventId} from Firebase...`);
-        
-        if (!this.isInitialized) {
-            throw new Error('Firebase not initialized');
-        }
-
-        if (!this.isOnline) {
-            throw new Error('No internet connection available');
-        }
-
-        try {
-            const { ref, remove } = this.firebaseFunctions;
-            
-            // حذف الحدث من Firebase
-            const eventRef = ref(this.database, `events/${eventId}`);
-            await remove(eventRef);
-
-            // تحديث metadata
-            await this.updateMetadata();
-
-            console.log(`✅ Successfully deleted event: ${eventId}`);
-            
-            const result = {
-                eventId: eventId,
-                operation: 'delete',
-                timestamp: new Date().toISOString()
-            };
-
-            // إرسال حدث حذف الحدث
-            this.dispatchEvent('eventDeleted', result);
-            
-            return result;
-
-        } catch (error) {
-            console.error('❌ Error deleting event from Firebase:', error);
-            this.dispatchEvent('eventDeleteError', { error: error.message });
-            throw new Error(`Failed to delete event: ${error.message}`);
-        }
-    }
-
-    /**
-     * الاستماع للتغييرات في الوقت الفعلي
-     */
-    subscribeToEvents(callback) {
-        console.log('👂 Subscribing to real-time events updates...');
-        
-        if (!this.isInitialized) {
-            console.warn('⚠️ Firebase not initialized, cannot subscribe');
-            return null;
-        }
-
-        try {
-            const { ref, onValue } = this.firebaseFunctions;
-            const eventsRef = ref(this.database, 'events');
-            
-            const unsubscribe = onValue(eventsRef, (snapshot) => {
-                if (snapshot.exists()) {
-                    const eventsData = snapshot.val();
-                    const events = Object.keys(eventsData).map(key => ({
-                        id: key,
-                        ...eventsData[key]
-                    }));
-
-                    console.log(`🔄 Real-time update: ${events.length} events`);
-                    
-                    if (callback) {
-                        callback(events);
-                    }
-
-                    // إرسال حدث التحديث في الوقت الفعلي
-                    this.dispatchEvent('eventsRealTimeUpdate', { events });
-                } else {
-                    console.log('📋 Real-time update: No events');
-                    if (callback) {
-                        callback([]);
-                    }
-                    this.dispatchEvent('eventsRealTimeUpdate', { events: [] });
-                }
-            });
-
-            console.log('✅ Successfully subscribed to real-time updates');
-            return unsubscribe;
-
-        } catch (error) {
-            console.error('❌ Error subscribing to events:', error);
-            return null;
-        }
-    }
-
-    /**
-     * إلغاء الاشتراك في التحديثات
-     */
-    unsubscribeFromEvents(unsubscribeFunction) {
-        if (unsubscribeFunction) {
-            unsubscribeFunction();
-            console.log('🔇 Unsubscribed from real-time updates');
-        }
-    }
-
-    /**
-     * تحديث metadata
-     */
-    async updateMetadata() {
-        try {
-            const { ref, get, set } = this.firebaseFunctions;
-            
-            // قراءة عدد الأحداث الحالي
-            const eventsRef = ref(this.database, 'events');
-            const snapshot = await get(eventsRef);
-            const totalEvents = snapshot.exists() ? Object.keys(snapshot.val()).length : 0;
-
-            // تحديث metadata
-            const metadataRef = ref(this.database, 'metadata');
-            await set(metadataRef, {
-                lastUpdated: new Date().toISOString(),
-                totalEvents: totalEvents,
-                version: '1.0.0'
-            });
-
-            console.log(`📊 Metadata updated: ${totalEvents} events`);
-
-        } catch (error) {
-            console.warn('⚠️ Failed to update metadata:', error);
-        }
-    }
-
-    /**
-     * اختبار الاتصال
-     */
-    async testConnection() {
-        console.log('🔍 Testing Firebase connection...');
-        
-        try {
-            if (!this.isInitialized) {
-                throw new Error('Firebase not initialized');
-            }
-
-            // اختبار قراءة بسيطة
-            const data = await this.readEvents();
-            
-            const result = {
-                success: true,
-                message: 'Firebase connection successful',
-                eventsCount: data.totalEvents || 0,
-                timestamp: new Date().toISOString(),
-                service: 'Firebase Realtime Database'
-            };
-
-            console.log('✅ Firebase connection test successful');
-            this.dispatchEvent('connectionTested', result);
-            
-            return result;
-
-        } catch (error) {
-            console.error('❌ Firebase connection test failed:', error);
-            
-            const result = {
-                success: false,
-                message: error.message,
-                timestamp: new Date().toISOString(),
-                service: 'Firebase Realtime Database'
-            };
-
-            this.dispatchEvent('connectionTested', result);
-            return result;
-        }
-    }
-
-    /**
-     * توليد معرف حدث فريد
-     */
-    generateEventId() {
-        return `event_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-    }
-
-    /**
-     * إرسال الأحداث المخصصة
-     */
-    dispatchEvent(eventType, data) {
-        window.dispatchEvent(new CustomEvent(`firebase${eventType}`, {
-            detail: { ...data, timestamp: new Date().toISOString() }
+    try {
+      const eventsRef = ref(this.database, 'events');
+      const snapshot = await get(eventsRef);
+      
+      if (snapshot.exists()) {
+        const data = snapshot.val();
+        // تحويل الكائن إلى مصفوفة
+        const events = Object.keys(data).map(key => ({
+          id: key,
+          ...data[key]
         }));
-    }
-
-    /**
-     * الحصول على معلومات Firebase
-     */
-    getFirebaseInfo() {
+        
+        console.log(`✅ تم تحميل ${events.length} حدث من Firebase`);
         return {
-            isInitialized: this.isInitialized,
-            isOnline: this.isOnline,
-            databaseURL: 'https://tamouz-webapp-default-rtdb.firebaseio.com',
-            projectId: 'tamouz-webapp',
-            lastCheck: new Date().toISOString()
+          events: events,
+          totalEvents: events.length,
+          lastUpdated: new Date().toISOString()
         };
-    }
-
-    /**
-     * التحقق من توفر Firebase
-     */
-    isAvailable() {
-        return this.isInitialized && this.isOnline;
-    }
-
-    /**
-     * الحصول على حالة الاتصال
-     */
-    getConnectionStatus() {
+      } else {
+        console.log('📋 لا توجد أحداث في Firebase');
         return {
-            isOnline: this.isOnline,
-            isInitialized: this.isInitialized,
-            isConfigured: this.isInitialized,
-            service: 'Firebase',
-            lastUpdate: new Date().toISOString()
+          events: [],
+          totalEvents: 0,
+          lastUpdated: new Date().toISOString()
         };
+      }
+    } catch (error) {
+      console.error('❌ خطأ في قراءة الأحداث:', error);
+      throw new Error(`فشل في تحميل الأحداث: ${error.message}`);
     }
+  }
+
+  async writeEvents(events) {
+    if (!this.isAuthenticated) {
+      throw new Error('المستخدم غير مصادق. يرجى المحاولة مرة أخرى.');
+    }
+    
+    if (!this.isConnected) {
+      throw new Error('غير متصل بـ Firebase');
+    }
+
+    try {
+      // تحويل المصفوفة إلى كائن
+      const eventsObject = {};
+      events.forEach(event => {
+        const eventId = event.id || this.generateEventId();
+        eventsObject[eventId] = {
+          ...event,
+          id: eventId,
+          updatedAt: new Date().toISOString()
+        };
+      });
+
+      const eventsRef = ref(this.database, 'events');
+      await set(eventsRef, eventsObject);
+
+      // تحديث metadata
+      const metadataRef = ref(this.database, 'metadata');
+      await set(metadataRef, {
+        lastUpdated: new Date().toISOString(),
+        totalEvents: events.length,
+        version: '1.0.0'
+      });
+
+      console.log(`✅ تم حفظ ${events.length} حدث في Firebase`);
+      return {
+        totalEvents: events.length,
+        lastUpdated: new Date().toISOString(),
+        operation: 'update'
+      };
+    } catch (error) {
+      console.error('❌ خطأ في كتابة الأحداث:', error);
+      throw new Error(`فشل في حفظ الأحداث: ${error.message}`);
+    }
+  }
+
+  async addEvent(event) {
+    if (!this.isAuthenticated) {
+      throw new Error('المستخدم غير مصادق. يرجى المحاولة مرة أخرى.');
+    }
+    
+    if (!this.isConnected) {
+      throw new Error('غير متصل بـ Firebase');
+    }
+
+    try {
+      const eventId = this.generateEventId();
+      const newEvent = {
+        ...event,
+        id: eventId,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      };
+
+      const eventRef = ref(this.database, `events/${eventId}`);
+      await set(eventRef, newEvent);
+
+      console.log(`✅ تم إضافة الحدث: ${newEvent.title}`);
+      return {
+        event: newEvent,
+        operation: 'add',
+        timestamp: new Date().toISOString()
+      };
+    } catch (error) {
+      console.error('❌ خطأ في إضافة الحدث:', error);
+      throw new Error(`فشل في إضافة الحدث: ${error.message}`);
+    }
+  }
+
+  async updateEvent(eventId, updates) {
+    if (!this.isAuthenticated) {
+      throw new Error('المستخدم غير مصادق. يرجى المحاولة مرة أخرى.');
+    }
+    
+    if (!this.isConnected) {
+      throw new Error('غير متصل بـ Firebase');
+    }
+
+    try {
+      const updatedEvent = {
+        ...updates,
+        id: eventId,
+        updatedAt: new Date().toISOString()
+      };
+
+      const eventRef = ref(this.database, `events/${eventId}`);
+      await set(eventRef, updatedEvent);
+
+      console.log(`✅ تم تحديث الحدث: ${eventId}`);
+      return {
+        event: updatedEvent,
+        operation: 'update',
+        timestamp: new Date().toISOString()
+      };
+    } catch (error) {
+      console.error('❌ خطأ في تحديث الحدث:', error);
+      throw new Error(`فشل في تحديث الحدث: ${error.message}`);
+    }
+  }
+
+  async deleteEvent(eventId) {
+    if (!this.isAuthenticated) {
+      throw new Error('المستخدم غير مصادق. يرجى المحاولة مرة أخرى.');
+    }
+    
+    if (!this.isConnected) {
+      throw new Error('غير متصل بـ Firebase');
+    }
+
+    try {
+      const eventRef = ref(this.database, `events/${eventId}`);
+      await remove(eventRef);
+
+      console.log(`✅ تم حذف الحدث: ${eventId}`);
+      return {
+        eventId: eventId,
+        operation: 'delete',
+        timestamp: new Date().toISOString()
+      };
+    } catch (error) {
+      console.error('❌ خطأ في حذف الحدث:', error);
+      throw new Error(`فشل في حذف الحدث: ${error.message}`);
+    }
+  }
+
+  async testConnection() {
+    try {
+      const testRef = ref(this.database, '.info/serverTimeOffset');
+      const snapshot = await get(testRef);
+      
+      return {
+        success: true,
+        message: 'الاتصال بـ Firebase ناجح',
+        timestamp: new Date().toISOString(),
+        serverTimeOffset: snapshot.val()
+      };
+    } catch (error) {
+      return {
+        success: false,
+        message: error.message,
+        timestamp: new Date().toISOString()
+      };
+    }
+  }
+
+  getConnectionStatus() {
+    return {
+      connected: this.isConnected,
+      authenticated: this.isAuthenticated,
+      provider: 'firebase'
+    };
+  }
+
+  generateEventId() {
+    return `event_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+  }
+
+  enableRealTimeUpdates() {
+    if (!this.isAuthenticated) {
+      console.warn('⚠️ لا يمكن تفعيل التحديثات في الوقت الفعلي: المستخدم غير مصادق');
+      return;
+    }
+    
+    if (this.listeners.has('events')) {
+      console.log('🔄 التحديثات في الوقت الفعلي مفعلة بالفعل');
+      return;
+    }
+
+    const eventsRef = ref(this.database, 'events');
+    const unsubscribe = onValue(eventsRef, (snapshot) => {
+      if (snapshot.exists()) {
+        const data = snapshot.val();
+        const events = Object.keys(data).map(key => ({
+          id: key,
+          ...data[key]
+        }));
+        
+        console.log(`🔄 تحديث في الوقت الفعلي: ${events.length} حدث`);
+        
+        // إرسال حدث مخصص
+        window.dispatchEvent(new CustomEvent('firebaseEventsUpdated', {
+          detail: { events, timestamp: new Date().toISOString() }
+        }));
+      }
+    });
+
+    this.listeners.set('events', unsubscribe);
+    console.log('✅ تم تفعيل التحديثات في الوقت الفعلي');
+  }
+
+  disableRealTimeUpdates() {
+    const unsubscribe = this.listeners.get('events');
+    if (unsubscribe) {
+      unsubscribe();
+      this.listeners.delete('events');
+      console.log('🔇 تم إيقاف التحديثات في الوقت الفعلي');
+    }
+  }
 }
 
-// ===========================================
-// SINGLETON PATTERN
-// ===========================================
+// إنشاء مثيل واحد من الخدمة
+window.firebaseService = new FirebaseService();
 
-let firebaseServiceInstance = null;
-
-/**
- * Get Firebase Service Instance
- * @returns {FirebaseService} Firebase service instance
- */
-function getFirebaseService() {
-    if (!firebaseServiceInstance) {
-        firebaseServiceInstance = new FirebaseService();
-    }
-    return firebaseServiceInstance;
-}
-
-// ===========================================
-// INITIALIZATION
-// ===========================================
-
-document.addEventListener('DOMContentLoaded', () => {
-    console.log('🔥 Initializing Firebase Service...');
-    window.firebaseService = getFirebaseService();
-});
-
-// ===========================================
-// GLOBAL EXPORTS
-// ===========================================
-
+// تصدير للاستخدام في ملفات أخرى
 window.FirebaseService = FirebaseService;
-window.getFirebaseService = getFirebaseService;
 
-// Export for use in other modules
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { FirebaseService, getFirebaseService };
-}
-
-console.log('🔥 Firebase Service module loaded successfully');
+console.log('🔥 تم تحميل خدمة Firebase بنجاح');

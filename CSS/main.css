@@ -1535,6 +1535,98 @@ Loading animation
     }
 }
 
+/* Firebase connection status */
+.firebase-status {
+    position: fixed;
+    top: var(--spacing-4);
+    left: var(--spacing-4);
+    padding: var(--spacing-2) var(--spacing-3);
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-xs);
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    box-shadow: var(--shadow-sm);
+    z-index: var(--z-fixed);
+}
+
+.firebase-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--green-500);
+}
+
+.firebase-indicator.disconnected {
+    background: var(--red-500);
+}
+
+.firebase-indicator.demo {
+    background: var(--amber-500);
+}
+
+/* Real-time update indicator */
+.realtime-indicator {
+    position: fixed;
+    top: var(--spacing-4);
+    right: var(--spacing-4);
+    padding: var(--spacing-1) var(--spacing-2);
+    background: var(--green-600);
+    color: white;
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    z-index: var(--z-fixed);
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all var(--transition-fast);
+}
+
+.realtime-indicator.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Connection status indicator */
+.connection-status {
+    position: fixed;
+    bottom: var(--spacing-4);
+    left: var(--spacing-4);
+    padding: var(--spacing-2) var(--spacing-3);
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-xs);
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    box-shadow: var(--shadow-sm);
+    z-index: var(--z-fixed);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all var(--transition-fast);
+}
+
+.connection-status.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.connection-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--green-500);
+}
+
+.connection-indicator.offline {
+    background: var(--red-500);
+}
+
 /* Mobile back button */
 .mobile-back-btn {
     background: none;
@@ -1675,6 +1767,18 @@ Mobile-first responsive breakpoints
         --spacing-8: 1.5rem;
     }
 
+    .firebase-status {
+        top: calc(var(--mobile-header-height) + var(--spacing-2));
+        left: var(--spacing-2);
+        font-size: 10px;
+        padding: var(--spacing-1) var(--spacing-2);
+    }
+    
+    .realtime-indicator {
+        top: calc(var(--mobile-header-height) + var(--spacing-2));
+        right: var(--spacing-2);
+    }
+    
     .main-content {
         padding: var(--spacing-4);
         padding-top: calc(var(--mobile-header-height) + var(--spacing-4));

@@ -67,7 +67,75 @@ class ScoutPluseApp {
         // Set up internationalization
         this.setupTranslations();
         
+        // Setup Firebase status indicator
+        this.setupFirebaseStatus();
+        
         console.log('✅ ScoutPluse Application initialized successfully');
+    }
+
+    /**
+     * Setup Firebase Status Indicator
+     */
+    setupFirebaseStatus() {
+        // Create Firebase status indicator
+        const statusIndicator = document.createElement('div');
+        statusIndicator.className = 'firebase-status';
+        statusIndicator.innerHTML = `
+            <div class="firebase-indicator"></div>
+            <span>Connecting...</span>
+        `;
+        document.body.appendChild(statusIndicator);
+        
+        // Listen for Firebase events
+        window.addEventListener('firebaseInitialized', (e) => {
+            const indicator = statusIndicator.querySelector('.firebase-indicator');
+            const text = statusIndicator.querySelector('span');
+            
+            if (e.detail.success) {
+                indicator.classList.remove('disconnected', 'demo');
+                text.textContent = 'Firebase Connected';
+            } else {
+                indicator.classList.add('disconnected');
+                text.textContent = 'Firebase Failed';
+            }
+        });
+        
+        // Listen for data manager events
+        window.addEventListener('dataManagerproviderSwitched', (e) => {
+            const indicator = statusIndicator.querySelector('.firebase-indicator');
+            const text = statusIndicator.querySelector('span');
+            
+            switch (e.detail.newProvider) {
+                case 'firebase':
+                    indicator.className = 'firebase-indicator';
+                    text.textContent = 'Firebase';
+                    break;
+                case 'api':
+                    indicator.className = 'firebase-indicator';
+                    text.textContent = 'PHP API';
+                    break;
+                case 'demo':
+                    indicator.className = 'firebase-indicator demo';
+                    text.textContent = 'Demo Data';
+                    break;
+            }
+        });
+        
+        // Create real-time update indicator
+        const realtimeIndicator = document.createElement('div');
+        realtimeIndicator.className = 'realtime-indicator';
+        realtimeIndicator.textContent = 'Updated';
+        document.body.appendChild(realtimeIndicator);
+        
+        // Listen for real-time updates
+        window.addEventListener('dataManagereventsRealTimeUpdate', () => {
+            realtimeIndicator.classList.add('show');
+            setTimeout(() => {
+                realtimeIndicator.classList.remove('show');
+            }, 2000);
+        });
+        
+        console.log('🔥 Firebase status indicators setup complete');
     }
 
     /**

@@ -92,7 +92,7 @@ class DashboardService {
     /**
      * Load Recent Events
      */
-    loadRecentEvents() {
+    async loadRecentEvents() {
         const recentEventsContainer = document.getElementById('recentEvents');
         if (!recentEventsContainer) return;
 
@@ -520,7 +520,7 @@ class DashboardService {
             stat.addEventListener('click', (e) => {
                 e.stopPropagation();
                 const action = stat.dataset.action;
-     * Falls back to demo data if file is not available or if using Firebase.
+                if (action === 'show-members') {
                     this.showTroopMembers();
                 }
             });

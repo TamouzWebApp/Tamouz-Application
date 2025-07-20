@@ -195,7 +195,15 @@ class EventsService {
         try {
             console.log('💾 حفظ الأحداث...');
             
+            // التحقق من حالة الاتصال والمصادقة
             const dataManager = window.getDataManagerService();
+            if (dataManager.currentProvider === 'firebase') {
+                const status = dataManager.firebaseService.getConnectionStatus();
+                if (!status.connected || !status.authenticated) {
+                    throw new Error('غير متصل أو غير مصادق. يرجى إعادة تحميل الصفحة والمحاولة مرة أخرى.');
+                }
+            }
+            
             const result = await dataManager.writeEvents(this.events);
             this.lastSync = new Date().toISOString();
             

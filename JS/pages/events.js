@@ -62,14 +62,22 @@ class EventsService {
         });
 
         // Listen for API events
-        window.addEventListener('apiEventsLoaded', (e) => {
+        window.addEventListener('dataManagereventsLoaded', (e) => {
             this.events = e.detail.events || [];
             this.renderEventsPage();
         });
 
-        window.addEventListener('apiEventsSaved', (e) => {
+        window.addEventListener('dataManagereventsSaved', (e) => {
             this.lastSync = new Date().toISOString();
             this.showNotification('تم حفظ الأحداث بنجاح!', 'success');
+        });
+
+        // Listen for Firebase real-time updates
+        window.addEventListener('dataManagereventsRealTimeUpdate', (e) => {
+            console.log('🔄 Real-time events update received');
+            this.events = e.detail.events || [];
+            this.renderEventsPage();
+            this.showNotification('تم تحديث الأحداث في الوقت الفعلي!', 'info');
         });
 
         // Setup UI event listeners
@@ -125,27 +133,31 @@ class EventsService {
         try {
             console.log('📥 تحميل الأحداث...');
             
-            // محاولة تحميل من API أولاً
-            if (window.APIService?.getInstance) {
+            // استخدام Data Manager للتحميل
+            if (window.DataManagerService?.getInstance || window.getDataManagerService) {
                 try {
-                    const apiService = window.APIService.getInstance();
-                    const apiData = await apiService.readEvents();
-                    this.events = apiData.events || [];
+                    const dataManager = window.getDataManagerService();
+                    const data = await dataManager.readEvents();
+                    this.events = data.events || [];
                     this.lastSync = new Date().toISOString();
                     
-                    console.log(`✅ تم تحميل ${this.events.length} حدث من API`);
-                    this.showNotification(`تم تحميل ${this.events.length} حدث من الخادم`, 'success');
+                    console.log(`✅ تم تحميل ${this.events.length} حدث من ${data.source || 'قاعدة البيانات'}`);
+                    
+                    const sourceMessage = data.source === 'firebase' ? 'Firebase' : 
+                                        data.source === 'api' ? 'الخادم' : 
+                                        'البيانات التجريبية';
+                    this.showNotification(`تم تحميل ${this.events.length} حدث من ${sourceMessage}`, 'success');
                     
                 } catch (apiError) {
-                    console.warn('⚠️ فشل API، محاولة التحميل من JSON:', apiError.message);
+                    console.warn('⚠️ فشل تحميل البيانات:', apiError.message);
                     throw apiError;
                 }
             } else {
-                throw new Error('API service غير متوفر');
+                throw new Error('Data Manager غير متوفر');
             }
             
         } catch (error) {
-            console.warn('⚠️ فشل API، محاولة التحميل من JSON:', error.message);
+            console.warn('⚠️ فشل تحميل البيانات، محاولة التحميل من JSON:', error.message);
             
             try {
                 // محاولة تحميل من ملف JSON
@@ -175,16 +187,16 @@ class EventsService {
      * حفظ الأحداث
      */
     async saveEvents() {
-        if (!window.APIService?.getInstance) {
-            console.warn('⚠️ خدمة API غير متوفرة');
+        if (!window.getDataManagerService) {
+            console.warn('⚠️ Data Manager غير متوفر');
             return false;
         }
 
         try {
             console.log('💾 حفظ الأحداث...');
             
-            const apiService = window.APIService.getInstance();
-            const result = await apiService.writeEvents(this.events);
+            const dataManager = window.getDataManagerService();
+            const result = await dataManager.writeEvents(this.events);
             this.lastSync = new Date().toISOString();
             
             console.log('✅ تم حفظ الأحداث بنجاح');
@@ -220,7 +232,7 @@ class EventsService {
             // إضافة محلياً
             this.events.unshift(newEvent);
             
-            // محاولة الحفظ في API
+            // محاولة الحفظ في قاعدة البيانات
             const saved = await this.saveEvents();
             
             if (saved) {

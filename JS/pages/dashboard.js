@@ -55,7 +55,13 @@ class DashboardService {
         });
 
         // Listen for events data changes
-        window.addEventListener('apiEventsLoaded', (e) => {
+        window.addEventListener('dataManagereventsLoaded', (e) => {
+            this.events = e.detail.events || [];
+            this.loadRecentEvents();
+        });
+
+        // Listen for real-time updates
+        window.addEventListener('dataManagereventsRealTimeUpdate', (e) => {
             this.events = e.detail.events || [];
             this.loadRecentEvents();
         });
@@ -92,10 +98,16 @@ class DashboardService {
 
         console.log('📅 Loading recent events...');
 
-        // Get events from EventsService if available
-        if (window.EventsService?.getInstance) {
-            const eventsService = window.EventsService.getInstance();
-            this.events = eventsService.getEvents() || [];
+        // Get events from Data Manager if available
+        if (window.getDataManagerService) {
+            try {
+                const dataManager = window.getDataManagerService();
+                const data = await dataManager.readEvents();
+                this.events = data.events || [];
+            } catch (error) {
+                console.warn('⚠️ Failed to load events from data manager:', error);
+                this.events = window.DEMO_EVENTS || [];
+            }
         } else {
             // Fallback to demo data
             this.events = window.DEMO_EVENTS || [];
@@ -508,7 +520,7 @@ class DashboardService {
             stat.addEventListener('click', (e) => {
                 e.stopPropagation();
                 const action = stat.dataset.action;
-                if (action === 'show-members') {
+     * Falls back to demo data if file is not available or if using Firebase.
                     this.showTroopMembers();
                 }
             });
@@ -520,6 +532,14 @@ class DashboardService {
      */
     async showTroopMembers() {
         console.log('👥 Loading troop members...');
+        
+        // Check if using Firebase - for now, use demo data for users
+        // In future versions, users could also be stored in Firebase
+        if (window.getDatabaseType() === 'firebase') {
+            console.log('🔥 Using demo users with Firebase (users not yet migrated)');
+            this.users = window.DEMO_USERS || {};
+            return this.users;
+        }
         
         try {
             // Load users data

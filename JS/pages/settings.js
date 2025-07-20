@@ -336,11 +336,32 @@ class SettingsService {
                 
                 <div class="settings-item">
                     <div class="settings-item-info">
-                        <h4>API Connection Test</h4>
-                        <p>Test the connection to the backend API</p>
+                        <h4>Database Connection Test</h4>
+                        <p>Test the connection to Firebase or API backend</p>
                     </div>
-                    <button class="btn btn-outline btn-sm" onclick="window.SettingsService.getInstance().testAPIConnection()">
-                        Test API
+                    <button class="btn btn-outline btn-sm" onclick="window.SettingsService.getInstance().testDatabaseConnection()">
+                        Test Connection
+                    </button>
+                </div>
+                
+                <div class="settings-item">
+                    <div class="settings-item-info">
+                        <h4>Database Provider</h4>
+                        <p>Switch between Firebase and PHP API</p>
+                    </div>
+                    <select id="databaseProviderSelect" class="settings-select">
+                        <option value="firebase">Firebase (Recommended)</option>
+                        <option value="api">PHP API</option>
+                        <option value="demo">Demo Data</option>
+                    </select>
+                </div>
+                
+                <div class="settings-item">
+                    <div class="settings-item-info">
+                        <h4>Real-time Updates</h4>
+                        <p>Enable real-time synchronization with Firebase</p>
+                    </div>
+                    <div class="toggle-switch ${this.settings.firebase?.realTimeUpdates !== false ? 'active' : ''}" data-setting="firebase.realTimeUpdates"></div>
                     </button>
                 </div>
             </div>
@@ -371,6 +392,13 @@ class SettingsService {
         const emailDigestSelect = document.getElementById('emailDigestSelect');
         if (emailDigestSelect) {
             emailDigestSelect.addEventListener('change', this.handleEmailDigestChange.bind(this));
+        }
+
+        const databaseProviderSelect = document.getElementById('databaseProviderSelect');
+        if (databaseProviderSelect) {
+            // Set current value
+            databaseProviderSelect.value = window.getDatabaseType() || 'firebase';
+            databaseProviderSelect.addEventListener('change', this.handleDatabaseProviderChange.bind(this));
         }
     }
 
@@ -501,28 +529,49 @@ class SettingsService {
     }
 
     /**
-     * Test API Connection
+     * Handle Database Provider Change
      */
-    async testAPIConnection() {
-        console.log('🔍 Testing API connection...');
+    handleDatabaseProviderChange(e) {
+        const provider = e.target.value;
+        console.log(`🔄 Database provider changed to: ${provider}`);
         
-        if (!window.APIService?.getInstance) {
-            this.showNotification('API Service not available', 'error');
+        if (confirm(`Are you sure you want to switch to ${provider}? This will reload the application.`)) {
+            window.setDatabaseType(provider);
+            this.showNotification(`Database provider switched to ${provider}. Reloading...`, 'info');
+            
+            // Reload after short delay
+            setTimeout(() => {
+                window.location.reload();
+            }, 2000);
+        } else {
+            // Reset select to current value
+            e.target.value = window.getDatabaseType();
+        }
+    }
+
+    /**
+     * Test Database Connection
+     */
+    async testDatabaseConnection() {
+        console.log('🔍 Testing database connection...');
+        
+        if (!window.getDataManagerService) {
+            this.showNotification('Data Manager not available', 'error');
             return;
         }
 
         try {
-            const apiService = window.APIService.getInstance();
-            const result = await apiService.testConnection();
+            const dataManager = window.getDataManagerService();
+            const result = await dataManager.testConnection();
             
             if (result.success) {
-                this.showNotification(`API connection successful! Found ${result.eventsCount} events.`, 'success');
+                this.showNotification(`${result.service} connection successful! Found ${result.eventsCount} events.`, 'success');
             } else {
-                this.showNotification(`API connection failed: ${result.message}`, 'error');
+                this.showNotification(`Database connection failed: ${result.message}`, 'error');
             }
         } catch (error) {
-            console.error('❌ API test failed:', error);
-            this.showNotification(`API test failed: ${error.message}`, 'error');
+            console.error('❌ Database test failed:', error);
+            this.showNotification(`Database test failed: ${error.message}`, 'error');
         }
     }
 

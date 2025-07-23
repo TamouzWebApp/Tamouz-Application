@@ -1,6 +1,6 @@
 # 🏕️ ScoutPluse - منصة إدارة الكشافة
 
-> منصة ويب حديثة ومتجاوبة لإدارة الفرق الكشفية والأحداث والأعضاء
+> منصة ويب محلية حديثة ومتجاوبة لإدارة الفرق الكشفية والأحداث والأعضاء
 
 [![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/your-repo/scoutpluse)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
@@ -49,7 +49,7 @@
 - **تتبع الحضور**: أشرطة تقدم بصرية وعدد الأعضاء
 - **تفاصيل الأحداث**: معلومات شاملة مع الصور
 - **الانضمام/المغادرة**: إدارة تفاعلية للمشاركة
-- **تكامل PHP API**: حفظ البيانات على الخادم
+- **تخزين محلي**: حفظ البيانات في المتصفح باستخدام localStorage
 
 ### 📚 مركز المعلومات التعليمي
 - **محتوى تعليمي**: معرفة ومصادر كشفية
@@ -191,61 +191,32 @@ php -S localhost:8000
 ### 🌐 النشر على 000webhost
 
 #### خطوة 1: إنشاء الموقع
-1. 🌐 اذهب إلى [000webhost.com](https://www.000webhost.com)
-2. 📝 سجل حساب جديد
-3. ➕ اضغط "Create Website"
-4. 🏷️ اختر اسم النطاق الفرعي (مثل: `scoutplus`)
+1. 🌐 اذهب إلى أي خدمة استضافة ثابتة
+2. 📝 ارفع ملفات HTML, CSS, JS
+3. 🏷️ لا حاجة لدعم PHP أو قواعد البيانات
 
 #### خطوة 2: رفع الملفات
 ```
-public_html/
+موقعك/
 ├── 📄 index.html              # صفحة التحويل
-├── 📄 read.php               # API قراءة
-├── 📄 write.php              # API كتابة
-├── 📄 data.json              # قاعدة البيانات
-├── 📄 setup.php              # الإعداد
-├── 📄 test-connection.php    # اختبار الاتصال
-├── 📄 .htaccess              # إعدادات الخادم
 ├── 📁 HTML/                  # صفحات التطبيق
 ├── 📁 CSS/                   # ملفات التصميم
-├── 📁 JS/                    # ملفات JavaScript
-└── 📁 backups/               # النسخ الاحتياطية (فارغ)
+└── 📁 JS/                    # ملفات JavaScript
 ```
 
-#### خطوة 3: ضبط الصلاحيات
-```bash
-# الملفات (.php, .json, .html, .css, .js)
-chmod 644
-
-# المجلدات (HTML/, CSS/, JS/, backups/)
-chmod 755
+#### خطوة 3: اختبار التطبيق
 ```
-
-#### خطوة 4: تحديث الإعدادات
-```javascript
-// في JS/config.js
-window.API_BASE_URL = 'https://yoursite.000webhostapp.com';
-```
-
-#### خطوة 5: تشغيل الإعداد
-```
-🔗 https://yoursite.000webhostapp.com/setup.php
-✅ تأكد من ظهور جميع الاختبارات بنجاح
-```
-
-#### خطوة 6: اختبار التطبيق
-```
-🔗 https://yoursite.000webhostapp.com/
-🔗 https://yoursite.000webhostapp.com/HTML/index.html
+🔗 https://yoursite.com/
+🔗 https://yoursite.com/HTML/index.html
 ```
 
 ### 🚀 النشر على خوادم أخرى
 
 #### Netlify
 ```bash
-# 1. ارفع مجلد HTML/ كموقع ثابت
-# 2. لا حاجة لملفات PHP
-# 3. سيعمل بالبيانات التجريبية فقط
+# 1. ارفع المشروع كاملاً
+# 2. اضبط build directory على HTML/
+# 3. سيعمل بالتخزين المحلي
 ```
 
 #### Vercel
@@ -260,6 +231,7 @@ window.API_BASE_URL = 'https://yoursite.000webhostapp.com';
 # 1. ارفع المشروع إلى GitHub
 # 2. فعل GitHub Pages
 # 3. اضبط المجلد على HTML/
+# 4. سيعمل بالتخزين المحلي تلقائياً
 ```
 
 ---
@@ -270,7 +242,7 @@ window.API_BASE_URL = 'https://yoursite.000webhostapp.com';
 
 ```javascript
 // 🌐 إعداد الـ Base URL للـ API
-window.API_BASE_URL = ''; // فارغ = نفس النطاق
+// لا حاجة لـ API - النظام محلي بالكامل
 
 // ⚙️ إعدادات التطبيق
 window.APP_CONFIG = {
@@ -280,9 +252,9 @@ window.APP_CONFIG = {
     
     // إعدادات الـ API
     api: {
-        timeout: 10000,           // 10 ثواني
-        retryAttempts: 3,         // 3 محاولات
-        securityToken: 'ScoutPlus(WebApp)'
+        eventsFile: '../JS/events.json',  // ملف الأحداث
+        usersFile: '../HTML/users.json',  // ملف المستخدمين
+        useLocalStorage: true             // استخدام localStorage
     },
     
     // إعدادات الواجهة
@@ -300,28 +272,11 @@ window.APP_CONFIG = {
 };
 ```
 
-### 🔄 تغيير الـ Base URL للبيئات المختلفة
-
-```javascript
-// 🏠 للتطوير المحلي
-window.API_BASE_URL = '';
-
-// 🌐 للنشر على 000webhost
-window.API_BASE_URL = 'https://scoutplus.000webhostapp.com';
-
-// 🏢 للنشر على خادم مخصص
-window.API_BASE_URL = 'https://scouts.yourorganization.com';
-
-// ☁️ للنشر على خدمة سحابية
-window.API_BASE_URL = 'https://api.scoutplus.app';
-```
-
-### 🔐 إعدادات الأمان
-
-```php
-// في ملفات PHP
-$SECURITY_TOKEN = 'ScoutPlus(WebApp)'; // يجب أن يطابق JavaScript
-```
+### 💾 التخزين المحلي
+- 📁 **ملف الأحداث**: `JS/events.json` (للبيانات الأولية)
+- 💾 **localStorage**: لحفظ التغييرات والإضافات
+- 🔄 **مزامنة التبويبات**: تحديث تلقائي بين التبويبات
+- 📤 **تصدير البيانات**: تحميل البيانات كملف JSON
 
 ---
 
@@ -548,33 +503,21 @@ await eventsService.joinEvent(eventId);
 ### 🔄 تكامل PHP API
 
 #### قراءة البيانات
-```php
-// read.php
-GET /read.php
-Response: {
-    "success": true,
-    "data": {
-        "events": [...],
-        "totalEvents": 10
-    }
-}
+```javascript
+// قراءة من localStorage
+const events = localStorageService.getEvents();
 ```
 
 #### كتابة البيانات
-```php
-// write.php
-POST /write.php
-Body: {
-    "token": "ScoutPlus(WebApp)",
-    "operation": "add|update|delete",
-    "data": {...}
-}
+```javascript
+// حفظ في localStorage
+localStorageService.saveEvents(events);
 ```
 
-#### النسخ الاحتياطية التلقائية
-- 📁 نسخ احتياطية قبل كل تعديل
-- 🗂️ الاحتفاظ بـ 10 نسخ كحد أقصى
-- 🔄 تنظيف تلقائي للنسخ القديمة
+#### التخزين المحلي
+- 💾 حفظ فوري في localStorage
+- 🔄 مزامنة بين التبويبات
+- 📤 تصدير واستيراد البيانات
 
 ---
 
@@ -680,85 +623,58 @@ const translations = {
 
 ### ❌ مشاكل شائعة وحلولها
 
-#### 🔌 "API Connection Failed"
+#### 💾 "Local Storage Full"
 ```bash
 # الأسباب المحتملة:
-❌ ملفات PHP غير مرفوعة
-❌ base URL خاطئ في config.js
-❌ مشاكل CORS
+❌ امتلاء التخزين المحلي
+❌ بيانات كثيرة محفوظة
 
 # الحلول:
-✅ تحقق من رفع read.php و write.php
-✅ تأكد من صحة API_BASE_URL
-✅ شغل test-connection.php
+✅ امسح البيانات القديمة من الإعدادات
+✅ صدر البيانات قبل المسح
+✅ استخدم وضع التصفح الخاص لاختبار نظيف
 ```
 
-#### 🔐 "Permission Denied"
+#### 📄 "Events Not Loading"
 ```bash
 # الأسباب:
-❌ صلاحيات ملفات خاطئة
-❌ مجلد backups غير موجود
+❌ ملف events.json غير موجود
+❌ مشاكل في localStorage
 
 # الحلول:
-✅ اضبط صلاحيات الملفات على 644
-✅ اضبط صلاحيات المجلدات على 755
-✅ أنشئ مجلد backups/
+✅ تأكد من وجود JS/events.json
+✅ امسح localStorage وأعد التحميل
+✅ تحقق من وحدة تحكم المطور للأخطاء
 ```
 
-#### 📄 "Invalid JSON"
+#### 🔄 "Data Not Syncing"
 ```bash
 # الأسباب:
-❌ ملف data.json تالف
-❌ مشاكل ترميز UTF-8
-❌ BOM في بداية الملف
+❌ تبويبات متعددة مفتوحة
+❌ localStorage معطل
 
 # الحلول:
-✅ شغل setup.php لإعادة إنشاء الملف
-✅ تأكد من ترميز UTF-8
-✅ ملفات PHP تنظف BOM تلقائياً
-```
-
-#### 🌐 مشاكل CORS
-```bash
-# الأسباب:
-❌ ملف .htaccess غير مرفوع
-❌ headers غير مضبوطة
-
-# الحلول:
-✅ ارفع ملف .htaccess
-✅ تحقق من headers في ملفات PHP
+✅ أعد تحميل جميع التبويبات
+✅ تحقق من إعدادات المتصفح
+✅ جرب متصفح آخر
 ```
 
 ### 🔍 أدوات التشخيص
 
-#### اختبار الاتصال
-```
-🔗 https://yoursite.com/test-connection.php
-📊 يعرض حالة جميع المكونات
-```
-
-#### إعداد النظام
-```
-🔗 https://yoursite.com/setup.php
-⚙️ يتحقق من المتطلبات ويعد النظام
-```
+#### اختبار التخزين المحلي
+- ⚙️ اذهب إلى الإعدادات → Administration → Test Storage
+- 📊 عرض معلومات التخزين والإحصائيات
 
 #### وحدة تحكم المتصفح
 ```javascript
 // افتح أدوات المطور (F12)
 // تحقق من:
 console.log('🔍 JavaScript errors');
-console.log('🌐 Network requests');
 console.log('💾 localStorage data');
+console.log('📊 Storage usage');
 ```
 
 ### 📊 مراقبة الأداء
-
-#### سجلات الأخطاء
-```php
-// في ملفات PHP
-error_log("API Error: " . $e->getMessage());
-```
 
 #### إحصائيات الاستخدام
 ```javascript
@@ -840,11 +756,11 @@ const themes = {
 
 #### إضافة API جديد
 ```javascript
-// في JS/api-service.js
+// في JS/services/local-storage.js
 class ExternalAPIService {
-    async fetchExternalData() {
-        const response = await fetch('https://external-api.com/data');
-        return response.json();
+    async saveToExternalAPI(data) {
+        // حفظ في خدمة خارجية (اختياري)
+        console.log('Saving to external API:', data);
     }
 }
 ```
@@ -1059,8 +975,8 @@ SOFTWARE.
 - 🌐 **HTML5** - هيكل التطبيق
 - 🎨 **CSS3** - التصميم والتنسيق
 - ⚡ **Vanilla JavaScript** - المنطق والتفاعل
-- 🐘 **PHP** - الخادم والـ API
-- 📄 **JSON** - تخزين البيانات
+- 💾 **localStorage** - تخزين البيانات محلياً
+- 📄 **JSON** - تنسيق البيانات
 - 🖼️ **Pexels** - الصور المجانية
 
 ---
@@ -1069,11 +985,11 @@ SOFTWARE.
 
 | المقياس | القيمة |
 |---------|--------|
-| 📁 **إجمالي الملفات** | 50+ ملف |
-| 📝 **أسطر الكود** | 15,000+ سطر |
+| 📁 **إجمالي الملفات** | 35+ ملف |
+| 📝 **أسطر الكود** | 12,000+ سطر |
 | 🎨 **ملفات CSS** | 6 ملفات |
-| ⚡ **ملفات JavaScript** | 15 ملف |
-| 🐘 **ملفات PHP** | 5 ملفات |
+| ⚡ **ملفات JavaScript** | 12 ملف |
+| 💾 **ملفات JSON** | 2 ملف |
 | 🌐 **صفحات HTML** | 4 صفحات |
 | 📱 **دعم الأجهزة** | جميع الأحجام |
 | 🌍 **اللغات** | الإنجليزية والعربية |
@@ -1088,12 +1004,11 @@ SOFTWARE.
 
 [![Demo](https://img.shields.io/badge/🌐_عرض_تجريبي-أزرق?style=for-the-badge)](https://scoutplus.000webhostapp.com)
 [![Download](https://img.shields.io/badge/📥_تحميل-أخضر?style=for-the-badge)](https://github.com/your-repo/scoutpluse/archive/main.zip)
-[![Docs](https://img.shields.io/badge/📚_الوثائق-برتقالي?style=for-the-badge)](docs/)
 
 ---
 
-**صُنع بـ ❤️ للمجتمع الكشفي**
+**صُنع بـ ❤️ للمجتمع الكشفي - نظام محلي بالكامل**
 
-*تمكين الفرق الكشفية بالتكنولوجيا الحديثة مع الحفاظ على القيم التقليدية*
+*تمكين الفرق الكشفية بتكنولوجيا بسيطة وفعالة بدون تعقيدات الخوادم*
 
 </div>

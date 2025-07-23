@@ -1,28 +1,13 @@
 /* 
 ===========================================
-SCOUTPLUSE - CONFIGURATION
+SCOUTPLUSE - LOCAL CONFIGURATION
 ===========================================
 
-ملف الإعدادات العام للتطبيق - محدث لـ Firebase
+ملف الإعدادات العام للتطبيق - نظام محلي
 */
 
 // إعداد نوع قاعدة البيانات
-window.DATABASE_TYPE = 'firebase'; // 'firebase' أو 'php'
-
-// إعداد Firebase (سيتم استخدامه في firebase.js)
-window.FIREBASE_CONFIG = {
-    apiKey: "AIzaSyCmRC2JPD_nR1kHKU3ksuH6OfnFJutO5_I",
-    authDomain: "tamouz-webapp.firebaseapp.com",
-    databaseURL: "https://tamouz-webapp-default-rtdb.firebaseio.com",
-    projectId: "tamouz-webapp",
-    storageBucket: "tamouz-webapp.firebasestorage.app",
-    messagingSenderId: "959471265726",
-    appId: "1:959471265726:web:faf9d1a7e645d92354fbef",
-    measurementId: "G-7WGDJ5B2P5"
-};
-
-// إعداد الـ Base URL للـ API (للتوافق مع النظام القديم)
-window.API_BASE_URL = ''; // لن يتم استخدامه مع Firebase
+window.DATABASE_TYPE = 'local'; // نظام محلي فقط
 
 // إعدادات أخرى
 window.APP_CONFIG = {
@@ -32,18 +17,9 @@ window.APP_CONFIG = {
     
     // إعدادات الـ API
     api: {
-        timeout: 15000, // 15 ثانية للـ Firebase
-        retryAttempts: 3,
-        securityToken: 'ScoutPlus(WebApp)',
-        useFirebase: true
-    },
-    
-    // إعدادات Firebase
-    firebase: {
-        enableOffline: true,
-        enableRealTime: true,
-        enableAnalytics: true,
-        cacheSize: 10 * 1024 * 1024 // 10MB
+        eventsFile: '../JS/events.json', // مسار ملف الأحداث
+        usersFile: '../HTML/users.json', // مسار ملف المستخدمين
+        useLocalStorage: true // استخدام localStorage للحفظ
     },
     
     // إعدادات الواجهة
@@ -74,26 +50,9 @@ window.APP_CONFIG = {
     }
 };
 
-// دالة لتحديث نوع قاعدة البيانات
-window.setDatabaseType = function(type) {
-    window.DATABASE_TYPE = type;
-    console.log(`🔄 Database type updated to: ${type}`);
-};
-
 // دالة للحصول على نوع قاعدة البيانات
 window.getDatabaseType = function() {
-    return window.DATABASE_TYPE || 'firebase';
-};
-
-// دالة لتحديث الـ base URL (للتوافق مع النظام القديم)
-window.setAPIBaseURL = function(url) {
-    window.API_BASE_URL = url;
-    console.log(`🔗 API Base URL updated to: ${url || 'same domain'} (Note: Firebase is now primary)`);
-};
-
-// دالة للحصول على الـ base URL الحالي
-window.getAPIBaseURL = function() {
-    return window.API_BASE_URL || '';
+    return window.DATABASE_TYPE || 'local';
 };
 
 // دالة للحصول على إعداد معين
@@ -127,22 +86,11 @@ window.setConfig = function(path, value) {
     console.log(`⚙️ Config updated: ${path} = ${value}`);
 };
 
-// دالة للحصول على إعدادات Firebase
-window.getFirebaseConfig = function() {
-    return window.FIREBASE_CONFIG;
-};
-
-// دالة لتحديث إعدادات Firebase
-window.setFirebaseConfig = function(config) {
-    window.FIREBASE_CONFIG = { ...window.FIREBASE_CONFIG, ...config };
-    console.log('🔥 Firebase config updated');
-};
-
-// دالة للتحقق من توفر Firebase
-window.isFirebaseEnabled = function() {
-    return window.getDatabaseType() === 'firebase' && !!window.FIREBASE_CONFIG;
+// دالة للحصول على مسار ملف الأحداث
+window.getEventsFilePath = function() {
+    return window.APP_CONFIG.api.eventsFile;
 };
 
 console.log('⚙️ Configuration loaded successfully');
-console.log(`🔥 Database type: ${window.getDatabaseType()}`);
-console.log(`🔥 Firebase enabled: ${window.isFirebaseEnabled()}`);
+console.log(`📁 Database type: ${window.getDatabaseType()}`);
+console.log(`📄 Events file: ${window.getEventsFilePath()}`);

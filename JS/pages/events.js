@@ -133,51 +133,22 @@ class EventsService {
         try {
             console.log('📥 تحميل الأحداث...');
             
-            // استخدام Data Manager للتحميل
-            if (window.DataManagerService?.getInstance || window.getDataManagerService) {
-                try {
-                    const dataManager = window.getDataManagerService();
-                    const data = await dataManager.readEvents();
-                    this.events = data.events || [];
-                    this.lastSync = new Date().toISOString();
-                    
-                    console.log(`✅ تم تحميل ${this.events.length} حدث من ${data.source || 'قاعدة البيانات'}`);
-                    
-                    const sourceMessage = data.source === 'firebase' ? 'Firebase' : 
-                                        data.source === 'api' ? 'الخادم' : 
-                                        'البيانات التجريبية';
-                    this.showNotification(`تم تحميل ${this.events.length} حدث من ${sourceMessage}`, 'success');
-                    
-                } catch (apiError) {
-                    console.warn('⚠️ فشل تحميل البيانات:', apiError.message);
-                    throw apiError;
-                }
-            } else {
-                throw new Error('Data Manager غير متوفر');
-            }
+            // تحميل من Data Manager المحلي
+            const dataManager = window.getDataManagerService();
+            const data = await dataManager.readEvents();
+            this.events = data.events || [];
+            this.lastSync = new Date().toISOString();
+            
+            console.log(`✅ تم تحميل ${this.events.length} حدث محلياً`);
+            this.showNotification(`تم تحميل ${this.events.length} حدث من التخزين المحلي`, 'success');
             
         } catch (error) {
-            console.warn('⚠️ فشل تحميل البيانات، محاولة التحميل من JSON:', error.message);
+            console.warn('⚠️ فشل تحميل البيانات، استخدام البيانات التجريبية:', error.message);
             
-            try {
-                // محاولة تحميل من ملف JSON
-                const response = await fetch('./events.json');
-                if (response.ok) {
-                    const jsonData = await response.json();
-                    this.events = jsonData.events || [];
-                    console.log(`📋 تم تحميل ${this.events.length} حدث من JSON`);
-                    this.showNotification('تم تحميل الأحداث من الملف المحلي', 'info');
-                } else {
-                    throw new Error('ملف JSON غير متاح');
-                }
-            } catch (jsonError) {
-                console.warn('⚠️ فشل JSON، استخدام البيانات التجريبية:', jsonError.message);
-                
-                // استخدام البيانات التجريبية كحل أخير
-                this.events = [...(window.DEMO_EVENTS || [])];
-                console.log(`📋 تم تحميل ${this.events.length} حدث من البيانات التجريبية`);
-                this.showNotification('استخدام البيانات التجريبية - API غير متوفر', 'warning');
-            }
+            // استخدام البيانات التجريبية كحل أخير
+            this.events = [...(window.DEMO_EVENTS || [])];
+            console.log(`📋 تم تحميل ${this.events.length} حدث من البيانات التجريبية`);
+            this.showNotification('استخدام البيانات التجريبية', 'warning');
         } finally {
             this.setLoading(false);
         }
@@ -187,28 +158,15 @@ class EventsService {
      * حفظ الأحداث
      */
     async saveEvents() {
-        if (!window.getDataManagerService) {
-            console.warn('⚠️ Data Manager غير متوفر');
-            return false;
-        }
-
         try {
             console.log('💾 حفظ الأحداث...');
             
-            // التحقق من حالة الاتصال والمصادقة
             const dataManager = window.getDataManagerService();
-            if (dataManager.currentProvider === 'firebase') {
-                const status = dataManager.firebaseService.getConnectionStatus();
-                if (!status.connected || !status.authenticated) {
-                    throw new Error('غير متصل أو غير مصادق. يرجى إعادة تحميل الصفحة والمحاولة مرة أخرى.');
-                }
-            }
-            
             const result = await dataManager.writeEvents(this.events);
             this.lastSync = new Date().toISOString();
             
-            console.log('✅ تم حفظ الأحداث بنجاح');
-            this.showNotification('تم حفظ الأحداث بنجاح!', 'success');
+            console.log('✅ تم حفظ الأحداث محلياً');
+            this.showNotification('تم حفظ الأحداث محلياً!', 'success');
             return true;
             
         } catch (error) {
@@ -240,13 +198,13 @@ class EventsService {
             // إضافة محلياً
             this.events.unshift(newEvent);
             
-            // محاولة الحفظ في قاعدة البيانات
+            // حفظ في التخزين المحلي
             const saved = await this.saveEvents();
             
             if (saved) {
                 this.showNotification(`تم إنشاء الحدث "${newEvent.title}" بنجاح!`, 'success');
             } else {
-                this.showNotification(`تم إنشاء الحدث محلياً - سيتم المزامنة لاحقاً`, 'warning');
+                this.showNotification(`تم إنشاء الحدث محلياً`, 'info');
             }
 
             return true;
@@ -296,13 +254,13 @@ class EventsService {
             this.currentUser.joinedEvents.push(eventId);
             window.AuthService?.updateUser(this.currentUser);
 
-            // محاولة المزامنة مع API
+            // حفظ في التخزين المحلي
             const saved = await this.saveEvents();
             
             if (saved) {
                 this.showNotification(`تم الانضمام لـ "${event.title}" بنجاح!`, 'success');
             } else {
-                this.showNotification(`تم الانضمام لـ "${event.title}" - سيتم المزامنة لاحقاً`, 'warning');
+                this.showNotification(`تم الانضمام لـ "${event.title}" محلياً`, 'info');
             }
 
             this.renderEventsPage();

@@ -336,32 +336,31 @@ class SettingsService {
                 
                 <div class="settings-item">
                     <div class="settings-item-info">
-                        <h4>Database Connection Test</h4>
-                        <p>Test the connection to Firebase or API backend</p>
+                        <h4>Local Storage Test</h4>
+                        <p>Test the local storage functionality</p>
                     </div>
-                    <button class="btn btn-outline btn-sm" onclick="window.SettingsService.getInstance().testDatabaseConnection()">
-                        Test Connection
+                    <button class="btn btn-outline btn-sm" onclick="window.SettingsService.getInstance().testLocalStorage()">
+                        Test Storage
                     </button>
                 </div>
                 
                 <div class="settings-item">
                     <div class="settings-item-info">
-                        <h4>Database Provider</h4>
-                        <p>Switch between Firebase and PHP API</p>
+                        <h4>Storage Info</h4>
+                        <p>View local storage usage and statistics</p>
                     </div>
-                    <select id="databaseProviderSelect" class="settings-select">
-                        <option value="firebase">Firebase (Recommended)</option>
-                        <option value="api">PHP API</option>
-                        <option value="demo">Demo Data</option>
-                    </select>
+                    <button class="btn btn-outline btn-sm" onclick="window.SettingsService.getInstance().showStorageInfo()">
+                        View Info
+                    </button>
                 </div>
                 
                 <div class="settings-item">
                     <div class="settings-item-info">
-                        <h4>Real-time Updates</h4>
-                        <p>Enable real-time synchronization with Firebase</p>
+                        <h4>Clear Local Data</h4>
+                        <p>Clear all locally stored events and settings</p>
                     </div>
-                    <div class="toggle-switch ${this.settings.firebase?.realTimeUpdates !== false ? 'active' : ''}" data-setting="firebase.realTimeUpdates"></div>
+                    <button class="btn btn-outline btn-sm" style="color: var(--red-600); border-color: var(--red-600);" onclick="window.SettingsService.getInstance().clearLocalData()">
+                        Clear Data
                     </button>
                 </div>
             </div>
@@ -392,13 +391,6 @@ class SettingsService {
         const emailDigestSelect = document.getElementById('emailDigestSelect');
         if (emailDigestSelect) {
             emailDigestSelect.addEventListener('change', this.handleEmailDigestChange.bind(this));
-        }
-
-        const databaseProviderSelect = document.getElementById('databaseProviderSelect');
-        if (databaseProviderSelect) {
-            // Set current value
-            databaseProviderSelect.value = window.getDatabaseType() || 'firebase';
-            databaseProviderSelect.addEventListener('change', this.handleDatabaseProviderChange.bind(this));
         }
     }
 
@@ -529,31 +521,10 @@ class SettingsService {
     }
 
     /**
-     * Handle Database Provider Change
+     * Test Local Storage
      */
-    handleDatabaseProviderChange(e) {
-        const provider = e.target.value;
-        console.log(`🔄 Database provider changed to: ${provider}`);
-        
-        if (confirm(`Are you sure you want to switch to ${provider}? This will reload the application.`)) {
-            window.setDatabaseType(provider);
-            this.showNotification(`Database provider switched to ${provider}. Reloading...`, 'info');
-            
-            // Reload after short delay
-            setTimeout(() => {
-                window.location.reload();
-            }, 2000);
-        } else {
-            // Reset select to current value
-            e.target.value = window.getDatabaseType();
-        }
-    }
-
-    /**
-     * Test Database Connection
-     */
-    async testDatabaseConnection() {
-        console.log('🔍 Testing database connection...');
+    async testLocalStorage() {
+        console.log('🔍 Testing local storage...');
         
         if (!window.getDataManagerService) {
             this.showNotification('Data Manager not available', 'error');
@@ -565,13 +536,68 @@ class SettingsService {
             const result = await dataManager.testConnection();
             
             if (result.success) {
-                this.showNotification(`${result.service} connection successful! Found ${result.eventsCount} events.`, 'success');
+                this.showNotification(`Local storage test successful! Found ${result.eventsCount || 0} events.`, 'success');
             } else {
-                this.showNotification(`Database connection failed: ${result.message}`, 'error');
+                this.showNotification(`Local storage test failed: ${result.message}`, 'error');
             }
         } catch (error) {
-            console.error('❌ Database test failed:', error);
-            this.showNotification(`Database test failed: ${error.message}`, 'error');
+            console.error('❌ Storage test failed:', error);
+            this.showNotification(`Storage test failed: ${error.message}`, 'error');
+        }
+    }
+
+    /**
+     * Show Storage Info
+     */
+    showStorageInfo() {
+        console.log('📊 Showing storage info...');
+        
+        if (!window.getLocalStorageService) {
+            this.showNotification('Local Storage Service not available', 'error');
+            return;
+        }
+
+        try {
+            const localStorageService = window.getLocalStorageService();
+            const stats = localStorageService.getStorageStats();
+            
+            const message = `Storage Info:
+Events: ${stats.totalEvents}
+Users: ${stats.totalUsers}
+Storage Used: ${stats.storageUsed.kb} KB`;
+            
+            alert(message);
+            
+        } catch (error) {
+            console.error('❌ Failed to get storage info:', error);
+            this.showNotification('Failed to get storage info', 'error');
+        }
+    }
+
+    /**
+     * Clear Local Data
+     */
+    clearLocalData() {
+        console.log('🗑️ Clearing local data...');
+        
+        if (confirm('Are you sure you want to clear all local data? This action cannot be undone.')) {
+            try {
+                const localStorageService = window.getLocalStorageService();
+                localStorageService.clearAllData();
+                
+                this.showNotification('Local data cleared successfully. Reloading...', 'info');
+                
+                // إعادة تحميل الصفحة بعد تأخير قصير
+                setTimeout(() => {
+                    window.location.reload();
+                }, 2000);
+                
+            } catch (error) {
+                console.error('❌ Failed to clear data:', error);
+                this.showNotification('Failed to clear local data', 'error');
+            }
+        } else {
+            console.log('❌ Clear data cancelled');
         }
     }
 

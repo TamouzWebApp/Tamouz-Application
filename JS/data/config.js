@@ -14,11 +14,12 @@ window.APP_CONFIG = {
     // إعدادات التطبيق
     appName: 'ScoutPluse',
     version: '1.0.0',
+    baseUrl: 'https://kinankassab.github.io/Tamouz-Application/',
     
     // إعدادات الـ API
     api: {
-        eventsFile: '../JS/events.json', // مسار ملف الأحداث
-        usersFile: '../HTML/users.json', // مسار ملف المستخدمين
+        eventsFile: 'JS/events.json', // مسار ملف الأحداث
+        usersFile: 'HTML/users.json', // مسار ملف المستخدمين
         useLocalStorage: true // استخدام localStorage للحفظ
     },
     

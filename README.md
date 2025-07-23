@@ -92,17 +92,11 @@ python -m http.server 8000
 ### 🌐 النشر على 000webhost
 
 ```bash
-# 1. إنشاء حساب على 000webhost.com
-# 2. رفع جميع الملفات إلى public_html/
-# 3. تحديث الـ base URL في JS/config.js:
-
-window.API_BASE_URL = 'https://yoursite.000webhostapp.com';
-
-# 4. تشغيل الإعداد:
-# https://yoursite.000webhostapp.com/setup.php
-
-# 5. اختبار التطبيق:
-# https://yoursite.000webhostapp.com/HTML/index.html
+# 1. إنشاء حساب على GitHub
+# 2. رفع جميع الملفات إلى repository
+# 3. تفعيل GitHub Pages
+# 4. الموقع سيكون متاح على:
+# https://kinankassab.github.io/Tamouz-Application/
 ```
 
 ---
@@ -198,16 +192,16 @@ php -S localhost:8000
 #### خطوة 2: رفع الملفات
 ```
 موقعك/
-├── 📄 index.html              # صفحة التحويل
-├── 📁 HTML/                  # صفحات التطبيق
-├── 📁 CSS/                   # ملفات التصميم
-└── 📁 JS/                    # ملفات JavaScript
+├── 📄 index.html                    # صفحة التحويل
+├── 📁 HTML/                        # صفحات التطبيق
+├── 📁 CSS/                         # ملفات التصميم
+└── 📁 JS/                          # ملفات JavaScript
 ```
 
 #### خطوة 3: اختبار التطبيق
 ```
-🔗 https://yoursite.com/
-🔗 https://yoursite.com/HTML/index.html
+🔗 https://kinankassab.github.io/Tamouz-Application/
+🔗 https://kinankassab.github.io/Tamouz-Application/HTML/index.html
 ```
 
 ### 🚀 النشر على خوادم أخرى
@@ -228,10 +222,10 @@ php -S localhost:8000
 
 #### GitHub Pages
 ```bash
-# 1. ارفع المشروع إلى GitHub
-# 2. فعل GitHub Pages
-# 3. اضبط المجلد على HTML/
-# 4. سيعمل بالتخزين المحلي تلقائياً
+# 1. المشروع مرفوع على GitHub
+# 2. GitHub Pages مفعل
+# 3. الموقع متاح على: https://kinankassab.github.io/Tamouz-Application/
+# 4. يعمل بالتخزين المحلي تلقائياً
 ```
 
 ---
@@ -1003,7 +997,8 @@ SOFTWARE.
 ### 🚀 ابدأ رحلتك الكشفية الرقمية الآن
 
 [![Demo](https://img.shields.io/badge/🌐_عرض_تجريبي-أزرق?style=for-the-badge)](https://scoutplus.000webhostapp.com)
-[![Download](https://img.shields.io/badge/📥_تحميل-أخضر?style=for-the-badge)](https://github.com/your-repo/scoutpluse/archive/main.zip)
+[![Download](https://img.shields.io/badge/📥_تحميل-أخضر?style=for-the-badge)](https://github.com/kinankassab/Tamouz-Application/archive/main.zip)
+[![Live Demo](https://img.shields.io/badge/🚀_موقع_مباشر-أحمر?style=for-the-badge)](https://kinankassab.github.io/Tamouz-Application/)
 
 ---
 

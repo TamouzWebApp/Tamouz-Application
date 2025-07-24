@@ -57,11 +57,19 @@ class LocalStorageService {
     async loadInitialEvents() {
         try {
             const eventsFilePath = window.getEventsFilePath() || '../JSON/events.json';
-            const response = await fetch(eventsFilePath);
+            const response = await fetch(`${eventsFilePath}?t=${Date.now()}`);
             if (response.ok) {
                 const data = await response.json();
                 this.saveEvents(data.events);
                 console.log(`✅ Loaded ${data.events.length} initial events`);
+                
+                // إرسال إشعار للمستخدم
+                if (window.EventsService?.getInstance) {
+                    setTimeout(() => {
+                        const eventsService = window.EventsService.getInstance();
+                        eventsService.showNotification(`تم تحميل ${data.events.length} حدث من ملف JSON`, 'success');
+                    }, 1000);
+                }
             } else {
                 throw new Error('Failed to load JSON/events.json');
             }
@@ -69,6 +77,14 @@ class LocalStorageService {
             console.error('❌ Failed to load JSON/events.json:', error);
             console.log('🔄 Using empty events array - please check JSON/events.json file');
             this.saveEvents([]);
+            
+            // إرسال إشعار خطأ للمستخدم
+            if (window.EventsService?.getInstance) {
+                setTimeout(() => {
+                    const eventsService = window.EventsService.getInstance();
+                    eventsService.showNotification('فشل تحميل ملف الأحداث - تحقق من JSON/events.json', 'error');
+                }, 1000);
+            }
         }
     }
 

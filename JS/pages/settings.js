@@ -367,9 +367,11 @@ class SettingsService {
                 <div class="settings-item">
                     <div class="settings-item-info">
                         <h4>Auto Sync</h4>
-                        <p>Automatically check for updates to events.json file</p>
+                        <p>Automatically check for updates to events.json file (Always enabled)</p>
                     </div>
-                    <div class="toggle-switch ${this.getAutoSyncEnabled() ? 'active' : ''}" data-setting="autoSync"></div>
+                    <div class="toggle-switch active" style="opacity: 0.6; pointer-events: none;" title="Auto sync is always enabled">
+                        <span style="font-size: 12px; color: var(--text-muted);">Always On</span>
+                    </div>
                 </div>
                 
                 <div class="settings-item">

@@ -57,12 +57,16 @@ class AutoSyncService {
         if (settings) {
             try {
                 const parsed = JSON.parse(settings);
-                this.isEnabled = parsed.enabled !== false;
+                this.isEnabled = true; // دائماً مفعل
                 this.pollInterval = parsed.interval || 30000;
                 console.log(`⚙️ Sync settings loaded: enabled=${this.isEnabled}, interval=${this.pollInterval}ms`);
             } catch (error) {
                 console.warn('⚠️ Failed to load sync settings, using defaults');
             }
+        } else {
+            // إعدادات افتراضية - المزامنة مفعلة دائماً
+            this.isEnabled = true;
+            this.pollInterval = 15000; // كل 15 ثانية
         }
     }
 
@@ -352,33 +356,7 @@ class AutoSyncService {
             existingIndicator.remove();
         }
 
-        const indicator = document.createElement('div');
-        indicator.id = 'autoSyncIndicator';
-        indicator.className = 'auto-sync-indicator';
-        indicator.innerHTML = `
-            <div class="sync-dot"></div>
-            <span class="sync-text">Auto Sync</span>
-            <button class="sync-toggle" title="Toggle Auto Sync">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <polyline points="1,4 1,10 7,10"></polyline>
-                    <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
-                </svg>
-            </button>
-        `;
-        
-        // إضافة الأنماط
-        this.addIndicatorStyles();
-        
-        // إضافة للصفحة
-        document.body.appendChild(indicator);
-        
-        // إعداد مستمعي الأحداث
-        this.setupIndicatorListeners();
-        
-        // تحديث الحالة الأولية
-        this.updateStatusIndicator();
-        
-        console.log('📊 Auto sync status indicator created');
+        console.log('📊 Auto sync running in background (no UI indicator)');
     }
 
     /**
@@ -514,75 +492,24 @@ class AutoSyncService {
      * إعداد مستمعي مؤشر الحالة
      */
     setupIndicatorListeners() {
-        const indicator = document.getElementById('autoSyncIndicator');
-        if (!indicator) return;
-        
-        const toggleBtn = indicator.querySelector('.sync-toggle');
-        if (toggleBtn) {
-            toggleBtn.addEventListener('click', () => {
-                this.toggleSync();
-            });
-        }
-        
-        // إظهار تفاصيل عند النقر على المؤشر
-        indicator.addEventListener('click', (e) => {
-            if (e.target === toggleBtn || toggleBtn.contains(e.target)) return;
-            this.showSyncDetails();
-        });
+        // لا حاجة لمستمعي الأحداث - المزامنة تعمل تلقائياً
+        console.log('📊 Auto sync running without UI controls');
     }
 
     /**
      * تحديث مؤشر الحالة
      */
     updateStatusIndicator() {
-        const indicator = document.getElementById('autoSyncIndicator');
-        if (!indicator) return;
-        
-        const dot = indicator.querySelector('.sync-dot');
-        const text = indicator.querySelector('.sync-text');
-        const toggle = indicator.querySelector('.sync-toggle');
-        
-        if (dot) {
-            dot.className = `sync-dot ${this.syncStatus}`;
-        }
-        
-        if (text) {
-            const statusTexts = {
-                idle: 'Auto Sync',
-                syncing: 'Syncing...',
-                success: 'Synced',
-                error: 'Sync Error',
-                paused: 'Paused'
-            };
-            text.textContent = statusTexts[this.syncStatus] || 'Auto Sync';
-        }
-        
-        if (toggle) {
-            toggle.classList.toggle('disabled', !this.isEnabled);
-            toggle.title = this.isEnabled ? 'Disable Auto Sync' : 'Enable Auto Sync';
-        }
-        
-        // تحديث لون المؤشر بناءً على الحالة
-        const colors = {
-            idle: 'var(--gray-400)',
-            syncing: 'var(--blue-500)',
-            success: 'var(--green-500)',
-            error: 'var(--red-500)',
-            paused: 'var(--amber-500)'
-        };
-        
-        indicator.style.borderColor = colors[this.syncStatus] || colors.idle;
+        // تسجيل الحالة في وحدة التحكم فقط
+        console.log(`🔄 Auto sync status: ${this.syncStatus}`);
     }
 
     /**
      * تبديل حالة المزامنة
      */
     toggleSync() {
-        if (this.isEnabled) {
-            this.disableSync();
-        } else {
-            this.enableSync();
-        }
+        console.log('⚠️ Auto sync toggle disabled - always enabled');
+        // لا نسمح بتبديل المزامنة
     }
 
     /**
@@ -596,7 +523,7 @@ class AutoSyncService {
         this.saveSettings();
         this.startPolling();
         
-        this.showSyncNotification('تم تفعيل المزامنة التلقائية', 'success');
+        console.log('✅ Auto sync enabled automatically');
         
         this.dispatchSyncEvent('syncEnabled', {
             interval: this.pollInterval
@@ -607,17 +534,8 @@ class AutoSyncService {
      * تعطيل المزامنة
      */
     disableSync() {
-        console.log('❌ Disabling auto sync');
-        
-        this.isEnabled = false;
-        this.saveSettings();
-        this.stopPolling();
-        
-        this.showSyncNotification('تم تعطيل المزامنة التلقائية', 'info');
-        
-        this.dispatchSyncEvent('syncDisabled', {
-            reason: 'manual'
-        });
+        console.log('⚠️ Auto sync cannot be disabled - always enabled');
+        // لا نسمح بتعطيل المزامنة
     }
 
     /**

@@ -151,12 +151,28 @@ class EventsService {
             
             // تحميل من Data Manager المحلي
             const dataManager = window.getDataManagerService();
-            const data = await dataManager.readEvents();
+            
+            // محاولة تحميل من localStorage أولاً
+            let data = await dataManager.readEvents();
             this.events = data.events || [];
+            
+            // إذا كانت فارغة، حاول التحميل من JSON
+            if (this.events.length === 0) {
+                console.log('📄 No events in localStorage, loading from JSON...');
+                await dataManager.loadEventsFromJSON();
+                data = await dataManager.readEvents();
+                this.events = data.events || [];
+            }
+            
             this.lastSync = new Date().toISOString();
             
             console.log(`✅ تم تحميل ${this.events.length} حدث محلياً`);
-            this.showNotification(`تم تحميل ${this.events.length} حدث من التخزين المحلي`, 'success');
+            
+            if (this.events.length > 0) {
+                this.showNotification(`تم تحميل ${this.events.length} حدث بنجاح`, 'success');
+            } else {
+                this.showNotification('لا توجد أحداث متاحة - تحقق من ملف JSON/events.json', 'warning');
+            }
             
         } catch (error) {
             console.error('❌ فشل تحميل البيانات:', error.message);

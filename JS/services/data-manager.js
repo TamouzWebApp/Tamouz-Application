@@ -72,12 +72,19 @@ class DataManagerService {
     async loadEventsFromJSON() {
         try {
             const eventsFilePath = window.getEventsFilePath() || '../JSON/events.json';
-            const response = await fetch(eventsFilePath);
+            const response = await fetch(`${eventsFilePath}?t=${Date.now()}`);
             if (response.ok) {
                 const data = await response.json();
                 this.events = data.events || [];
                 this.localStorageService.saveEvents(this.events);
                 console.log(`📄 Loaded ${this.events.length} events from JSON file`);
+                
+                // إرسال حدث تحديث البيانات
+                this.dispatchEvent('eventsLoaded', {
+                    events: this.events,
+                    totalEvents: this.events.length,
+                    source: 'jsonFile'
+                });
             } else {
                 throw new Error('JSON file not found');
             }

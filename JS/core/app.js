@@ -648,7 +648,7 @@ class ScoutPluseApp {
             
             // Reset to default page
             this.currentPage = 'dashboard';
-            history.replaceState(null, '', '/');
+            history.replaceState(null, '', '#dashboard');
             
             console.log('✅ Logout completed successfully');
         } else {

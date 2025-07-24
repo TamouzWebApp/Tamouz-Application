@@ -121,7 +121,7 @@ class NavigationService {
 
         // Update URL
         if (updateHistory) {
-            const url = page === 'dashboard' ? '#dashboard' : `#${page}`;
+            const url = `#${page}`;
             history.pushState({ page }, '', url);
             console.log(`🔗 URL updated: ${url}`);
         }

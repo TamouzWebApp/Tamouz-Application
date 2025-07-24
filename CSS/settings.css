@@ -1,0 +1,585 @@
+/* 
+===========================================
+SCOUTPLUSE - صفحة الإعدادات
+===========================================
+
+أنماط شاملة لصفحة الإعدادات
+مع دعم كامل للتصميم المتجاوب والمظاهر المتعددة
+*/
+
+/* ===========================================
+   حاوي صفحة الإعدادات
+   ========================================== */
+
+.settings-page {
+    padding: var(--spacing-6);
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* ===========================================
+   قسم الإعدادات
+   ========================================== */
+
+.settings-section {
+    background: var(--bg-primary);
+    border-radius: var(--radius-3xl);
+    padding: var(--spacing-8);
+    margin-bottom: var(--spacing-6);
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border-light);
+    transition: all var(--transition-fast);
+    position: relative;
+    overflow: hidden;
+}
+
+.settings-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-500), var(--secondary-500));
+}
+
+.settings-section:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-2xl);
+}
+
+.settings-section h3 {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-6);
+    padding-bottom: var(--spacing-4);
+    border-bottom: 2px solid var(--border-light);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+}
+
+.settings-section h3::before {
+    content: '';
+    width: 6px;
+    height: 24px;
+    background: linear-gradient(135deg, var(--primary-500), var(--secondary-500));
+    border-radius: var(--radius-full);
+}
+
+/* ===========================================
+   عنصر الإعدادات
+   ========================================== */
+
+.settings-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-5);
+    margin-bottom: var(--spacing-4);
+    background: var(--bg-secondary);
+    border-radius: var(--radius-2xl);
+    border: 1px solid var(--border-light);
+    transition: all var(--transition-fast);
+    gap: var(--spacing-4);
+}
+
+.settings-item:hover {
+    background: var(--primary-50);
+    border-color: var(--primary-200);
+    transform: translateX(4px);
+    box-shadow: var(--shadow-sm);
+}
+
+.dark .settings-item:hover {
+    background: var(--primary-900);
+    border-color: var(--primary-700);
+}
+
+.settings-item:last-child {
+    margin-bottom: 0;
+}
+
+/* ===========================================
+   معلومات عنصر الإعدادات
+   ========================================== */
+
+.settings-item-info {
+    flex: 1;
+}
+
+.settings-item-info h4 {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-2);
+    line-height: var(--line-height-tight);
+}
+
+.settings-item-info p {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: var(--line-height-relaxed);
+}
+
+/* ===========================================
+   عناصر التحكم في الإعدادات
+   ========================================== */
+
+.settings-select {
+    padding: var(--spacing-3) var(--spacing-4);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    min-width: 140px;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.5rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 2.5rem;
+}
+
+.settings-select:focus {
+    outline: none;
+    border-color: var(--primary-500);
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+    transform: translateY(-1px);
+}
+
+.settings-select:hover {
+    border-color: var(--border-strong);
+    background-color: var(--bg-primary);
+}
+
+/* ===========================================
+   مفتاح التبديل
+   ========================================== */
+
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 32px;
+    background: var(--gray-300);
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    border: 2px solid transparent;
+}
+
+.toggle-switch::before {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 24px;
+    height: 24px;
+    background: white;
+    border-radius: var(--radius-full);
+    transition: all var(--transition-fast);
+    box-shadow: var(--shadow-sm);
+}
+
+.toggle-switch.active {
+    background: linear-gradient(135deg, var(--primary-500), var(--primary-600));
+    border-color: var(--primary-400);
+}
+
+.toggle-switch.active::before {
+    transform: translateX(28px);
+    box-shadow: var(--shadow-md);
+}
+
+.toggle-switch:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+}
+
+.dark .toggle-switch {
+    background: var(--gray-600);
+}
+
+.dark .toggle-switch::before {
+    background: var(--gray-200);
+}
+
+/* ===========================================
+   أزرار الإجراءات
+   ========================================== */
+
+.settings-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-3);
+    margin-top: var(--spacing-4);
+}
+
+.settings-actions .btn {
+    flex: 1;
+    min-width: 160px;
+    position: relative;
+    overflow: hidden;
+}
+
+.settings-actions .btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left var(--transition-normal);
+}
+
+.settings-actions .btn:hover::before {
+    left: 100%;
+}
+
+/* زر الخطر */
+.btn-danger {
+    background-color: var(--red-600);
+    border-color: var(--red-600);
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: var(--red-700);
+    border-color: var(--red-700);
+    box-shadow: var(--shadow-lg);
+}
+
+/* ===========================================
+   قسم معلومات التطبيق
+   ========================================== */
+
+.app-info {
+    text-align: center;
+    padding: var(--spacing-6);
+    background: linear-gradient(135deg, var(--gray-50), var(--gray-100));
+    border-radius: var(--radius-2xl);
+    border: 1px solid var(--gray-200);
+    position: relative;
+    overflow: hidden;
+}
+
+.dark .app-info {
+    background: linear-gradient(135deg, var(--gray-800), var(--gray-700));
+    border-color: var(--gray-600);
+}
+
+.app-info::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.1) 0%, transparent 70%);
+    animation: float 20s ease-in-out infinite;
+    z-index: 0;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-10px) rotate(180deg); }
+}
+
+.app-info > * {
+    position: relative;
+    z-index: 1;
+}
+
+.app-info h4 {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-3);
+    background: linear-gradient(135deg, var(--primary-600), var(--secondary-600));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.app-info p {
+    color: var(--text-muted);
+    font-size: var(--font-size-sm);
+    margin: var(--spacing-2) 0;
+}
+
+/* ===========================================
+   مؤشر حالة المزامنة
+   ========================================== */
+
+.sync-status-indicator {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    padding: var(--spacing-3) var(--spacing-4);
+    background: var(--bg-secondary);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--border-color);
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+}
+
+.sync-status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--green-500);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.sync-status-dot.error {
+    background: var(--red-500);
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+/* ===========================================
+   قسم الإدارة (للمديرين)
+   ========================================== */
+
+.admin-section {
+    background: linear-gradient(135deg, var(--amber-50), var(--amber-100));
+    border: 2px solid var(--amber-200);
+}
+
+.dark .admin-section {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(245, 158, 11, 0.2));
+    border-color: var(--amber-700);
+}
+
+.admin-section h3 {
+    color: var(--amber-700);
+}
+
+.dark .admin-section h3 {
+    color: var(--amber-300);
+}
+
+.admin-section .settings-item {
+    background: var(--amber-50);
+    border-color: var(--amber-200);
+}
+
+.dark .admin-section .settings-item {
+    background: rgba(245, 158, 11, 0.1);
+    border-color: var(--amber-700);
+}
+
+.admin-section .settings-item:hover {
+    background: var(--amber-100);
+    border-color: var(--amber-300);
+}
+
+.dark .admin-section .settings-item:hover {
+    background: rgba(245, 158, 11, 0.2);
+    border-color: var(--amber-600);
+}
+
+/* ===========================================
+   التصميم المتجاوب
+   ========================================== */
+
+@media (max-width: 768px) {
+    .settings-page {
+        padding: var(--spacing-4);
+    }
+    
+    .settings-section {
+        padding: var(--spacing-6);
+    }
+    
+    .settings-item {
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--spacing-3);
+        text-align: center;
+    }
+    
+    .settings-select {
+        min-width: auto;
+        width: 100%;
+    }
+    
+    .toggle-switch {
+        align-self: center;
+    }
+    
+    .settings-actions {
+        flex-direction: column;
+    }
+    
+    .settings-actions .btn {
+        min-width: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .settings-page {
+        padding: var(--spacing-3);
+    }
+    
+    .settings-section {
+        padding: var(--spacing-4);
+    }
+    
+    .settings-section h3 {
+        font-size: var(--font-size-xl);
+        flex-direction: column;
+        gap: var(--spacing-2);
+        text-align: center;
+    }
+    
+    .settings-item {
+        padding: var(--spacing-4);
+    }
+    
+    .app-info {
+        padding: var(--spacing-4);
+    }
+}
+
+/* ===========================================
+   أنماط الطباعة
+   ========================================== */
+
+@media print {
+    .settings-actions,
+    .toggle-switch {
+        display: none !important;
+    }
+    
+    .settings-section {
+        break-inside: avoid;
+        box-shadow: none;
+        border: 1px solid #ccc;
+    }
+}
+
+/* ===========================================
+   وضع التباين العالي
+   ========================================== */
+
+@media (prefers-contrast: high) {
+    .settings-section,
+    .settings-item {
+        border-width: 2px;
+    }
+    
+    .toggle-switch {
+        border-width: 2px;
+    }
+    
+    .settings-select {
+        border-width: 2px;
+    }
+}
+
+/* ===========================================
+   تقليل الحركة
+   ========================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    .settings-section,
+    .settings-item,
+    .toggle-switch {
+        transition: none;
+    }
+    
+    .app-info::before {
+        animation: none;
+    }
+    
+    .sync-status-dot {
+        animation: none;
+    }
+}
+
+/* ===========================================
+   تحسينات إضافية
+   ========================================== */
+
+/* تحسين التركيز للوصولية */
+.settings-item:focus-within,
+.toggle-switch:focus-visible,
+.settings-select:focus-visible {
+    outline: 2px solid var(--primary-600);
+    outline-offset: 2px;
+}
+
+/* تحسين الأداء */
+.settings-section,
+.settings-item {
+    will-change: transform;
+}
+
+/* تحسين الخطوط */
+.settings-section h3 {
+    text-rendering: optimizeLegibility;
+}
+
+/* ===========================================
+   أنماط خاصة للمكونات
+   ========================================== */
+
+/* مؤشر التحميل للأزرار */
+.btn.loading {
+    position: relative;
+    color: transparent;
+}
+
+.btn.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 16px;
+    height: 16px;
+    border: 2px solid currentColor;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* تحسين النوافذ المنبثقة */
+.settings-modal {
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.settings-modal-content {
+    background: var(--bg-primary);
+    border-radius: var(--radius-3xl);
+    box-shadow: var(--shadow-2xl);
+    border: 1px solid var(--border-color);
+    max-width: 500px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+}

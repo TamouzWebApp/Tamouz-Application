@@ -85,7 +85,8 @@ class ProfileService {
         const joinDate = this.formatDate(this.currentUser.joinDate || '2022-01-15');
 
         return `
-            <div class="profile-card">
+            <div class="profile-page">
+                <div class="profile-card">
                 <div class="profile-header">
                     <div class="profile-avatar">
                         ${initials}
@@ -110,11 +111,11 @@ class ProfileService {
                         <div class="profile-stat-label">Badges Earned</div>
                     </div>
                 </div>
-            </div>
+                </div>
 
-            <div class="profile-card">
-                <h3>Personal Information</h3>
-                <form id="profileForm">
+                <div class="profile-card">
+                    <h3>Personal Information</h3>
+                    <form id="profileForm">
                     <div class="profile-field">
                         <label for="fullName">Full Name</label>
                         <input type="text" id="fullName" value="${this.currentUser.name}" required ${this.isEditing ? '' : 'readonly'}>
@@ -150,13 +151,14 @@ class ProfileService {
                         <textarea id="bio" placeholder="Tell us about yourself..." ${this.isEditing ? '' : 'readonly'}>${this.currentUser.bio || this.getDefaultBio()}</textarea>
                     </div>
                     
-                    <div style="display: flex; gap: 12px; justify-content: flex-end;">
+                        <div class="profile-actions">
                         ${this.getFormActionsHTML()}
                     </div>
-                </form>
-            </div>
+                    </form>
+                </div>
 
-            ${this.currentUser.badges?.length > 0 ? this.getBadgesHTML() : ''}
+                ${this.currentUser.badges?.length > 0 ? this.getBadgesHTML() : ''}
+            </div>
         `;
     }
 

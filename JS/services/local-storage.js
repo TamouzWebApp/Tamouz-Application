@@ -56,16 +56,16 @@ class LocalStorageService {
      */
     async loadInitialEvents() {
         try {
-            const response = await fetch('JS/events.json');
+            const response = await fetch('../JS/events.json');
             if (response.ok) {
                 const data = await response.json();
                 this.saveEvents(data.events);
                 console.log(`✅ Loaded ${data.events.length} initial events`);
             } else {
-                throw new Error('Failed to load events.json');
+                throw new Error('Failed to load JS/events.json');
             }
         } catch (error) {
-            console.warn('⚠️ Failed to load events.json, using demo data:', error);
+            console.warn('⚠️ Failed to load JS/events.json, using demo data:', error);
             this.saveEvents(window.DEMO_EVENTS || []);
         }
     }

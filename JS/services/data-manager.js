@@ -71,7 +71,7 @@ class DataManagerService {
      */
     async loadEventsFromJSON() {
         try {
-            const response = await fetch('JS/events.json');
+            const response = await fetch('../JS/events.json');
             if (response.ok) {
                 const data = await response.json();
                 this.events = data.events || [];

@@ -321,7 +321,7 @@ Additional styles for API integration features
 /* Connection Status Indicator */
 .connection-status {
     position: fixed;
-    bottom: var(--spacing-4);
+    bottom: calc(var(--bottom-nav-height) + var(--spacing-4));
     left: var(--spacing-4);
     padding: var(--spacing-2) var(--spacing-3);
     background: var(--bg-primary);
@@ -366,7 +366,7 @@ Additional styles for API integration features
     }
     
     .connection-status {
-        bottom: calc(var(--bottom-nav-height) + var(--spacing-4));
+        bottom: var(--spacing-4);
     }
 }
 

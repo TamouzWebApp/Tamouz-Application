@@ -81,7 +81,7 @@ class AuthService {
         
         try {
             // Attempt to load from JSON file
-            const response = await fetch('./users.json');
+            const response = await fetch('../HTML/users.json');
             
             if (!response.ok) {
                 throw new Error(`HTTP ${response.status}: ${response.statusText}`);
@@ -100,7 +100,7 @@ class AuthService {
             return this.users;
             
         } catch (error) {
-            console.warn('⚠️ Failed to load users.json:', error.message);
+            console.warn('⚠️ Failed to load HTML/users.json:', error.message);
             console.log('🔄 Falling back to demo data');
             
             // Fallback to demo data

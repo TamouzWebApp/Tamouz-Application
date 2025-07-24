@@ -247,7 +247,7 @@ window.APP_CONFIG = {
     // إعدادات الـ API
     api: {
         eventsFile: 'https://tamouzwebapp.github.io/Tamouz-Application/JSON/events.json',  // ملف الأحداث
-        usersFile: 'https://tamouzwebapp.github.io/Tamouz-Application/JSON/events.json',  // ملف المستخدمين
+        usersFile: 'https://tamouzwebapp.github.io/Tamouz-Application/JSON/users.json',  // ملف المستخدمين
         useLocalStorage: true             // استخدام localStorage
     },
     

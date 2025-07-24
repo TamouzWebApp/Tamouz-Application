@@ -452,19 +452,8 @@ INFORMATION GRID COMPONENT
 Grid layout for educational content and resources
 */
 
-.information-grid {
+.information-content {
     min-height: 400px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* When grid has content */
-.information-grid.has-content {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: var(--spacing-6);
-    min-height: auto;
 }
 
 /* 

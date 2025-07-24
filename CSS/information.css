@@ -1,0 +1,650 @@
+/* 
+===========================================
+SCOUTPLUSE - صفحة المعلومات
+===========================================
+
+أنماط شاملة لصفحة المعلومات التعليمية
+مع دعم كامل للتصميم المتجاوب والمظاهر المتعددة
+*/
+
+/* ===========================================
+   حاوي صفحة المعلومات
+   ========================================== */
+
+.information-page {
+    padding: var(--spacing-6);
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* ===========================================
+   رأس الصفحة
+   ========================================== */
+
+.information-header {
+    text-align: center;
+    margin-bottom: var(--spacing-8);
+    padding: var(--spacing-8);
+    background: linear-gradient(135deg, var(--primary-50), var(--secondary-50));
+    border-radius: var(--radius-3xl);
+    border: 1px solid var(--primary-100);
+}
+
+.dark .information-header {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(14, 165, 233, 0.1));
+    border-color: var(--primary-800);
+}
+
+.information-header h1 {
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--text-primary);
+    background: linear-gradient(135deg, var(--primary-600), var(--secondary-600));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: var(--spacing-4);
+}
+
+.information-header p {
+    font-size: var(--font-size-lg);
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+/* ===========================================
+   فئات المعلومات
+   ========================================== */
+
+.information-categories {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-3);
+    justify-content: center;
+    margin-bottom: var(--spacing-8);
+    padding: var(--spacing-6);
+    background: var(--bg-primary);
+    border-radius: var(--radius-3xl);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+}
+
+.category-btn {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    padding: var(--spacing-3) var(--spacing-5);
+    border: 2px solid var(--border-color);
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
+    border-radius: var(--radius-xl);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    white-space: nowrap;
+    min-height: 48px;
+}
+
+.category-btn:hover {
+    border-color: var(--primary-300);
+    background: var(--primary-50);
+    color: var(--text-primary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+.dark .category-btn:hover {
+    background: var(--primary-900);
+    border-color: var(--primary-700);
+}
+
+.category-btn.active {
+    border-color: var(--primary-600);
+    background: linear-gradient(135deg, var(--primary-100), var(--secondary-100));
+    color: var(--primary-700);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.dark .category-btn.active {
+    background: linear-gradient(135deg, var(--primary-900), var(--secondary-900));
+    color: var(--primary-300);
+}
+
+.category-btn svg {
+    flex-shrink: 0;
+}
+
+/* ===========================================
+   منطقة المحتوى
+   ========================================== */
+
+.information-content-area {
+    background: var(--bg-primary);
+    border-radius: var(--radius-3xl);
+    padding: var(--spacing-8);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+    min-height: 600px;
+}
+
+.category-content {
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===========================================
+   رأس الفئة
+   ========================================== */
+
+.category-header {
+    text-align: center;
+    margin-bottom: var(--spacing-8);
+    padding-bottom: var(--spacing-6);
+    border-bottom: 2px solid var(--border-light);
+}
+
+.category-header h2 {
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-3);
+}
+
+.category-header p {
+    font-size: var(--font-size-lg);
+    color: var(--text-secondary);
+    line-height: var(--line-height-relaxed);
+    margin: 0;
+}
+
+/* ===========================================
+   شبكة المعلومات
+   ========================================== */
+
+.information-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: var(--spacing-6);
+}
+
+/* ===========================================
+   عنصر المعلومات
+   ========================================== */
+
+.information-item {
+    background: var(--bg-secondary);
+    border-radius: var(--radius-3xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-fast);
+    cursor: pointer;
+    border: 1px solid var(--border-light);
+    position: relative;
+}
+
+.information-item:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-xl);
+    border-color: var(--primary-200);
+}
+
+.information-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-500), var(--secondary-500));
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+}
+
+.information-item:hover::before {
+    opacity: 1;
+}
+
+/* ===========================================
+   صورة العنصر
+   ========================================== */
+
+.information-item-image {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--gray-100), var(--gray-200));
+}
+
+.information-item-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-normal);
+}
+
+.information-item:hover .information-item-image img {
+    transform: scale(1.08);
+}
+
+.difficulty-badge {
+    position: absolute;
+    top: var(--spacing-3);
+    right: var(--spacing-3);
+    padding: var(--spacing-1) var(--spacing-3);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: var(--shadow-sm);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.difficulty-beginner {
+    background: rgba(34, 197, 94, 0.9);
+    color: white;
+}
+
+.difficulty-intermediate {
+    background: rgba(245, 158, 11, 0.9);
+    color: white;
+}
+
+.difficulty-advanced {
+    background: rgba(239, 68, 68, 0.9);
+    color: white;
+}
+
+/* ===========================================
+   محتوى العنصر
+   ========================================== */
+
+.information-item-content {
+    padding: var(--spacing-6);
+}
+
+.information-item-title {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-3);
+    line-height: var(--line-height-tight);
+}
+
+.information-item-uses {
+    color: var(--text-secondary);
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-relaxed);
+    margin-bottom: var(--spacing-4);
+    font-style: italic;
+}
+
+.information-item-steps {
+    margin-bottom: var(--spacing-5);
+}
+
+.information-item-steps h4 {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-2);
+}
+
+.information-item-steps ol {
+    padding-left: var(--spacing-4);
+    color: var(--text-secondary);
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-relaxed);
+}
+
+.information-item-steps li {
+    margin-bottom: var(--spacing-1);
+    padding-left: var(--spacing-1);
+}
+
+.information-item-steps li::marker {
+    color: var(--primary-600);
+    font-weight: var(--font-weight-bold);
+}
+
+.view-details-btn {
+    width: 100%;
+    justify-content: center;
+}
+
+/* ===========================================
+   تفاصيل العنصر (في النافذة المنبثقة)
+   ========================================== */
+
+.information-details {
+    max-width: 100%;
+}
+
+.information-details img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: var(--radius-xl);
+    margin-bottom: var(--spacing-4);
+}
+
+.detail-section {
+    margin-bottom: var(--spacing-6);
+}
+
+.detail-section h4 {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-3);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+}
+
+.detail-section h4::before {
+    content: '';
+    width: 4px;
+    height: 20px;
+    background: linear-gradient(135deg, var(--primary-500), var(--secondary-500));
+    border-radius: var(--radius-full);
+}
+
+.detail-section p {
+    color: var(--text-secondary);
+    line-height: var(--line-height-relaxed);
+    margin: 0;
+}
+
+.detailed-steps {
+    padding-left: var(--spacing-5);
+    color: var(--text-secondary);
+    line-height: var(--line-height-relaxed);
+}
+
+.detailed-steps li {
+    margin-bottom: var(--spacing-2);
+    padding-left: var(--spacing-2);
+}
+
+.detailed-steps li::marker {
+    color: var(--primary-600);
+    font-weight: var(--font-weight-bold);
+}
+
+.tips-list {
+    padding-left: var(--spacing-5);
+    color: var(--text-secondary);
+    line-height: var(--line-height-relaxed);
+}
+
+.tips-list li {
+    margin-bottom: var(--spacing-2);
+    padding-left: var(--spacing-2);
+}
+
+.tips-list li::marker {
+    content: '💡';
+}
+
+/* ===========================================
+   حالة فارغة
+   ========================================== */
+
+.information-empty {
+    text-align: center;
+    padding: var(--spacing-16);
+    color: var(--text-muted);
+    background: var(--bg-secondary);
+    border-radius: var(--radius-3xl);
+    border: 2px dashed var(--border-color);
+}
+
+.information-empty svg {
+    margin-bottom: var(--spacing-4);
+    opacity: 0.6;
+}
+
+.information-empty h3 {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-2);
+}
+
+.information-empty p {
+    font-size: var(--font-size-base);
+    color: var(--text-muted);
+    line-height: var(--line-height-relaxed);
+    margin: 0;
+}
+
+/* ===========================================
+   حالة التحميل
+   ========================================== */
+
+.information-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: var(--spacing-16);
+    color: var(--text-muted);
+    gap: var(--spacing-3);
+}
+
+.loading-spinner {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* ===========================================
+   التصميم المتجاوب
+   ========================================== */
+
+@media (max-width: 768px) {
+    .information-page {
+        padding: var(--spacing-4);
+    }
+    
+    .information-header {
+        padding: var(--spacing-6);
+        margin-bottom: var(--spacing-6);
+    }
+    
+    .information-header h1 {
+        font-size: var(--font-size-3xl);
+    }
+    
+    .information-categories {
+        padding: var(--spacing-4);
+        gap: var(--spacing-2);
+    }
+    
+    .category-btn {
+        padding: var(--spacing-2) var(--spacing-4);
+        font-size: var(--font-size-xs);
+        min-height: 44px;
+    }
+    
+    .information-content-area {
+        padding: var(--spacing-6);
+        min-height: 400px;
+    }
+    
+    .information-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-4);
+    }
+    
+    .information-item-image {
+        height: 160px;
+    }
+    
+    .information-item-content {
+        padding: var(--spacing-4);
+    }
+    
+    .category-header h2 {
+        font-size: var(--font-size-2xl);
+    }
+}
+
+@media (max-width: 480px) {
+    .information-page {
+        padding: var(--spacing-3);
+    }
+    
+    .information-header {
+        padding: var(--spacing-4);
+    }
+    
+    .information-header h1 {
+        font-size: var(--font-size-2xl);
+    }
+    
+    .information-categories {
+        padding: var(--spacing-3);
+        gap: var(--spacing-1);
+    }
+    
+    .category-btn {
+        padding: var(--spacing-1) var(--spacing-3);
+        font-size: var(--font-size-xs);
+        min-height: 40px;
+    }
+    
+    .information-content-area {
+        padding: var(--spacing-4);
+    }
+    
+    .information-item-image {
+        height: 140px;
+    }
+    
+    .information-item-content {
+        padding: var(--spacing-3);
+    }
+    
+    .information-item-title {
+        font-size: var(--font-size-lg);
+    }
+    
+    .category-header h2 {
+        font-size: var(--font-size-xl);
+    }
+    
+    .detailed-steps,
+    .tips-list {
+        padding-left: var(--spacing-4);
+    }
+}
+
+/* ===========================================
+   أنماط الطباعة
+   ========================================== */
+
+@media print {
+    .information-categories,
+    .view-details-btn {
+        display: none !important;
+    }
+    
+    .information-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .information-item {
+        break-inside: avoid;
+        box-shadow: none;
+        border: 1px solid #ccc;
+    }
+    
+    .information-item-image {
+        height: 150px;
+    }
+}
+
+/* ===========================================
+   وضع التباين العالي
+   ========================================== */
+
+@media (prefers-contrast: high) {
+    .information-item,
+    .category-btn {
+        border-width: 2px;
+    }
+    
+    .difficulty-badge {
+        border: 1px solid currentColor;
+    }
+}
+
+/* ===========================================
+   تقليل الحركة
+   ========================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    .information-item,
+    .category-btn {
+        transition: none;
+    }
+    
+    .information-item:hover .information-item-image img {
+        transform: none;
+    }
+    
+    .category-content {
+        animation: none;
+    }
+    
+    .loading-spinner {
+        animation: none;
+    }
+}
+
+/* ===========================================
+   تحسينات إضافية
+   ========================================== */
+
+/* تحسين التركيز للوصولية */
+.category-btn:focus-visible,
+.information-item:focus-visible,
+.view-details-btn:focus-visible {
+    outline: 2px solid var(--primary-600);
+    outline-offset: 2px;
+}
+
+/* تحسين الأداء */
+.information-item-image,
+.category-btn {
+    will-change: transform;
+}
+
+/* تحسين التحميل */
+.information-item-image img {
+    loading: lazy;
+}
+
+/* تحسين الخطوط */
+.information-item-title,
+.category-header h2 {
+    text-rendering: optimizeLegibility;
+}

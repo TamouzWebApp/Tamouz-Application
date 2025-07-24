@@ -121,6 +121,30 @@ class InformationService {
      */
     getInformationHTML() {
         return `
+            <div class="information-page">
+                <div class="information-header">
+                    <h1>Information Center</h1>
+                    <p>Essential scouting knowledge and skills for every adventure</p>
+                </div>
+                
+                <div class="information-categories">
+                    ${this.categories.map(category => this.getCategoryButtonHTML(category)).join('')}
+                </div>
+                
+                <div class="information-content-area">
+                    <div id="categoryContent" class="category-content">
+                        <!-- Category content will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    /**
+     * Get Information Page HTML (Old method - keeping for compatibility)
+     */
+    getInformationHTMLOld() {
+        return `
             <div class="information-categories">
                 ${this.categories.map(category => this.getCategoryButtonHTML(category)).join('')}
             </div>

@@ -18,7 +18,7 @@ window.APP_CONFIG = {
     
     // API settings
     api: {
-        eventsFile: './JSON/events.json',
+        eventsFile: '../JSON/events.json',
         usersFile: '../JSON/users.json',
         useLocalStorage: true
     },

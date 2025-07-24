@@ -45,7 +45,11 @@ class EventsService {
         
         await this.loadEvents();
         this.setupEventListeners();
-        this.renderEventsPage();
+        
+        // تأكد من عرض الصفحة إذا كانت نشطة
+        if (window.scoutPluseApp?.getCurrentPage() === 'events') {
+            this.renderEventsPage();
+        }
         
         console.log('✅ تم تهيئة خدمة الأحداث بنجاح');
     }
@@ -57,6 +61,7 @@ class EventsService {
         // Listen for page changes
         window.addEventListener('pageChanged', (e) => {
             if (e.detail.page === 'events') {
+                console.log('📅 Events page activated, rendering content...');
                 this.renderEventsPage();
             }
         });
@@ -64,6 +69,7 @@ class EventsService {
         // Listen for API events
         window.addEventListener('dataManagereventsLoaded', (e) => {
             this.events = e.detail.events || [];
+            console.log(`📥 Received ${this.events.length} events from data manager`);
             this.renderEventsPage();
         });
 
@@ -151,7 +157,12 @@ class EventsService {
             
             // تحميل من localStorage أولاً
             const localStorageService = window.getLocalStorageService();
-            this.events = localStorageService.getEvents();
+            if (localStorageService) {
+                this.events = localStorageService.getEvents();
+            } else {
+                console.warn('⚠️ LocalStorage service not available');
+                this.events = [];
+            }
             
             // إذا كانت فارغة، حاول التحميل من JSON
             if (this.events.length === 0) {
@@ -162,7 +173,9 @@ class EventsService {
                     if (response.ok) {
                         const data = await response.json();
                         this.events = data.events || [];
-                        localStorageService.saveEvents(this.events);
+                        if (localStorageService) {
+                            localStorageService.saveEvents(this.events);
+                        }
                         console.log(`✅ تم تحميل ${this.events.length} حدث من ملف JSON`);
                     } else {
                         throw new Error('Failed to load JSON file');
@@ -171,7 +184,9 @@ class EventsService {
                     console.error('❌ فشل تحميل ملف JSON:', jsonError);
                     // استخدام بيانات تجريبية
                     this.events = this.getDemoEvents();
-                    localStorageService.saveEvents(this.events);
+                    if (localStorageService) {
+                        localStorageService.saveEvents(this.events);
+                    }
                     console.log('📋 استخدام البيانات التجريبية');
                 }
             }
@@ -195,6 +210,8 @@ class EventsService {
             this.showNotification('تم تحميل البيانات التجريبية', 'info');
         } finally {
             this.setLoading(false);
+            // تأكد من عرض الأحداث بعد التحميل
+            this.renderEventsPage();
         }
     }
 
@@ -352,6 +369,8 @@ class EventsService {
             .join('');
 
         this.setupEventCardListeners();
+        
+        console.log(`✅ Rendered ${filteredEvents.length} events on page`);
     }
 
     /**
@@ -387,11 +406,14 @@ class EventsService {
         });
 
         // ترتيب حسب التاريخ (القادمة أولاً)
-        return filtered.sort((a, b) => {
+        const sorted = filtered.sort((a, b) => {
             const dateA = new Date(a.date);
             const dateB = new Date(b.date);
             return dateA - dateB;
         });
+        
+        console.log(`🔍 Filtered events: ${sorted.length} out of ${this.events.length} total events`);
+        return sorted;
     }
 
     /**
@@ -1190,10 +1212,13 @@ function getEventsService() {
 // ===========================================
 
 document.addEventListener('DOMContentLoaded', () => {
-    if (window.AuthService?.isAuthenticated()) {
-        console.log('📅 Initializing Events Service...');
-        window.eventsService = getEventsService();
-    }
+    // تأخير قصير للتأكد من تحميل جميع الخدمات
+    setTimeout(() => {
+        if (window.AuthService?.isAuthenticated()) {
+            console.log('📅 Initializing Events Service...');
+            window.eventsService = getEventsService();
+        }
+    }, 500);
 });
 
 // ===========================================

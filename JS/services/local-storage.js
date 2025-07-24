@@ -41,6 +41,8 @@ class LocalStorageService {
         if (!existingEvents || existingEvents.length === 0) {
             console.log('📥 Loading initial events from JSON file...');
             await this.loadInitialEvents();
+        } else {
+            console.log(`📋 Found ${existingEvents.length} existing events in localStorage`);
         }
         
         // تحقق من وجود المستخدمين
@@ -48,6 +50,8 @@ class LocalStorageService {
         if (!existingUsers || Object.keys(existingUsers).length === 0) {
             console.log('👥 Loading initial users from demo data...');
             await this.loadInitialUsers();
+        } else {
+            console.log(`👥 Found ${Object.keys(existingUsers).length} existing users in localStorage`);
         }
     }
 
@@ -204,8 +208,11 @@ class LocalStorageService {
             const stored = localStorage.getItem(this.eventsKey);
             if (stored) {
                 const data = JSON.parse(stored);
-                return data.events || [];
+                const events = data.events || [];
+                console.log(`📋 Retrieved ${events.length} events from localStorage`);
+                return events;
             }
+            console.log('📋 No events found in localStorage');
             return [];
         } catch (error) {
             console.error('❌ Failed to load events:', error);

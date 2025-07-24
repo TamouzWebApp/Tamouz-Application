@@ -24,7 +24,7 @@ Full-screen login interface with centered content
 
 .login-screen {
     min-height: 100vh;
-    background: linear-gradient(135deg, var(--primary-50) 0%, #e6fffa 100%);
+    background: linear-gradient(135deg, var(--primary-50) 0%, var(--secondary-50) 100%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -35,7 +35,7 @@ Full-screen login interface with centered content
 
 /* Dark theme background */
 .dark .login-screen {
-    background: linear-gradient(135deg, var(--gray-900) 0%, var(--primary-900) 100%);
+    background: linear-gradient(135deg, var(--gray-900) 0%, rgba(16, 185, 129, 0.1) 100%);
 }
 
 /* Animated background elements */
@@ -142,7 +142,7 @@ Card container for the login form
 .login-form-container {
     background-color: var(--bg-primary);
     border-radius: var(--radius-2xl);
-    padding: var(--spacing-6);
+    padding: var(--spacing-8);
     box-shadow: var(--shadow-xl);
     transition: all var(--transition-normal);
     border: 1px solid var(--border-light);
@@ -207,7 +207,7 @@ Input fields with icons and interactive elements
 /* Input field icons */
 .input-icon {
     position: absolute;
-    left: var(--spacing-3);
+    left: var(--spacing-4);
     top: 50%;
     transform: translateY(-50%);
     color: var(--text-muted);
@@ -219,7 +219,7 @@ Input fields with icons and interactive elements
 /* Input fields */
 .input-group input {
     width: 100%;
-    padding: var(--spacing-3) var(--spacing-3) var(--spacing-3) 2.5rem;
+    padding: var(--spacing-4) var(--spacing-4) var(--spacing-4) 3rem;
     border: 2px solid var(--border-color);
     border-radius: var(--radius-lg);
     font-size: var(--font-size-base);
@@ -257,7 +257,7 @@ Show/hide password functionality
 
 .password-toggle {
     position: absolute;
-    right: var(--spacing-3);
+    right: var(--spacing-4);
     top: 50%;
     transform: translateY(-50%);
     background: none;
@@ -335,7 +335,7 @@ Quick access to demo user accounts
 .demo-accounts {
     padding-top: var(--spacing-6);
     border-top: 1px solid var(--border-light);
-    animation: fadeIn 1s ease-out 0.4s both;
+    animation: fadeIn 0.8s ease-out 0.3s both;
 }
 
 @keyframes fadeIn {
@@ -346,7 +346,7 @@ Quick access to demo user accounts
 /* Demo section title */
 .demo-title {
     font-size: var(--font-size-xs);
-    color: var(--text-muted);
+    color: var(--text-secondary);
     text-align: center;
     margin-bottom: var(--spacing-3);
     text-transform: uppercase;
@@ -365,7 +365,7 @@ Quick access to demo user accounts
 .demo-account {
     width: 100%;
     text-align: left;
-    padding: var(--spacing-3);
+    padding: var(--spacing-4);
     border: 1px solid var(--border-light);
     border-radius: var(--radius-lg);
     background-color: transparent;
@@ -391,7 +391,7 @@ Quick access to demo user accounts
 /* Demo account role */
 .demo-role {
     font-size: var(--font-size-sm);
-    font-weight: 500;
+    font-weight: var(--font-weight-semibold);
     color: var(--text-primary);
     margin-bottom: var(--spacing-1);
 }
@@ -399,7 +399,7 @@ Quick access to demo user accounts
 /* Demo account email */
 .demo-email {
     font-size: var(--font-size-xs);
-    color: var(--text-muted);
+    color: var(--text-secondary);
     font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
 }
 
@@ -492,16 +492,16 @@ Mobile and tablet optimizations
     }
     
     .input-group input {
-        padding: var(--spacing-2) var(--spacing-2) var(--spacing-2) 2.25rem;
+        padding: var(--spacing-3) var(--spacing-3) var(--spacing-3) 2.5rem;
         font-size: var(--font-size-sm);
     }
     
     .input-icon {
-        left: var(--spacing-2);
+        left: var(--spacing-3);
     }
     
     .password-toggle {
-        right: var(--spacing-2);
+        right: var(--spacing-3);
     }
 }
 

@@ -56,7 +56,7 @@ class LocalStorageService {
      */
     async loadInitialEvents() {
         try {
-            const response = await fetch('../JS/events.json');
+            const response = await fetch('../JSON/events.json');
             if (response.ok) {
                 const data = await response.json();
                 this.saveEvents(data.events);

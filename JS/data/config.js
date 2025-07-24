@@ -18,8 +18,8 @@ window.APP_CONFIG = {
     
     // إعدادات الـ API
     api: {
-        eventsFile: '../JS/events.json', // مسار ملف الأحداث
-        usersFile: 'HTML/users.json', // مسار ملف المستخدمين
+        eventsFile: '../JSON/events.json', // مسار ملف الأحداث
+        usersFile: '../JSON/users.json', // مسار ملف المستخدمين
         useLocalStorage: true // استخدام localStorage للحفظ
     },
     

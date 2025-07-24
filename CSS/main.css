@@ -1379,21 +1379,21 @@ Consistent form styling
 */
 
 .form-group {
-    margin-bottom: var(--spacing-5);
+    margin-bottom: var(--spacing-4);
 }
 
 .form-group label {
     display: block;
     font-size: var(--font-size-sm);
-    font-weight: var(--font-weight-medium);
+    font-weight: var(--font-weight-semibold);
     color: var(--text-primary);
     margin-bottom: var(--spacing-2);
 }
 
 .form-control {
     width: 100%;
-    padding: var(--spacing-3);
-    border: 1px solid var(--border-color);
+    padding: var(--spacing-4);
+    border: 2px solid var(--border-color);
     border-radius: var(--radius-lg);
     font-size: var(--font-size-base);
     background-color: var(--bg-primary);
@@ -1404,11 +1404,12 @@ Consistent form styling
 .form-control:focus {
     outline: none;
     border-color: var(--primary-500);
-    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+    transform: translateY(-1px);
 }
 
 .form-control::placeholder {
-    color: var(--text-muted);
+    color: var(--text-secondary);
 }
 
 /* 

@@ -705,7 +705,7 @@ Navigation controls for paginated content
 
 .pagination-btn:hover:not(:disabled) {
     background-color: var(--gray-100);
-    border-color: var(--gray-300);
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
     transform: translateY(-1px);
 }
 

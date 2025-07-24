@@ -62,10 +62,10 @@ class LocalStorageService {
                 this.saveEvents(data.events);
                 console.log(`✅ Loaded ${data.events.length} initial events`);
             } else {
-                throw new Error('Failed to load JS/events.json');
+                throw new Error('Failed to load JSON/events.json');
             }
         } catch (error) {
-            console.warn('⚠️ Failed to load JS/events.json, using demo data:', error);
+            console.warn('⚠️ Failed to load JSON/events.json, using demo data:', error);
             this.saveEvents(window.DEMO_EVENTS || []);
         }
     }

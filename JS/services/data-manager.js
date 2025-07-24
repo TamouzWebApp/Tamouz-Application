@@ -71,7 +71,7 @@ class DataManagerService {
      */
     async loadEventsFromJSON() {
         try {
-            const eventsFilePath = window.getEventsFilePath() || '../JSON/events.json';
+            const eventsFilePath = window.getEventsFilePath() || 'https://tamouzwebapp.github.io/Tamouz-Application/JSON/events.json';
             const response = await fetch(`${eventsFilePath}?t=${Date.now()}`);
             if (response.ok) {
                 const data = await response.json();

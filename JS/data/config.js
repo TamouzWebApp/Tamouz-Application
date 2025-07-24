@@ -18,7 +18,7 @@ window.APP_CONFIG = {
     
     // API settings
     api: {
-        eventsFile: '../../JSON/events.json',
+        eventsFile: 'https://tamouzwebapp.github.io/Tamouz-Application/JSON/events.json',
         usersFile: 'https://tamouzwebapp.github.io/Tamouz-Application/JSON/users.json',
         useLocalStorage: true
     },

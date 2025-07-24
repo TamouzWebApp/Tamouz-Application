@@ -56,7 +56,7 @@ class LocalStorageService {
      */
     async loadInitialEvents() {
         try {
-            const eventsFilePath = window.getEventsFilePath() || '../JSON/events.json';
+            const eventsFilePath = window.getEventsFilePath() || 'https://tamouzwebapp.github.io/Tamouz-Application/JSON/events.json';
             const response = await fetch(`${eventsFilePath}?t=${Date.now()}`);
             if (response.ok) {
                 const data = await response.json();
@@ -150,7 +150,7 @@ class LocalStorageService {
      */
     async loadInitialUsers() {
         try {
-            const usersFilePath = window.getUsersFilePath() || '../JSON/users.json';
+            const usersFilePath = window.getUsersFilePath() || 'https://tamouzwebapp.github.io/Tamouz-Application/JSON/users.json';
             const response = await fetch(usersFilePath);
             if (response.ok) {
                 const data = await response.json();

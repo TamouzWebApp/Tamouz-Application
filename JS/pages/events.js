@@ -157,7 +157,7 @@ class EventsService {
             if (this.events.length === 0) {
                 console.log('📄 No events in localStorage, loading from JSON...');
                 try {
-                    const eventsFilePath = window.getEventsFilePath() || '../JSON/events.json';
+                    const eventsFilePath = window.getEventsFilePath() || 'https://tamouzwebapp.github.io/Tamouz-Application/JSON/events.json';
                     const response = await fetch(`${eventsFilePath}?t=${Date.now()}`);
                     if (response.ok) {
                         const data = await response.json();

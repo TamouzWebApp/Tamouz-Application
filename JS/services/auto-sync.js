@@ -189,7 +189,7 @@ class AutoSyncService {
         try {
             console.log('🔍 Checking for events file updates...');
             
-            const eventsFilePath = window.getEventsFilePath() || '../JSON/events.json';
+            const eventsFilePath = window.getEventsFilePath() || 'https://tamouzwebapp.github.io/Tamouz-Application/JSON/events.json';
             
             // إضافة timestamp لتجنب cache المتصفح
             const url = `${eventsFilePath}?t=${Date.now()}`;
@@ -232,7 +232,7 @@ class AutoSyncService {
      */
     async fetchAndUpdateEvents() {
         try {
-            const eventsFilePath = window.getEventsFilePath() || '../JSON/events.json';
+            const eventsFilePath = window.getEventsFilePath() || 'https://tamouzwebapp.github.io/Tamouz-Application/JSON/events.json';
             const url = `${eventsFilePath}?t=${Date.now()}`;
             
             const response = await fetch(url, {

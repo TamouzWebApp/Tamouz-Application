@@ -80,7 +80,7 @@ class AuthService {
         
         try {
             // Attempt to load from JSON file
-            const usersFilePath = window.getUsersFilePath() || '../JSON/users.json';
+            const usersFilePath = window.getUsersFilePath() || 'https://tamouzwebapp.github.io/Tamouz-Application/JSON/users.json';
             const response = await fetch(usersFilePath);
             
             if (!response.ok) {

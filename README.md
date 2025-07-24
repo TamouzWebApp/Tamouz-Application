@@ -246,7 +246,7 @@ window.APP_CONFIG = {
     
     // إعدادات الـ API
     api: {
-        eventsFile: '../JS/events.json',  // ملف الأحداث
+        eventsFile: '../JSON/events.json',  // ملف الأحداث
         usersFile: '../HTML/users.json',  // ملف المستخدمين
         useLocalStorage: true             // استخدام localStorage
     },
@@ -636,7 +636,7 @@ const translations = {
 ❌ مشاكل في localStorage
 
 # الحلول:
-✅ تأكد من وجود JS/events.json
+✅ تأكد من وجود JSON/events.json
 ✅ امسح localStorage وأعد التحميل
 ✅ تحقق من وحدة تحكم المطور للأخطاء
 ```

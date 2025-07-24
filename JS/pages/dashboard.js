@@ -127,7 +127,7 @@ class DashboardService {
             
             // Others see only their troop's events
             return event.troop === this.currentUser.troop && event.status === 'upcoming';
-        }).slice(0, 3);
+        }).slice(0, 1); // Show only the most recent event
 
         if (troopEvents.length === 0) {
             recentEventsContainer.innerHTML = this.getEmptyEventsHTML();
@@ -141,7 +141,7 @@ class DashboardService {
         // Add event listeners
         this.setupRecentEventListeners();
         
-        console.log(`✅ Loaded ${troopEvents.length} recent events`);
+        console.log(`✅ Loaded the most recent event`);
     }
 
     /**
@@ -544,8 +544,8 @@ class DashboardService {
                     <line x1="8" y1="2" x2="8" y2="6"></line>
                     <line x1="3" y1="10" x2="21" y2="10"></line>
                 </svg>
-                <h3>No upcoming events</h3>
-                <p>Check back later for new activities in your troop</p>
+                <h3>No recent events</h3>
+                <p>No recent activities to display. Check the Events page for all upcoming activities.</p>
             </div>
         `;
     }

@@ -890,7 +890,7 @@ Enhanced dashboard layout and components
 .recent-events {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-6);
+    gap: var(--spacing-4);
 }
 
 .recent-event {
@@ -900,6 +900,7 @@ Enhanced dashboard layout and components
     border: 1px solid var(--border-light);
     transition: all var(--transition-fast);
     cursor: pointer;
+    max-width: 100%;
 }
 
 .recent-event:hover {
@@ -910,7 +911,7 @@ Enhanced dashboard layout and components
 
 .recent-event-image {
     position: relative;
-    height: 200px;
+    height: 240px;
     overflow: hidden;
 }
 

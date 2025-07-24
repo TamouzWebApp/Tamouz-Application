@@ -105,19 +105,19 @@ class DashboardService {
 
         console.log('📅 Loading recent events...');
 
-        // Get events from Data Manager if available
-        if (window.getDataManagerService) {
-            try {
-                const dataManager = window.getDataManagerService();
-                const data = await dataManager.readEvents();
-                this.events = data.events || [];
-            } catch (error) {
-                console.warn('⚠️ Failed to load events from data manager:', error);
-                this.events = window.DEMO_EVENTS || [];
+        // Get events from localStorage
+        try {
+            const localStorageService = window.getLocalStorageService();
+            this.events = localStorageService.getEvents();
+            
+            // إذا كانت فارغة، استخدم البيانات التجريبية
+            if (this.events.length === 0) {
+                this.events = this.getDemoEvents();
+                localStorageService.saveEvents(this.events);
             }
-        } else {
-            // Fallback to demo data
-            this.events = window.DEMO_EVENTS || [];
+        } catch (error) {
+            console.warn('⚠️ Failed to load events:', error);
+            this.events = this.getDemoEvents();
         }
 
         // Filter events by user's troop and status
@@ -142,6 +142,48 @@ class DashboardService {
         this.setupRecentEventListeners();
         
         console.log(`✅ Loaded ${troopEvents.length} recent events`);
+    }
+
+    /**
+     * الحصول على بيانات تجريبية
+     */
+    getDemoEvents() {
+        return [
+            {
+                id: "demo_1",
+                title: "رحلة تخييم نهاية الأسبوع",
+                description: "مغامرة تخييم لثلاثة أيام مع أنشطة المشي والنار.",
+                date: "2025-01-20",
+                time: "09:00",
+                location: "موقع التخييم الجبلي",
+                attendees: [],
+                maxAttendees: 25,
+                category: "ramita",
+                image: "https://images.pexels.com/photos/1061640/pexels-photo-1061640.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+                status: "upcoming",
+                troop: "Ramita",
+                createdBy: "1",
+                createdAt: "2025-01-15T10:00:00Z",
+                updatedAt: "2025-01-15T10:00:00Z"
+            },
+            {
+                id: "demo_2",
+                title: "مشروع خدمة المجتمع",
+                description: "ساعد في تنظيف الحديقة المحلية وزراعة أشجار جديدة.",
+                date: "2025-01-25",
+                time: "14:00",
+                location: "الحديقة المركزية",
+                attendees: [],
+                maxAttendees: 20,
+                category: "ma3lola",
+                image: "https://images.pexels.com/photos/2885320/pexels-photo-2885320.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+                status: "upcoming",
+                troop: "Ma3lola",
+                createdBy: "2",
+                createdAt: "2025-01-14T15:30:00Z",
+                updatedAt: "2025-01-14T15:30:00Z"
+            }
+        ];
     }
 
     /**
@@ -546,6 +588,23 @@ class DashboardService {
             });
         });
     }
+
+    /**
+     * Setup Troop Overview Listeners
+     */
+    setupTroopOverviewListeners() {
+        const clickableStats = document.querySelectorAll('.clickable-stat');
+        clickableStats.forEach(stat => {
+            stat.addEventListener('click', () => {
+                const action = stat.dataset.action;
+                if (action === 'show-members') {
+                    this.showTroopMembers();
+                }
+            });
+        });
+    }
+
+    /**
      * Show Troop Members Modal
      */
     async showTroopMembers() {

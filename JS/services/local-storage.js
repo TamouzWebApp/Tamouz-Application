@@ -60,7 +60,8 @@ class LocalStorageService {
             const response = await fetch(`${eventsFilePath}?t=${Date.now()}`);
             if (response.ok) {
                 const data = await response.json();
-                this.saveEvents(data.events);
+                const events = data.events || [];
+                this.saveEvents(events);
                 console.log(`✅ Loaded ${data.events.length} initial events`);
                 
                 // إرسال إشعار للمستخدم
@@ -76,13 +77,69 @@ class LocalStorageService {
         } catch (error) {
             console.error('❌ Failed to load JSON/events.json:', error);
             console.log('🔄 Using empty events array - please check JSON/events.json file');
-            this.saveEvents([]);
+            
+            // استخدام بيانات تجريبية
+            const demoEvents = [
+                {
+                    id: "demo_1",
+                    title: "رحلة تخييم نهاية الأسبوع",
+                    description: "مغامرة تخييم لثلاثة أيام مع أنشطة المشي والنار. تعلم مهارات البقاء في الهواء الطلق واستمتع بالطبيعة.",
+                    date: "2025-01-20",
+                    time: "09:00",
+                    location: "موقع التخييم الجبلي",
+                    attendees: [],
+                    maxAttendees: 25,
+                    category: "ramita",
+                    image: "https://images.pexels.com/photos/1061640/pexels-photo-1061640.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+                    status: "upcoming",
+                    troop: "Ramita",
+                    createdBy: "1",
+                    createdAt: "2025-01-15T10:00:00Z",
+                    updatedAt: "2025-01-15T10:00:00Z"
+                },
+                {
+                    id: "demo_2",
+                    title: "مشروع خدمة المجتمع",
+                    description: "ساعد في تنظيف الحديقة المحلية وزراعة أشجار جديدة. اصنع تأثيراً إيجابياً في مجتمعنا.",
+                    date: "2025-01-25",
+                    time: "14:00",
+                    location: "الحديقة المركزية",
+                    attendees: [],
+                    maxAttendees: 20,
+                    category: "ma3lola",
+                    image: "https://images.pexels.com/photos/2885320/pexels-photo-2885320.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+                    status: "upcoming",
+                    troop: "Ma3lola",
+                    createdBy: "2",
+                    createdAt: "2025-01-14T15:30:00Z",
+                    updatedAt: "2025-01-14T15:30:00Z"
+                },
+                {
+                    id: "demo_3",
+                    title: "ورشة الإسعافات الأولية",
+                    description: "تعلم مهارات الإسعافات الأولية الأساسية. مدربون معتمدون سيرشدونك خلال التمارين العملية.",
+                    date: "2025-01-28",
+                    time: "10:00",
+                    location: "قاعة الكشافة",
+                    attendees: [],
+                    maxAttendees: 15,
+                    category: "sergila",
+                    image: "https://images.pexels.com/photos/1170979/pexels-photo-1170979.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+                    status: "upcoming",
+                    troop: "Sergila",
+                    createdBy: "1",
+                    createdAt: "2025-01-13T09:15:00Z",
+                    updatedAt: "2025-01-13T09:15:00Z"
+                }
+            ];
+            
+            this.saveEvents(demoEvents);
             
             // إرسال إشعار خطأ للمستخدم
             if (window.EventsService?.getInstance) {
                 setTimeout(() => {
                     const eventsService = window.EventsService.getInstance();
-                    eventsService.showNotification('فشل تحميل ملف الأحداث - تحقق من JSON/events.json', 'error');
+                    eventsService.showNotification('تم تحميل البيانات التجريبية - تحقق من JSON/events.json', 'warning');
                 }, 1000);
             }
         }

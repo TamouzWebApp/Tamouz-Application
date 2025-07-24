@@ -149,19 +149,31 @@ class EventsService {
         try {
             console.log('📥 تحميل الأحداث...');
             
-            // تحميل من Data Manager المحلي
-            const dataManager = window.getDataManagerService();
-            
-            // محاولة تحميل من localStorage أولاً
-            let data = await dataManager.readEvents();
-            this.events = data.events || [];
+            // تحميل من localStorage أولاً
+            const localStorageService = window.getLocalStorageService();
+            this.events = localStorageService.getEvents();
             
             // إذا كانت فارغة، حاول التحميل من JSON
             if (this.events.length === 0) {
                 console.log('📄 No events in localStorage, loading from JSON...');
-                await dataManager.loadEventsFromJSON();
-                data = await dataManager.readEvents();
-                this.events = data.events || [];
+                try {
+                    const eventsFilePath = window.getEventsFilePath() || '../JSON/events.json';
+                    const response = await fetch(`${eventsFilePath}?t=${Date.now()}`);
+                    if (response.ok) {
+                        const data = await response.json();
+                        this.events = data.events || [];
+                        localStorageService.saveEvents(this.events);
+                        console.log(`✅ تم تحميل ${this.events.length} حدث من ملف JSON`);
+                    } else {
+                        throw new Error('Failed to load JSON file');
+                    }
+                } catch (jsonError) {
+                    console.error('❌ فشل تحميل ملف JSON:', jsonError);
+                    // استخدام بيانات تجريبية
+                    this.events = this.getDemoEvents();
+                    localStorageService.saveEvents(this.events);
+                    console.log('📋 استخدام البيانات التجريبية');
+                }
             }
             
             this.lastSync = new Date().toISOString();
@@ -177,10 +189,10 @@ class EventsService {
         } catch (error) {
             console.error('❌ فشل تحميل البيانات:', error.message);
             
-            // Use empty array if loading fails
-            this.events = [];
-            console.log('📋 Using empty events array - please check JSON files');
-            this.showNotification('فشل تحميل البيانات - تحقق من ملفات JSON', 'error');
+            // Use demo data if loading fails
+            this.events = this.getDemoEvents();
+            console.log('📋 Using demo events data');
+            this.showNotification('تم تحميل البيانات التجريبية', 'info');
         } finally {
             this.setLoading(false);
         }
@@ -193,8 +205,8 @@ class EventsService {
         try {
             console.log('💾 حفظ الأحداث...');
             
-            const dataManager = window.getDataManagerService();
-            const result = await dataManager.writeEvents(this.events);
+            const localStorageService = window.getLocalStorageService();
+            const result = localStorageService.saveEvents(this.events);
             this.lastSync = new Date().toISOString();
             
             console.log('✅ تم حفظ الأحداث محلياً');
@@ -945,6 +957,65 @@ class EventsService {
                 <span>جاري تحميل الأحداث...</span>
             </div>
         `;
+    }
+
+    /**
+     * الحصول على بيانات تجريبية
+     */
+    getDemoEvents() {
+        return [
+            {
+                id: "demo_1",
+                title: "رحلة تخييم نهاية الأسبوع",
+                description: "مغامرة تخييم لثلاثة أيام مع أنشطة المشي والنار. تعلم مهارات البقاء في الهواء الطلق واستمتع بالطبيعة.",
+                date: "2025-01-20",
+                time: "09:00",
+                location: "موقع التخييم الجبلي",
+                attendees: [],
+                maxAttendees: 25,
+                category: "ramita",
+                image: "https://images.pexels.com/photos/1061640/pexels-photo-1061640.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+                status: "upcoming",
+                troop: "Ramita",
+                createdBy: "1",
+                createdAt: "2025-01-15T10:00:00Z",
+                updatedAt: "2025-01-15T10:00:00Z"
+            },
+            {
+                id: "demo_2",
+                title: "مشروع خدمة المجتمع",
+                description: "ساعد في تنظيف الحديقة المحلية وزراعة أشجار جديدة. اصنع تأثيراً إيجابياً في مجتمعنا.",
+                date: "2025-01-25",
+                time: "14:00",
+                location: "الحديقة المركزية",
+                attendees: [],
+                maxAttendees: 20,
+                category: "ma3lola",
+                image: "https://images.pexels.com/photos/2885320/pexels-photo-2885320.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+                status: "upcoming",
+                troop: "Ma3lola",
+                createdBy: "2",
+                createdAt: "2025-01-14T15:30:00Z",
+                updatedAt: "2025-01-14T15:30:00Z"
+            },
+            {
+                id: "demo_3",
+                title: "ورشة الإسعافات الأولية",
+                description: "تعلم مهارات الإسعافات الأولية الأساسية. مدربون معتمدون سيرشدونك خلال التمارين العملية.",
+                date: "2025-01-28",
+                time: "10:00",
+                location: "قاعة الكشافة",
+                attendees: [],
+                maxAttendees: 15,
+                category: "sergila",
+                image: "https://images.pexels.com/photos/1170979/pexels-photo-1170979.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+                status: "upcoming",
+                troop: "Sergila",
+                createdBy: "1",
+                createdAt: "2025-01-13T09:15:00Z",
+                updatedAt: "2025-01-13T09:15:00Z"
+            }
+        ];
     }
 
     // ===========================================

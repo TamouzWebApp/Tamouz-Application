@@ -342,24 +342,53 @@ class DashboardService {
     /**
      * Get Troop Data
      */
-    getTroopData() {
-        // Get users data
-        const users = window.DEMO_USERS || {};
-        const troopMembers = Object.values(users).filter(user => 
-            user.troop === this.currentUser.troop
-        );
+    async getTroopData() {
+        try {
+            // Get users data from AuthService
+            const users = await window.AuthService.loadUsers();
+            const troopMembers = Object.values(users).filter(user => 
+                user.troop === this.currentUser.troop
+            );
+            
+            const troopEvents = this.events.filter(event => 
+                event.troop === this.currentUser.troop
+            );
+            
+            return {
+                name: this.currentUser.troop,
+                totalMembers: troopMembers.length,
+                activeMembers: troopMembers.filter(user => user.role !== 'guest').length,
+                upcomingEvents: troopEvents.filter(event => event.status === 'upcoming').length,
+                completedEvents: troopEvents.filter(event => event.status === 'past').length
+            };
+        } catch (error) {
+            console.error('❌ Error loading troop data:', error);
+            return {
+                name: this.currentUser.troop,
+                totalMembers: 0,
+                activeMembers: 0,
+                upcomingEvents: 0,
+                completedEvents: 0
+            };
+        }
+    }
+
+    /**
+     * Load Troop Overview
+     */
+    async loadTroopOverview() {
+        const troopOverviewContainer = document.getElementById('troopOverview');
+        if (!troopOverviewContainer) return;
+
+        console.log('👥 Loading troop overview...');
+
+        const troopData = await this.getTroopData();
+        troopOverviewContainer.innerHTML = this.getTroopOverviewHTML(troopData);
         
-        const troopEvents = this.events.filter(event => 
-            event.troop === this.currentUser.troop
-        );
+        // Setup click handlers for stats
+        this.setupTroopOverviewListeners();
         
-        return {
-            name: this.currentUser.troop,
-            totalMembers: troopMembers.length,
-            activeMembers: troopMembers.filter(user => user.role !== 'guest').length,
-            upcomingEvents: troopEvents.filter(event => event.status === 'upcoming').length,
-            completedEvents: troopEvents.filter(event => event.status === 'past').length
-        };
+        console.log('✅ Troop overview loaded');
     }
 
     /**
@@ -510,36 +539,10 @@ class DashboardService {
             });
         });
     }
-
-    /**
-     * Setup Troop Overview Listeners
-     */
-    setupTroopOverviewListeners() {
-        const clickableStats = document.querySelectorAll('.clickable-stat');
-        clickableStats.forEach(stat => {
-            stat.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const action = stat.dataset.action;
-                if (action === 'show-members') {
-                    this.showTroopMembers();
-                }
-            });
-        });
-    }
-
-    /**
      * Show Troop Members Modal
      */
     async showTroopMembers() {
         console.log('👥 Loading troop members...');
-        
-        // Check if using Firebase - for now, use demo data for users
-        // In future versions, users could also be stored in Firebase
-        if (window.getDatabaseType() === 'firebase') {
-            console.log('🔥 Using demo users with Firebase (users not yet migrated)');
-            this.users = window.DEMO_USERS || {};
-            return this.users;
-        }
         
         try {
             // Load users data

@@ -66,7 +66,6 @@ class AuthService {
      * Load Users from JSON File
      * 
      * Attempts to load user data from users.json file.
-     * Falls back to demo data if file is not available.
      * 
      * @returns {Promise<Object>} User data object
      */
@@ -81,7 +80,8 @@ class AuthService {
         
         try {
             // Attempt to load from JSON file
-            const response = await fetch('../JSON/users.json');
+            const usersFilePath = window.getUsersFilePath() || '../JSON/users.json';
+            const response = await fetch(usersFilePath);
             
             if (!response.ok) {
                 throw new Error(`HTTP ${response.status}: ${response.statusText}`);
@@ -100,11 +100,11 @@ class AuthService {
             return this.users;
             
         } catch (error) {
-            console.warn('⚠️ Failed to load JSON/users.json:', error.message);
-            console.log('🔄 Falling back to demo data');
+            console.error('❌ Failed to load users from JSON file:', error.message);
+            console.log('🔄 Using empty user data - please check JSON/users.json file');
             
-            // Fallback to demo data
-            this.users = window.DEMO_USERS || {};
+            // Initialize with empty users object
+            this.users = {};
             return this.users;
         }
     }

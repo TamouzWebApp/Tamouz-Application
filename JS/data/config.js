@@ -1,62 +1,86 @@
 /* 
 ===========================================
-SCOUTPLUSE - LOCAL CONFIGURATION
+SCOUTPLUSE - APPLICATION CONFIGURATION
 ===========================================
 
-ملف الإعدادات العام للتطبيق - نظام محلي
+Application configuration file
 */
 
-// إعداد نوع قاعدة البيانات
-window.DATABASE_TYPE = 'local'; // نظام محلي فقط
+// Database type configuration
+window.DATABASE_TYPE = 'local';
 
-// إعدادات أخرى
+// Application configuration
 window.APP_CONFIG = {
-    // إعدادات التطبيق
+    // App info
     appName: 'ScoutPluse',
     version: '1.0.0',
-    baseUrl: 'https://kinankassab.github.io/Tamouz-Application/',
+    baseUrl: window.location.origin + window.location.pathname.replace(/\/[^\/]*$/, '/'),
     
-    // إعدادات الـ API
+    // API settings
     api: {
-        eventsFile: '../JSON/events.json', // مسار ملف الأحداث
-        usersFile: '../JSON/users.json', // مسار ملف المستخدمين
-        useLocalStorage: true // استخدام localStorage للحفظ
+        eventsFile: '../JSON/events.json',
+        usersFile: '../JSON/users.json',
+        useLocalStorage: true
     },
     
-    // إعدادات الواجهة
+    // UI settings
     ui: {
-        theme: 'auto', // light, dark, auto
-        language: 'en', // en, ar
+        theme: 'auto',
+        language: 'en',
         animations: true
     },
     
-    // إعدادات التخزين
+    // Storage settings
     storage: {
         prefix: 'scoutpluse_',
-        expiry: 30 * 24 * 60 * 60 * 1000 // 30 يوم
+        expiry: 30 * 24 * 60 * 60 * 1000 // 30 days
     },
     
-    // إعدادات الأداء
+    // Performance settings
     performance: {
         debounceDelay: 300,
         throttleDelay: 100,
-        cacheTimeout: 5 * 60 * 1000 // 5 دقائق
+        cacheTimeout: 5 * 60 * 1000 // 5 minutes
     },
     
-    // إعدادات الأمان
+    // Security settings
     security: {
         maxLoginAttempts: 5,
-        sessionTimeout: 24 * 60 * 60 * 1000, // 24 ساعة
+        sessionTimeout: 24 * 60 * 60 * 1000, // 24 hours
         requireStrongPassword: false
     }
 };
 
-// دالة للحصول على نوع قاعدة البيانات
+// Navigation permissions by role
+window.ROLE_PERMISSIONS = {
+    guest: ['events'],
+    member: ['dashboard', 'events', 'information', 'profile'],
+    leader: ['dashboard', 'events', 'information', 'profile', 'settings'],
+    admin: ['dashboard', 'events', 'information', 'profile', 'settings']
+};
+
+// Event permissions by role
+window.EVENT_PERMISSIONS = {
+    guest: ['view'],
+    member: ['view', 'join'],
+    leader: ['view', 'join', 'create', 'manage'],
+    admin: ['view', 'join', 'create', 'manage', 'delete']
+};
+
+// Event Categories
+window.EVENT_CATEGORIES = [
+    { id: 'ramita', name: 'رميتا', color: '#10b981', icon: '🌲' },
+    { id: 'ma3lola', name: 'معلولا', color: '#3b82f6', icon: '🤝' },
+    { id: 'sergila', name: 'سرجيلا', color: '#f59e0b', icon: '📚' },
+    { id: 'bousra', name: 'بوسرا', color: '#ef4444', icon: '🏆' }
+];
+
+// Get database type
 window.getDatabaseType = function() {
     return window.DATABASE_TYPE || 'local';
 };
 
-// دالة للحصول على إعداد معين
+// Get configuration value
 window.getConfig = function(path) {
     const keys = path.split('.');
     let current = window.APP_CONFIG;
@@ -71,7 +95,7 @@ window.getConfig = function(path) {
     return current;
 };
 
-// دالة لتحديث إعداد معين
+// Set configuration value
 window.setConfig = function(path, value) {
     const keys = path.split('.');
     let current = window.APP_CONFIG;
@@ -87,11 +111,40 @@ window.setConfig = function(path, value) {
     console.log(`⚙️ Config updated: ${path} = ${value}`);
 };
 
-// دالة للحصول على مسار ملف الأحداث
+// Get events file path
 window.getEventsFilePath = function() {
     return window.APP_CONFIG.api.eventsFile;
+};
+
+// Get users file path
+window.getUsersFilePath = function() {
+    return window.APP_CONFIG.api.usersFile;
+};
+
+// Utility functions for permissions
+window.getRolePermissions = function(role) {
+    return window.ROLE_PERMISSIONS[role] || [];
+};
+
+window.getEventPermissions = function(role) {
+    return window.EVENT_PERMISSIONS[role] || [];
+};
+
+window.canUserAccessPage = function(role, page) {
+    const permissions = window.getRolePermissions(role);
+    return permissions.includes(page);
+};
+
+window.canUserPerformEventAction = function(role, action) {
+    const permissions = window.getEventPermissions(role);
+    return permissions.includes(action);
+};
+
+window.getCategoryById = function(categoryId) {
+    return window.EVENT_CATEGORIES.find(cat => cat.id === categoryId) || null;
 };
 
 console.log('⚙️ Configuration loaded successfully');
 console.log(`📁 Database type: ${window.getDatabaseType()}`);
 console.log(`📄 Events file: ${window.getEventsFilePath()}`);
+console.log(`👥 Users file: ${window.getUsersFilePath()}`);

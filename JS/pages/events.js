@@ -143,12 +143,12 @@ class EventsService {
             this.showNotification(`تم تحميل ${this.events.length} حدث من التخزين المحلي`, 'success');
             
         } catch (error) {
-            console.warn('⚠️ فشل تحميل البيانات، استخدام البيانات التجريبية:', error.message);
+            console.error('❌ فشل تحميل البيانات:', error.message);
             
-            // استخدام البيانات التجريبية كحل أخير
-            this.events = [...(window.DEMO_EVENTS || [])];
-            console.log(`📋 تم تحميل ${this.events.length} حدث من البيانات التجريبية`);
-            this.showNotification('استخدام البيانات التجريبية', 'warning');
+            // Use empty array if loading fails
+            this.events = [];
+            console.log('📋 Using empty events array - please check JSON files');
+            this.showNotification('فشل تحميل البيانات - تحقق من ملفات JSON', 'error');
         } finally {
             this.setLoading(false);
         }

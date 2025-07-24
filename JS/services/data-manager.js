@@ -67,11 +67,12 @@ class DataManagerService {
     }
 
     /**
-     * تحميل الأحداث من ملف JSON
+     * Load events from JSON file
      */
     async loadEventsFromJSON() {
         try {
-            const response = await fetch('../JSON/events.json');
+            const eventsFilePath = window.getEventsFilePath() || '../JSON/events.json';
+            const response = await fetch(eventsFilePath);
             if (response.ok) {
                 const data = await response.json();
                 this.events = data.events || [];
@@ -81,8 +82,9 @@ class DataManagerService {
                 throw new Error('JSON file not found');
             }
         } catch (error) {
-            console.warn('⚠️ Failed to load from JSON, using demo data:', error);
-            this.events = [...(window.DEMO_EVENTS || [])];
+            console.error('❌ Failed to load events from JSON file:', error);
+            console.log('🔄 Using empty events array - please check JSON/events.json file');
+            this.events = [];
             this.localStorageService.saveEvents(this.events);
         }
     }

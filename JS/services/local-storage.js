@@ -47,16 +47,17 @@ class LocalStorageService {
         const existingUsers = this.getUsers();
         if (!existingUsers || Object.keys(existingUsers).length === 0) {
             console.log('👥 Loading initial users from demo data...');
-            this.loadInitialUsers();
+            await this.loadInitialUsers();
         }
     }
 
     /**
-     * تحميل الأحداث الأولية من ملف JSON
+     * Load initial events from JSON file
      */
     async loadInitialEvents() {
         try {
-            const response = await fetch('../JSON/events.json');
+            const eventsFilePath = window.getEventsFilePath() || '../JSON/events.json';
+            const response = await fetch(eventsFilePath);
             if (response.ok) {
                 const data = await response.json();
                 this.saveEvents(data.events);
@@ -65,18 +66,35 @@ class LocalStorageService {
                 throw new Error('Failed to load JSON/events.json');
             }
         } catch (error) {
-            console.warn('⚠️ Failed to load JSON/events.json, using demo data:', error);
-            this.saveEvents(window.DEMO_EVENTS || []);
+            console.error('❌ Failed to load JSON/events.json:', error);
+            console.log('🔄 Using empty events array - please check JSON/events.json file');
+            this.saveEvents([]);
         }
     }
 
     /**
-     * تحميل المستخدمين الأوليين
+     * Load initial users
      */
-    loadInitialUsers() {
-        const users = window.DEMO_USERS || {};
-        this.saveUsers(users);
-        console.log(`✅ Loaded ${Object.keys(users).length} initial users`);
+    async loadInitialUsers() {
+        try {
+            const usersFilePath = window.getUsersFilePath() || '../JSON/users.json';
+            const response = await fetch(usersFilePath);
+            if (response.ok) {
+                const data = await response.json();
+                const usersObject = {};
+                data.users.forEach(user => {
+                    usersObject[user.email] = user;
+                });
+                this.saveUsers(usersObject);
+                console.log(`✅ Loaded ${data.users.length} initial users`);
+            } else {
+                throw new Error('Failed to load JSON/users.json');
+            }
+        } catch (error) {
+            console.error('❌ Failed to load JSON/users.json:', error);
+            console.log('🔄 Using empty users object - please check JSON/users.json file');
+            this.saveUsers({});
+        }
     }
 
     /**

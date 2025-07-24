@@ -80,6 +80,22 @@ class EventsService {
             this.showNotification('تم تحديث الأحداث في الوقت الفعلي!', 'info');
         });
 
+        // Listen for auto sync updates
+        window.addEventListener('autoSyncdataUpdated', (e) => {
+            console.log('🔄 Auto sync update received');
+            this.events = e.detail.events || [];
+            this.renderEventsPage();
+        });
+
+        // Listen for auto sync events
+        window.addEventListener('autoSyncsyncEnabled', () => {
+            this.showNotification('تم تفعيل المزامنة التلقائية للأحداث', 'success');
+        });
+
+        window.addEventListener('autoSyncsyncDisabled', () => {
+            this.showNotification('تم تعطيل المزامنة التلقائية للأحداث', 'info');
+        });
+
         // Setup UI event listeners
         this.setupUIEventListeners();
         

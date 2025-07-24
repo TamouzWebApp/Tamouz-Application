@@ -235,6 +235,7 @@ Centralized design tokens for consistent theming
     --z-popover: 1060;
     --z-tooltip: 1070;
     --z-toast: 1080;
+    --z-sync-indicator: 1090;
 
     /* Layout Dimensions */
     --sidebar-width: 280px;

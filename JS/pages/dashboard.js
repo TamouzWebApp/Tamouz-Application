@@ -66,6 +66,13 @@ class DashboardService {
             this.loadRecentEvents();
         });
 
+        // Listen for auto sync updates
+        window.addEventListener('autoSyncdataUpdated', (e) => {
+            console.log('🔄 Auto sync update received in dashboard');
+            this.events = e.detail.events || [];
+            this.loadRecentEvents();
+        });
+
         // Listen for user updates
         window.addEventListener('userUpdated', (e) => {
             this.currentUser = e.detail.user;

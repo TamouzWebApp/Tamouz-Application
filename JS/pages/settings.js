@@ -363,6 +363,37 @@ class SettingsService {
                         Clear Data
                     </button>
                 </div>
+                
+                <div class="settings-item">
+                    <div class="settings-item-info">
+                        <h4>Auto Sync</h4>
+                        <p>Automatically check for updates to events.json file</p>
+                    </div>
+                    <div class="toggle-switch ${this.getAutoSyncEnabled() ? 'active' : ''}" data-setting="autoSync"></div>
+                </div>
+                
+                <div class="settings-item">
+                    <div class="settings-item-info">
+                        <h4>Sync Interval</h4>
+                        <p>How often to check for updates (in seconds)</p>
+                    </div>
+                    <select id="syncIntervalSelect" class="settings-select">
+                        <option value="15000" ${this.getAutoSyncInterval() === 15000 ? 'selected' : ''}>15 seconds</option>
+                        <option value="30000" ${this.getAutoSyncInterval() === 30000 ? 'selected' : ''}>30 seconds</option>
+                        <option value="60000" ${this.getAutoSyncInterval() === 60000 ? 'selected' : ''}>1 minute</option>
+                        <option value="300000" ${this.getAutoSyncInterval() === 300000 ? 'selected' : ''}>5 minutes</option>
+                    </select>
+                </div>
+                
+                <div class="settings-item">
+                    <div class="settings-item-info">
+                        <h4>Manual Sync</h4>
+                        <p>Force check for updates right now</p>
+                    </div>
+                    <button class="btn btn-outline btn-sm" onclick="window.SettingsService.getInstance().triggerManualSync()">
+                        Sync Now
+                    </button>
+                </div>
             </div>
         `;
     }
@@ -392,6 +423,11 @@ class SettingsService {
         if (emailDigestSelect) {
             emailDigestSelect.addEventListener('change', this.handleEmailDigestChange.bind(this));
         }
+
+        const syncIntervalSelect = document.getElementById('syncIntervalSelect');
+        if (syncIntervalSelect) {
+            syncIntervalSelect.addEventListener('change', this.handleSyncIntervalChange.bind(this));
+        }
     }
 
     /**
@@ -408,6 +444,11 @@ class SettingsService {
         
         this.setSetting(settingPath, isActive);
         this.saveSettings();
+        
+        // معالجة خاصة لإعداد Auto Sync
+        if (settingPath === 'autoSync') {
+            this.handleAutoSyncToggle(isActive);
+        }
         
         this.showNotification(`${this.getSettingDisplayName(settingPath)} ${isActive ? 'enabled' : 'disabled'}`, 'info');
     }
@@ -460,6 +501,67 @@ class SettingsService {
     }
 
     /**
+     * Handle Auto Sync Toggle
+     */
+    handleAutoSyncToggle(enabled) {
+        console.log(`🔄 Auto sync ${enabled ? 'enabled' : 'disabled'}`);
+        
+        const autoSyncService = window.getAutoSyncService?.();
+        if (autoSyncService) {
+            if (enabled) {
+                autoSyncService.enableSync();
+            } else {
+                autoSyncService.disableSync();
+            }
+        }
+    }
+
+    /**
+     * Handle Sync Interval Change
+     */
+    handleSyncIntervalChange(e) {
+        const interval = parseInt(e.target.value);
+        console.log(`⏰ Sync interval changed to: ${interval}ms`);
+        
+        const autoSyncService = window.getAutoSyncService?.();
+        if (autoSyncService) {
+            autoSyncService.setPollingInterval(interval);
+        }
+        
+        this.showNotification(`Sync interval set to ${interval / 1000} seconds`, 'info');
+    }
+
+    /**
+     * Get Auto Sync Enabled Status
+     */
+    getAutoSyncEnabled() {
+        const autoSyncService = window.getAutoSyncService?.();
+        return autoSyncService ? autoSyncService.getSyncInfo().isEnabled : false;
+    }
+
+    /**
+     * Get Auto Sync Interval
+     */
+    getAutoSyncInterval() {
+        const autoSyncService = window.getAutoSyncService?.();
+        return autoSyncService ? autoSyncService.getSyncInfo().pollInterval : 30000;
+    }
+
+    /**
+     * Trigger Manual Sync
+     */
+    async triggerManualSync() {
+        console.log('🔄 Manual sync triggered from settings');
+        
+        const autoSyncService = window.getAutoSyncService?.();
+        if (autoSyncService) {
+            await autoSyncService.syncNow();
+        } else {
+            this.showNotification('Auto sync service not available', 'error');
+        }
+    }
+
+    /**
      * Set Setting Value
      */
     setSetting(path, value) {
@@ -487,7 +589,8 @@ class SettingsService {
             'notifications.email': 'Email Notifications',
             'notifications.browser': 'Browser Notifications',
             'notifications.events': 'Event Notifications',
-            'preferences.animations': 'Animations'
+            'preferences.animations': 'Animations',
+            'autoSync': 'Auto Sync'
         };
         return names[settingPath] || settingPath;
     }

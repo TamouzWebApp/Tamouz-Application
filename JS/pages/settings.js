@@ -152,146 +152,148 @@ class SettingsService {
      */
     getSettingsHTML() {
         return `
-            <div class="settings-section">
-                <h3>Appearance</h3>
-                <div class="settings-item">
-                    <div class="settings-item-info">
-                        <h4>Theme</h4>
-                        <p>Choose your preferred color scheme</p>
+            <div class="settings-page">
+                <div class="settings-section">
+                    <h3>Appearance</h3>
+                    <div class="settings-item">
+                        <div class="settings-item-info">
+                            <h4>Theme</h4>
+                            <p>Choose your preferred color scheme</p>
+                        </div>
+                        <select id="themeSelect" class="settings-select">
+                            <option value="light" ${this.settings.theme === 'light' ? 'selected' : ''}>Light</option>
+                            <option value="dark" ${this.settings.theme === 'dark' ? 'selected' : ''}>Dark</option>
+                            <option value="auto" ${this.settings.theme === 'auto' ? 'selected' : ''}>Auto (System)</option>
+                        </select>
                     </div>
-                    <select id="themeSelect" class="settings-select">
-                        <option value="light" ${this.settings.theme === 'light' ? 'selected' : ''}>Light</option>
-                        <option value="dark" ${this.settings.theme === 'dark' ? 'selected' : ''}>Dark</option>
-                        <option value="auto" ${this.settings.theme === 'auto' ? 'selected' : ''}>Auto (System)</option>
-                    </select>
-                </div>
-                
-                <div class="settings-item">
-                    <div class="settings-item-info">
-                        <h4>Language</h4>
-                        <p>Select your preferred language</p>
-                    </div>
-                    <select id="languageSelect" class="settings-select">
-                        <option value="en" ${this.settings.language === 'en' ? 'selected' : ''}>English</option>
-                        <option value="ar" ${this.settings.language === 'ar' ? 'selected' : ''}>العربية (Arabic)</option>
-                    </select>
-                </div>
-                
-                <div class="settings-item">
-                    <div class="settings-item-info">
-                        <h4>Animations</h4>
-                        <p>Enable or disable interface animations</p>
-                    </div>
-                    <div class="toggle-switch ${this.settings.preferences.animations ? 'active' : ''}" data-setting="preferences.animations"></div>
-                </div>
-            </div>
-
-            <div class="settings-section">
-                <h3>Privacy</h3>
-                <div class="settings-item">
-                    <div class="settings-item-info">
-                        <h4>Profile Visibility</h4>
-                        <p>Make your profile visible to other troop members</p>
-                    </div>
-                    <div class="toggle-switch ${this.settings.privacy.profileVisible ? 'active' : ''}" data-setting="privacy.profileVisible"></div>
-                </div>
-                
-                <div class="settings-item">
-                    <div class="settings-item-info">
-                        <h4>Show Email</h4>
-                        <p>Display your email address on your profile</p>
-                    </div>
-                    <div class="toggle-switch ${this.settings.privacy.showEmail ? 'active' : ''}" data-setting="privacy.showEmail"></div>
-                </div>
-                
-                <div class="settings-item">
-                    <div class="settings-item-info">
-                        <h4>Show Phone</h4>
-                        <p>Display your phone number on your profile</p>
-                    </div>
-                    <div class="toggle-switch ${this.settings.privacy.showPhone ? 'active' : ''}" data-setting="privacy.showPhone"></div>
-                </div>
-            </div>
-
-            <div class="settings-section">
-                <h3>Notifications</h3>
-                <div class="settings-item">
-                    <div class="settings-item-info">
-                        <h4>Email Notifications</h4>
-                        <p>Receive notifications via email</p>
-                    </div>
-                    <div class="toggle-switch ${this.settings.notifications.email ? 'active' : ''}" data-setting="notifications.email"></div>
-                </div>
-                
-                <div class="settings-item">
-                    <div class="settings-item-info">
-                        <h4>Browser Notifications</h4>
-                        <p>Show notifications in your browser</p>
-                    </div>
-                    <div class="toggle-switch ${this.settings.notifications.browser ? 'active' : ''}" data-setting="notifications.browser"></div>
-                </div>
-                
-                <div class="settings-item">
-                    <div class="settings-item-info">
-                        <h4>Event Notifications</h4>
-                        <p>Get notified about new events and updates</p>
-                    </div>
-                    <div class="toggle-switch ${this.settings.notifications.events ? 'active' : ''}" data-setting="notifications.events"></div>
-                </div>
-                
-                <div class="settings-item">
-                    <div class="settings-item-info">
-                        <h4>Email Digest</h4>
-                        <p>How often to receive email summaries</p>
-                    </div>
-                    <select id="emailDigestSelect" class="settings-select">
-                        <option value="daily" ${this.settings.preferences.emailDigest === 'daily' ? 'selected' : ''}>Daily</option>
-                        <option value="weekly" ${this.settings.preferences.emailDigest === 'weekly' ? 'selected' : ''}>Weekly</option>
-                        <option value="monthly" ${this.settings.preferences.emailDigest === 'monthly' ? 'selected' : ''}>Monthly</option>
-                        <option value="never" ${this.settings.preferences.emailDigest === 'never' ? 'selected' : ''}>Never</option>
-                    </select>
-                </div>
-            </div>
-
-            ${this.currentUser.role === 'admin' ? this.getAdminSettingsHTML() : ''}
-
-            <div class="settings-section">
-                <h3>Account</h3>
-                <div class="settings-actions">
-                    <button class="btn btn-outline" onclick="window.SettingsService.getInstance().exportData()">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                            <polyline points="7,10 12,15 17,10"></polyline>
-                            <line x1="12" y1="15" x2="12" y2="3"></line>
-                        </svg>
-                        Export Data
-                    </button>
                     
-                    <button class="btn btn-outline" onclick="window.SettingsService.getInstance().resetSettings()">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="1,4 1,10 7,10"></polyline>
-                            <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
-                        </svg>
-                        Reset Settings
-                    </button>
+                    <div class="settings-item">
+                        <div class="settings-item-info">
+                            <h4>Language</h4>
+                            <p>Select your preferred language</p>
+                        </div>
+                        <select id="languageSelect" class="settings-select">
+                            <option value="en" ${this.settings.language === 'en' ? 'selected' : ''}>English</option>
+                            <option value="ar" ${this.settings.language === 'ar' ? 'selected' : ''}>العربية (Arabic)</option>
+                        </select>
+                    </div>
                     
-                    <button class="btn btn-outline" style="color: var(--red-600); border-color: var(--red-600);" onclick="window.SettingsService.getInstance().deleteAccount()">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="3,6 5,6 21,6"></polyline>
-                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                        </svg>
-                        Delete Account
-                    </button>
+                    <div class="settings-item">
+                        <div class="settings-item-info">
+                            <h4>Animations</h4>
+                            <p>Enable or disable interface animations</p>
+                        </div>
+                        <div class="toggle-switch ${this.settings.preferences.animations ? 'active' : ''}" data-setting="preferences.animations"></div>
+                    </div>
                 </div>
-            </div>
 
-            <div class="settings-section">
-                <div style="text-align: center; padding: var(--spacing-4); background: var(--bg-secondary); border-radius: var(--radius-xl);">
-                    <h4 style="margin-bottom: var(--spacing-2);">ScoutPluse</h4>
-                    <p style="color: var(--text-muted); font-size: var(--font-size-sm);">Version 1.0.0</p>
-                    <p style="color: var(--text-muted); font-size: var(--font-size-xs); margin-top: var(--spacing-2);">
-                        Built with ❤️ for the scouting community
-                    </p>
+                <div class="settings-section">
+                    <h3>Privacy</h3>
+                    <div class="settings-item">
+                        <div class="settings-item-info">
+                            <h4>Profile Visibility</h4>
+                            <p>Make your profile visible to other troop members</p>
+                        </div>
+                        <div class="toggle-switch ${this.settings.privacy.profileVisible ? 'active' : ''}" data-setting="privacy.profileVisible"></div>
+                    </div>
+                    
+                    <div class="settings-item">
+                        <div class="settings-item-info">
+                            <h4>Show Email</h4>
+                            <p>Display your email address on your profile</p>
+                        </div>
+                        <div class="toggle-switch ${this.settings.privacy.showEmail ? 'active' : ''}" data-setting="privacy.showEmail"></div>
+                    </div>
+                    
+                    <div class="settings-item">
+                        <div class="settings-item-info">
+                            <h4>Show Phone</h4>
+                            <p>Display your phone number on your profile</p>
+                        </div>
+                        <div class="toggle-switch ${this.settings.privacy.showPhone ? 'active' : ''}" data-setting="privacy.showPhone"></div>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <h3>Notifications</h3>
+                    <div class="settings-item">
+                        <div class="settings-item-info">
+                            <h4>Email Notifications</h4>
+                            <p>Receive notifications via email</p>
+                        </div>
+                        <div class="toggle-switch ${this.settings.notifications.email ? 'active' : ''}" data-setting="notifications.email"></div>
+                    </div>
+                    
+                    <div class="settings-item">
+                        <div class="settings-item-info">
+                            <h4>Browser Notifications</h4>
+                            <p>Show notifications in your browser</p>
+                        </div>
+                        <div class="toggle-switch ${this.settings.notifications.browser ? 'active' : ''}" data-setting="notifications.browser"></div>
+                    </div>
+                    
+                    <div class="settings-item">
+                        <div class="settings-item-info">
+                            <h4>Event Notifications</h4>
+                            <p>Get notified about new events and updates</p>
+                        </div>
+                        <div class="toggle-switch ${this.settings.notifications.events ? 'active' : ''}" data-setting="notifications.events"></div>
+                    </div>
+                    
+                    <div class="settings-item">
+                        <div class="settings-item-info">
+                            <h4>Email Digest</h4>
+                            <p>How often to receive email summaries</p>
+                        </div>
+                        <select id="emailDigestSelect" class="settings-select">
+                            <option value="daily" ${this.settings.preferences.emailDigest === 'daily' ? 'selected' : ''}>Daily</option>
+                            <option value="weekly" ${this.settings.preferences.emailDigest === 'weekly' ? 'selected' : ''}>Weekly</option>
+                            <option value="monthly" ${this.settings.preferences.emailDigest === 'monthly' ? 'selected' : ''}>Monthly</option>
+                            <option value="never" ${this.settings.preferences.emailDigest === 'never' ? 'selected' : ''}>Never</option>
+                        </select>
+                    </div>
+                </div>
+
+                ${this.currentUser.role === 'admin' ? this.getAdminSettingsHTML() : ''}
+
+                <div class="settings-section">
+                    <h3>Account</h3>
+                    <div class="settings-actions">
+                        <button class="btn btn-outline" onclick="window.SettingsService.getInstance().exportData()">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="7,10 12,15 17,10"></polyline>
+                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                            </svg>
+                            Export Data
+                        </button>
+                        
+                        <button class="btn btn-outline" onclick="window.SettingsService.getInstance().resetSettings()">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="1,4 1,10 7,10"></polyline>
+                                <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+                            </svg>
+                            Reset Settings
+                        </button>
+                        
+                        <button class="btn btn-danger" onclick="window.SettingsService.getInstance().deleteAccount()">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="3,6 5,6 21,6"></polyline>
+                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                            </svg>
+                            Delete Account
+                        </button>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <div class="app-info">
+                        <h4 style="margin-bottom: var(--spacing-2);">ScoutPluse</h4>
+                        <p style="color: var(--text-muted); font-size: var(--font-size-sm);">Version 1.0.0</p>
+                        <p style="color: var(--text-muted); font-size: var(--font-size-xs); margin-top: var(--spacing-2);">
+                            Built with ❤️ for the scouting community
+                        </p>
+                    </div>
                 </div>
             </div>
         `;
@@ -302,7 +304,7 @@ class SettingsService {
      */
     getAdminSettingsHTML() {
         return `
-            <div class="settings-section">
+            <div class="settings-section admin-section">
                 <h3>Administration</h3>
                 <div class="settings-item">
                     <div class="settings-item-info">
@@ -359,7 +361,7 @@ class SettingsService {
                         <h4>Clear Local Data</h4>
                         <p>Clear all locally stored events and settings</p>
                     </div>
-                    <button class="btn btn-outline btn-sm" style="color: var(--red-600); border-color: var(--red-600);" onclick="window.SettingsService.getInstance().clearLocalData()">
+                    <button class="btn btn-danger btn-sm" onclick="window.SettingsService.getInstance().clearLocalData()">
                         Clear Data
                     </button>
                 </div>
@@ -369,8 +371,9 @@ class SettingsService {
                         <h4>Auto Sync</h4>
                         <p>Automatically check for updates to events.json file (Always enabled)</p>
                     </div>
-                    <div class="toggle-switch active" style="opacity: 0.6; pointer-events: none;" title="Auto sync is always enabled">
-                        <span style="font-size: 12px; color: var(--text-muted);">Always On</span>
+                    <div class="sync-status-indicator">
+                        <div class="sync-status-dot"></div>
+                        <span>Always Active</span>
                     </div>
                 </div>
                 

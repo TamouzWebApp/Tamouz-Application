@@ -121,7 +121,7 @@ class DashboardService {
 
         // Filter events by user's troop and status
         const troopEvents = this.events.filter(event => {
-            // جميع المستخدمين يرون الأحداث القادمة
+            // عرض جميع الأحداث القادمة بدون فلترة حسب الفرقة
             return event.status === 'upcoming';
         }).slice(0, 1); // Show only the most recent event
 

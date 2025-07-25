@@ -62,7 +62,10 @@ class EventsService {
         window.addEventListener('pageChanged', (e) => {
             if (e.detail.page === 'events') {
                 console.log('📅 Events page activated, rendering content...');
-                this.renderEventsPage();
+                // تأخير قصير للتأكد من تحميل البيانات
+                setTimeout(() => {
+                    this.renderEventsPage();
+                }, 100);
             }
         });
 
@@ -73,6 +76,12 @@ class EventsService {
             this.renderEventsPage();
         });
 
+        // Listen for localStorage events
+        window.addEventListener('localStorageeventsUpdated', (e) => {
+            this.events = e.detail.events || [];
+            console.log(`📥 Received ${this.events.length} events from localStorage`);
+            this.renderEventsPage();
+        });
         window.addEventListener('dataManagereventsSaved', (e) => {
             this.lastSync = new Date().toISOString();
             this.showNotification('تم حفظ الأحداث بنجاح!', 'success');
@@ -159,6 +168,7 @@ class EventsService {
             const localStorageService = window.getLocalStorageService();
             if (localStorageService) {
                 this.events = localStorageService.getEvents();
+                console.log(`📋 تم تحميل ${this.events.length} حدث من localStorage`);
             } else {
                 console.warn('⚠️ LocalStorage service not available');
                 this.events = [];
@@ -195,6 +205,9 @@ class EventsService {
             
             console.log(`✅ تم تحميل ${this.events.length} حدث محلياً`);
             
+            // تأكد من عرض الأحداث بعد التحميل
+            this.renderEventsPage();
+            
             if (this.events.length > 0) {
                 this.showNotification(`تم تحميل ${this.events.length} حدث بنجاح`, 'success');
             } else {
@@ -208,10 +221,9 @@ class EventsService {
             this.events = this.getDemoEvents();
             console.log('📋 Using demo events data');
             this.showNotification('تم تحميل البيانات التجريبية', 'info');
+            this.renderEventsPage();
         } finally {
             this.setLoading(false);
-            // تأكد من عرض الأحداث بعد التحميل
-            this.renderEventsPage();
         }
     }
 
@@ -378,15 +390,6 @@ class EventsService {
      */
     getFilteredEvents() {
         let filtered = this.events.filter(event => {
-            // فلترة حسب الفرقة - المديرون يرون كل شيء، الآخرون يرون فرقتهم فقط
-            if (this.currentUser.role === 'admin') {
-                // المديرون يرون جميع الأحداث
-                return true;
-            } else {
-                // الأعضاء والقادة يرون جميع الأحداث (تم إزالة فلترة الفرقة)
-                return true;
-            }
-            
             // فلترة حسب الفئة
             if (this.selectedCategory !== 'all' && event.category !== this.selectedCategory) {
                 return false;
@@ -406,6 +409,7 @@ class EventsService {
                 }
             }
             
+            // جميع المستخدمين يرون جميع الأحداث
             return true;
         });
 

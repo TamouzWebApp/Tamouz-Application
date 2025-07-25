@@ -121,11 +121,8 @@ class DashboardService {
 
         // Filter events by user's troop and status
         const troopEvents = this.events.filter(event => {
-            // Admin can see all events
-            if (this.currentUser.role === 'admin') return true;
-            
-            // Others see only their troop's events
-            return event.troop === this.currentUser.troop && event.status === 'upcoming';
+            // جميع المستخدمين يرون الأحداث القادمة
+            return event.status === 'upcoming';
         }).slice(0, 1); // Show only the most recent event
 
         if (troopEvents.length === 0) {

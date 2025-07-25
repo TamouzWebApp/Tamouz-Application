@@ -43,6 +43,11 @@ class LocalStorageService {
             await this.loadInitialEvents();
         } else {
             console.log(`📋 Found ${existingEvents.length} existing events in localStorage`);
+            
+            // إرسال حدث تحديث البيانات حتى لو كانت البيانات موجودة
+            window.dispatchEvent(new CustomEvent('localStorageeventsUpdated', {
+                detail: { events: existingEvents, source: 'localStorage' }
+            }));
         }
         
         // تحقق من وجود المستخدمين

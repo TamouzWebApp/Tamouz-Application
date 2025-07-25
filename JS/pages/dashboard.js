@@ -518,6 +518,22 @@ class DashboardService {
         )
     }
     /**
+    setupTroopOverviewListeners() {
+        // Setup click handlers for troop stats
+        const clickableStats = document.querySelectorAll('.clickable-stat');
+        clickableStats.forEach(stat => {
+            stat.addEventListener('click', () => {
+                const action = stat.dataset.action;
+                if (action === 'show-members') {
+                    this.showTroopMembers();
+                }
+            });
+        });
+        
+        console.log('👥 Troop overview listeners attached');
+    }
+
+    /**
      * Show Troop Members Modal
      */
     async showTroopMembers() {

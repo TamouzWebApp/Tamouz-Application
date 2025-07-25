@@ -258,14 +258,20 @@ class AutoSyncService {
             // تحديث البيانات المحلية
             const localStorageService = window.getLocalStorageService();
             if (localStorageService) {
-                localStorageService.saveEvents(newEvents);
+                // تحقق من أن البيانات الجديدة ليست فارغة
+                if (newEvents && newEvents.length > 0) {
+                    localStorageService.saveEvents(newEvents);
+                    console.log(`✅ Updated ${newEvents.length} events from server`);
+                    
+                    // إشعار المستخدم
+                    this.showSyncNotification(`تم تحديث ${newEvents.length} حدث من الخادم`, 'success');
+                } else {
+                    console.log('⚠️ Received empty events array, keeping existing data');
+                    return; // لا تحديث إذا كانت البيانات فارغة
+                }
+                
                 this.lastHash = newHash;
-                
-                console.log(`✅ Updated ${newEvents.length} events from server`);
-                
-                // إشعار المستخدم
-                this.showSyncNotification(`تم تحديث ${newEvents.length} حدث من الخادم`, 'success');
-                
+
                 // إرسال حدث التحديث
                 this.dispatchSyncEvent('dataUpdated', {
                     eventsCount: newEvents.length,

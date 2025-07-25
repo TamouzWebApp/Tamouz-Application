@@ -98,8 +98,15 @@ class EventsService {
         // Listen for auto sync updates
         window.addEventListener('autoSyncdataUpdated', (e) => {
             console.log('🔄 Auto sync update received');
-            this.events = e.detail.events || [];
-            this.renderEventsPage();
+            const newEvents = e.detail.events || [];
+            // تحقق من أن البيانات الجديدة ليست فارغة
+            if (newEvents.length > 0) {
+                this.events = newEvents;
+                this.renderEventsPage();
+                console.log(`✅ Updated events display with ${newEvents.length} events`);
+            } else {
+                console.log('⚠️ Received empty events from auto sync, keeping current data');
+            }
         });
 
         // Listen for auto sync events
@@ -169,6 +176,11 @@ class EventsService {
             if (localStorageService) {
                 this.events = localStorageService.getEvents();
                 console.log(`📋 تم تحميل ${this.events.length} حدث من localStorage`);
+                
+                // إذا تم تحميل الأحداث بنجاح، اعرضها فوراً
+                if (this.events.length > 0) {
+                    this.renderEventsPage();
+                }
             } else {
                 console.warn('⚠️ LocalStorage service not available');
                 this.events = [];

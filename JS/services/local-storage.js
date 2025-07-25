@@ -183,6 +183,12 @@ class LocalStorageService {
      * حفظ الأحداث
      */
     saveEvents(events) {
+        // تحقق من صحة البيانات
+        if (!Array.isArray(events)) {
+            console.error('❌ Events must be an array');
+            return false;
+        }
+        
         try {
             const data = {
                 events: events,

@@ -378,9 +378,18 @@ class EventsService {
      */
     getFilteredEvents() {
         let filtered = this.events.filter(event => {
-            // فلترة حسب الفرقة (إذا لم يكن مدير)
-            if (this.currentUser.role !== 'admin' && event.troop !== this.currentUser.troop) {
-                return false;
+            // فلترة حسب الفرقة - المديرون يرون كل شيء، الآخرون يرون فرقتهم فقط
+            if (this.currentUser.role === 'admin') {
+                // المديرون يرون جميع الأحداث
+                return true;
+            } else {
+                // الأعضاء والقادة يرون أحداث فرقتهم + الأحداث العامة
+                const isOwnTroop = event.troop === this.currentUser.troop;
+                const isGeneralEvent = !event.troop || event.troop === 'All' || event.troop === 'General';
+                
+                if (!isOwnTroop && !isGeneralEvent) {
+                    return false;
+                }
             }
             
             // فلترة حسب الفئة

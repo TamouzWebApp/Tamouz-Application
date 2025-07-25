@@ -253,6 +253,69 @@ Centralized design tokens for consistent theming
 
 /* 
 ===========================================
+APP FOOTER
+===========================================
+Footer with developer credit
+*/
+
+.app-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--bg-primary);
+    border-top: 1px solid var(--border-color);
+    padding: var(--spacing-2) var(--spacing-4);
+    z-index: calc(var(--z-fixed) - 1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.footer-content {
+    text-align: center;
+}
+
+.footer-content p {
+    margin: 0;
+    font-size: var(--font-size-xs);
+    color: var(--text-muted);
+}
+
+.footer-content strong {
+    color: var(--primary-600);
+    font-weight: var(--font-weight-semibold);
+}
+
+/* Adjust main content to account for footer */
+.main-content {
+    padding-bottom: calc(var(--bottom-nav-height) + 40px);
+}
+
+/* Hide footer on mobile when bottom nav is visible */
+@media (max-width: 1023px) {
+    .app-footer {
+        display: none;
+    }
+    
+    .main-content {
+        padding-bottom: calc(var(--bottom-nav-height) + var(--spacing-4));
+    }
+}
+
+/* Show footer on desktop */
+@media (min-width: 1024px) {
+    .app-footer {
+        display: block;
+        left: var(--sidebar-width);
+    }
+    
+    .main-content {
+        padding-bottom: 60px;
+    }
+}
+
+/* 
+===========================================
 DARK THEME OVERRIDES
 ===========================================
 Dark theme color adjustments

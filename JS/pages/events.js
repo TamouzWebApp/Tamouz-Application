@@ -401,9 +401,14 @@ class EventsService {
      * الحصول على الأحداث المفلترة
      */
     getFilteredEvents() {
+        console.log(`🔍 Filtering ${this.events.length} events...`);
+        console.log(`📂 Selected category: ${this.selectedCategory}`);
+        console.log(`🔎 Search query: "${this.searchQuery}"`);
+        
         let filtered = this.events.filter(event => {
             // فلترة حسب الفئة
             if (this.selectedCategory !== 'all' && event.category !== this.selectedCategory) {
+                console.log(`❌ Event ${event.id} filtered out by category: ${event.category} !== ${this.selectedCategory}`);
                 return false;
             }
             
@@ -417,10 +422,12 @@ class EventsService {
                 ].join(' ').toLowerCase();
                 
                 if (!searchFields.includes(this.searchQuery)) {
+                    console.log(`❌ Event ${event.id} filtered out by search: "${this.searchQuery}" not in "${searchFields}"`);
                     return false;
                 }
             }
             
+            console.log(`✅ Event ${event.id} passed filters`);
             // عرض جميع الأحداث بدون فلترة تلقائية
             return true;
         });

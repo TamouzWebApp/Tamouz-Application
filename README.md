@@ -1,6 +1,6 @@
 # 🏕️ ScoutPluse - منصة إدارة الكشافة
 
-> منصة ويب محلية حديثة ومتجاوبة لإدارة الفرق الكشفية والأحداث والأعضاء
+> منصة ويب محلية حديثة ومتجاوبة لإدارة الفرق الكشفية والأحداث والأعضاء - Created by KinanKassab
 
 [![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/your-repo/scoutpluse)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
@@ -1004,6 +1004,6 @@ SOFTWARE.
 
 **صُنع بـ ❤️ للمجتمع الكشفي - نظام محلي بالكامل**
 
-*تمكين الفرق الكشفية بتكنولوجيا بسيطة وفعالة بدون تعقيدات الخوادم*
+*تمكين الفرق الكشفية بتكنولوجيا بسيطة وفعالة بدون تعقيدات الخوادم - Developed by KinanKassab*
 
 </div>

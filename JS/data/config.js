@@ -13,6 +13,7 @@ window.DATABASE_TYPE = 'local';
 window.APP_CONFIG = {
     // App info
     appName: 'ScoutPluse',
+    developer: 'KinanKassab',
     version: '1.0.0',
     baseUrl: window.location.origin + window.location.pathname.replace(/\/[^\/]*$/, '/'),
     

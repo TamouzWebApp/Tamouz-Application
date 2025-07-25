@@ -91,7 +91,6 @@ class DashboardService {
         this.loadRecentEvents();
         this.loadQuickActions();
         this.loadTroopOverview();
-        this.loadUpcomingDeadlines();
         
         console.log('✅ Dashboard content loaded');
     }
@@ -221,23 +220,6 @@ class DashboardService {
         this.setupTroopOverviewListeners();
         
         console.log('✅ Troop overview loaded');
-    }
-
-    /**
-     * Load Upcoming Deadlines
-     */
-    loadUpcomingDeadlines() {
-        const deadlinesContainer = document.getElementById('upcomingDeadlines');
-        if (!deadlinesContainer) return;
-
-        console.log('⏰ Loading upcoming deadlines...');
-
-        const deadlines = this.getUpcomingDeadlines();
-        deadlinesContainer.innerHTML = deadlines
-            .map(deadline => this.getDeadlineHTML(deadline))
-            .join('');
-            
-        console.log(`✅ Loaded ${deadlines.length} upcoming deadlines`);
     }
 
     /**
@@ -532,28 +514,6 @@ class DashboardService {
                 const actionId = actionElement.dataset.action;
                 const action = this.getQuickActionsForRole().find(a => a.id === actionId);
                 if (action && action.action) {
-                    console.log(`⚡ Quick action triggered: ${actionId}`);
-                    action.action();
-                }
-            });
-        });
-    }
-
-    /**
-     * Setup Troop Overview Listeners
-     */
-    setupTroopOverviewListeners() {
-        const clickableStats = document.querySelectorAll('.clickable-stat');
-        clickableStats.forEach(stat => {
-            stat.addEventListener('click', () => {
-                const action = stat.dataset.action;
-                if (action === 'show-members') {
-                    this.showTroopMembers();
-                }
-            });
-        });
-    }
-
     /**
      * Show Troop Members Modal
      */

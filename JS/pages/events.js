@@ -383,13 +383,8 @@ class EventsService {
                 // المديرون يرون جميع الأحداث
                 return true;
             } else {
-                // الأعضاء والقادة يرون أحداث فرقتهم + الأحداث العامة
-                const isOwnTroop = event.troop === this.currentUser.troop;
-                const isGeneralEvent = !event.troop || event.troop === 'All' || event.troop === 'General';
-                
-                if (!isOwnTroop && !isGeneralEvent) {
-                    return false;
-                }
+                // الأعضاء والقادة يرون جميع الأحداث (تم إزالة فلترة الفرقة)
+                return true;
             }
             
             // فلترة حسب الفئة

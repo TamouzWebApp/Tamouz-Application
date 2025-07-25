@@ -514,6 +514,12 @@ class DashboardService {
                 const actionId = actionElement.dataset.action;
                 const action = this.getQuickActionsForRole().find(a => a.id === actionId);
                 if (action && action.action) {
+                }
+            }
+            )
+        }
+        )
+    }
     /**
      * Show Troop Members Modal
      */

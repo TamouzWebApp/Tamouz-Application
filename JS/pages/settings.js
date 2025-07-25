@@ -291,7 +291,7 @@ class SettingsService {
                         <h4 style="margin-bottom: var(--spacing-2);">ScoutPluse</h4>
                         <p style="color: var(--text-muted); font-size: var(--font-size-sm);">Version 1.0.0</p>
                         <p style="color: var(--text-muted); font-size: var(--font-size-xs); margin-top: var(--spacing-2);">
-                            Built with ❤️ for the scouting community
+                            Built with Kinan Kassab for the scouting community
                         </p>
                     </div>
                 </div>

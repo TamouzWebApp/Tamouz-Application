@@ -483,56 +483,6 @@ class DashboardService {
     }
 
     /**
-     * Get Upcoming Deadlines
-     */
-    getUpcomingDeadlines() {
-        // Mock deadlines data
-        return [
-            {
-                title: 'Event Registration Deadline',
-                date: '2025-01-18',
-                type: 'registration',
-                urgent: true
-            },
-            {
-                title: 'Monthly Report Due',
-                date: '2025-01-31',
-                type: 'report',
-                urgent: false
-            },
-            {
-                title: 'Badge Assessment',
-                date: '2025-02-05',
-                type: 'assessment',
-                urgent: false
-            }
-        ];
-    }
-
-    /**
-     * Get Deadline HTML
-     */
-    getDeadlineHTML(deadline) {
-        const daysUntil = this.getDaysUntilDate(deadline.date);
-        const urgentClass = deadline.urgent ? 'deadline-urgent' : '';
-        
-        return `
-            <div class="deadline-item ${urgentClass}">
-                <div class="deadline-icon">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <polyline points="12,6 12,12 16,14"></polyline>
-                    </svg>
-                </div>
-                <div class="deadline-content">
-                    <h4 class="deadline-title">${deadline.title}</h4>
-                    <p class="deadline-date">${daysUntil} days remaining</p>
-                </div>
-            </div>
-        `;
-    }
-
-    /**
      * Get Empty Events HTML
      */
     getEmptyEventsHTML() {

@@ -366,18 +366,27 @@ class DashboardService {
         try {
             // Get users data from AuthService
             const users = await window.AuthService.loadUsers();
+            
+            // Filter members by current user's troop
             const troopMembers = Object.values(users).filter(user => 
+                user.troop === this.currentUser.troop && user.id !== this.currentUser.id
+            );
+            
+            // Include current user in total count
+            const allTroopMembers = Object.values(users).filter(user => 
                 user.troop === this.currentUser.troop
             );
             
+            // Filter events by troop (if event has troop property) or show all events
             const troopEvents = this.events.filter(event => 
-                event.troop === this.currentUser.troop
+                !event.troop || event.troop === this.currentUser.troop || event.troop === 'Troop 101'
             );
             
             return {
                 name: this.currentUser.troop,
-                totalMembers: troopMembers.length,
-                activeMembers: troopMembers.filter(user => user.role !== 'guest').length,
+                totalMembers: allTroopMembers.length,
+                activeMembers: allTroopMembers.filter(user => user.role !== 'guest').length,
+                otherMembers: troopMembers, // Members excluding current user
                 upcomingEvents: troopEvents.filter(event => event.status === 'upcoming').length,
                 completedEvents: troopEvents.filter(event => event.status === 'past').length
             };
@@ -417,7 +426,7 @@ class DashboardService {
     getTroopOverviewHTML(troopData) {
         return `
             <div class="troop-overview-header">
-                <h3>Troop ${troopData.name}</h3>
+                <h3>${troopData.name}</h3>
                 <p>Your troop at a glance</p>
             </div>
             <div class="troop-stats">
@@ -548,7 +557,7 @@ class DashboardService {
             const membersList = document.getElementById('troopMembersList');
             
             if (modal && title && membersList) {
-                title.textContent = `Troop ${this.currentUser.troop} Members`;
+                title.textContent = `${this.currentUser.troop} Members`;
                 membersList.innerHTML = this.getTroopMembersHTML(troopMembers);
                 modal.style.display = 'flex';
             }

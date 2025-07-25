@@ -274,7 +274,7 @@ class EventsService {
                 id: this.generateEventId(),
                 attendees: [],
                 status: 'upcoming',
-                troop: this.currentUser.troop,
+                troop: this.currentUser.troop || 'Troop 101',
                 createdBy: this.currentUser.id,
                 createdAt: new Date().toISOString(),
                 updatedAt: new Date().toISOString()
@@ -427,8 +427,13 @@ class EventsService {
                 }
             }
             
+            // Show events for user's troop or events without troop specified
+            if (event.troop && event.troop !== this.currentUser.troop && event.troop !== 'Troop 101') {
+                console.log(`❌ Event ${event.id} filtered out by troop: ${event.troop} !== ${this.currentUser.troop}`);
+                return false;
+            }
+            
             console.log(`✅ Event ${event.id} passed filters`);
-            // عرض جميع الأحداث بدون فلترة تلقائية
             return true;
         });
 
@@ -1025,7 +1030,7 @@ class EventsService {
                 category: "ramita",
                 image: "https://images.pexels.com/photos/1061640/pexels-photo-1061640.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
                 status: "upcoming",
-                troop: "Ramita",
+                troop: "Troop 101",
                 createdBy: "1",
                 createdAt: "2025-01-15T10:00:00Z",
                 updatedAt: "2025-01-15T10:00:00Z"
@@ -1042,7 +1047,7 @@ class EventsService {
                 category: "ma3lola",
                 image: "https://images.pexels.com/photos/2885320/pexels-photo-2885320.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
                 status: "upcoming",
-                troop: "Ma3lola",
+                troop: "Troop 101",
                 createdBy: "2",
                 createdAt: "2025-01-14T15:30:00Z",
                 updatedAt: "2025-01-14T15:30:00Z"
@@ -1059,7 +1064,7 @@ class EventsService {
                 category: "sergila",
                 image: "https://images.pexels.com/photos/1170979/pexels-photo-1170979.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
                 status: "upcoming",
-                troop: "Sergila",
+                troop: "Troop 101",
                 createdBy: "1",
                 createdAt: "2025-01-13T09:15:00Z",
                 updatedAt: "2025-01-13T09:15:00Z"

@@ -216,7 +216,7 @@ class ScoutPluseApp {
         // Update welcome message on dashboard
         const welcomeMessage = document.getElementById('welcomeMessage');
         if (welcomeMessage) {
-            welcomeMessage.textContent = `Welcome back, ${this.currentUser.name}!`;
+            welcomeMessage.textContent = `Welcome back, ${this.currentUser.name}! (${this.currentUser.troop})`;
         }
 
         // Update navigation based on user role permissions

@@ -101,7 +101,7 @@ class LocalStorageService {
                     category: "ramita",
                     image: "https://images.pexels.com/photos/1061640/pexels-photo-1061640.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
                     status: "upcoming",
-                    troop: "Ramita",
+                    troop: "Troop 101",
                     createdBy: "1",
                     createdAt: "2025-01-15T10:00:00Z",
                     updatedAt: "2025-01-15T10:00:00Z"
@@ -118,7 +118,7 @@ class LocalStorageService {
                     category: "ma3lola",
                     image: "https://images.pexels.com/photos/2885320/pexels-photo-2885320.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
                     status: "upcoming",
-                    troop: "Ma3lola",
+                    troop: "Troop 101",
                     createdBy: "2",
                     createdAt: "2025-01-14T15:30:00Z",
                     updatedAt: "2025-01-14T15:30:00Z"
@@ -135,7 +135,7 @@ class LocalStorageService {
                     category: "sergila",
                     image: "https://images.pexels.com/photos/1170979/pexels-photo-1170979.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
                     status: "upcoming",
-                    troop: "Sergila",
+                    troop: "Troop 101",
                     createdBy: "1",
                     createdAt: "2025-01-13T09:15:00Z",
                     updatedAt: "2025-01-13T09:15:00Z"

@@ -133,7 +133,7 @@ class ProfileService {
                     
                     <div class="profile-field">
                         <label for="troop">Troop</label>
-                        <input type="text" id="troop" value="${this.currentUser.troop || 'Not assigned'}" readonly>
+                        <input type="text" id="troop" value="${this.currentUser.troop || 'Troop 101'}" readonly>
                     </div>
                     
                     <div class="profile-field">

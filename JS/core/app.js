@@ -614,13 +614,6 @@ class ScoutPluseApp {
                 }
                 break;
                 
-            case 'settings':
-                if (window.SettingsService?.getInstance) {
-                    window.SettingsService.getInstance().refresh();
-                    console.log('✅ Settings content refreshed');
-                }
-                break;
-                
             default:
                 console.log(`ℹ️ No refresh handler for page: ${page}`);
         }

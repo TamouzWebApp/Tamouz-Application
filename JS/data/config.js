@@ -55,8 +55,8 @@ window.APP_CONFIG = {
 window.ROLE_PERMISSIONS = {
     guest: ['events'],
     member: ['dashboard', 'events', 'information', 'profile'],
-    leader: ['dashboard', 'events', 'information', 'profile', 'settings'],
-    admin: ['dashboard', 'events', 'information', 'profile', 'settings']
+    leader: ['dashboard', 'events', 'information', 'profile'],
+    admin: ['dashboard', 'events', 'information', 'profile']
 };
 
 // Event permissions by role

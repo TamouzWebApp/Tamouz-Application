@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مولد أيقونات ScoutPluse</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .icon-generator {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .icon-preview {
+            display: inline-block;
+            margin: 10px;
+            text-align: center;
+        }
+        .icon {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #10b981, #0ea5e9);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+        .size-label {
+            font-size: 12px;
+            color: #666;
+            font-weight: bold;
+        }
+        .download-btn {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+        .download-btn:hover {
+            background: #059669;
+            transform: translateY(-2px);
+        }
+        .instructions {
+            background: #f0f9ff;
+            border: 1px solid #0ea5e9;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: right;
+            direction: rtl;
+        }
+        .instructions h3 {
+            color: #0369a1;
+            margin-top: 0;
+        }
+        .instructions ol {
+            text-align: right;
+            padding-right: 20px;
+        }
+        .instructions li {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="icon-generator">
+        <h1>🏕️ مولد أيقونات ScoutPluse</h1>
+        <p>انقر على الأزرار أدناه لتحميل الأيقونات بأحجام مختلفة</p>
+        
+        <div id="iconPreviews"></div>
+        
+        <button class="download-btn" onclick="downloadAllIcons()">
+            📥 تحميل جميع الأيقونات
+        </button>
+        
+        <div class="instructions">
+            <h3>📋 تعليمات الاستخدام:</h3>
+            <ol>
+                <li>انقر على "تحميل جميع الأيقونات" لتحميل جميع الأحجام</li>
+                <li>ضع الأيقونات في مجلد <code>icons/</code> في مشروعك</li>
+                <li>تأكد من أن مسارات الأيقونات في <code>manifest.json</code> صحيحة</li>
+                <li>الأيقونات ستعمل تلقائياً مع PWA</li>
+            </ol>
+            
+            <h3>📱 الأحجام المطلوبة:</h3>
+            <ul>
+                <li><strong>72x72</strong> - أيقونة صغيرة</li>
+                <li><strong>96x96</strong> - أيقونة متوسطة</li>
+                <li><strong>128x128</strong> - أيقونة كبيرة</li>
+                <li><strong>144x144</strong> - Windows tiles</li>
+                <li><strong>152x152</strong> - iOS touch icon</li>
+                <li><strong>192x192</strong> - Android home screen</li>
+                <li><strong>384x384</strong> - أيقونة كبيرة جداً</li>
+                <li><strong>512x512</strong> - أيقونة splash screen</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        const iconSizes = [
+            { size: 16, name: 'favicon' },
+            { size: 32, name: 'favicon' },
+            { size: 72, name: 'icon' },
+            { size: 96, name: 'icon' },
+            { size: 128, name: 'icon' },
+            { size: 144, name: 'icon' },
+            { size: 152, name: 'icon' },
+            { size: 192, name: 'icon' },
+            { size: 384, name: 'icon' },
+            { size: 512, name: 'icon' }
+        ];
+
+        function createIcon(size) {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = size;
+            canvas.height = size;
+            
+            // خلفية متدرجة
+            const gradient = ctx.createLinearGradient(0, 0, size, size);
+            gradient.addColorStop(0, '#10b981');
+            gradient.addColorStop(1, '#0ea5e9');
+            
+            // رسم الخلفية
+            ctx.fillStyle = gradient;
+            ctx.roundRect(0, 0, size, size, size * 0.2);
+            ctx.fill();
+            
+            // رسم الأيقونة (رمز الكشافة)
+            ctx.fillStyle = 'white';
+            ctx.font = `bold ${size * 0.5}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('🏕️', size / 2, size / 2);
+            
+            return canvas;
+        }
+
+        function downloadIcon(size, name) {
+            const canvas = createIcon(size);
+            const link = document.createElement('a');
+            link.download = `${name}-${size}x${size}.png`;
+            link.href = canvas.toDataURL();
+            link.click();
+        }
+
+        function downloadAllIcons() {
+            iconSizes.forEach(({ size, name }) => {
+                setTimeout(() => {
+                    downloadIcon(size, name);
+                }, 100 * iconSizes.indexOf(iconSizes.find(s => s.size === size)));
+            });
+        }
+
+        function displayPreviews() {
+            const container = document.getElementById('iconPreviews');
+            
+            iconSizes.forEach(({ size, name }) => {
+                const preview = document.createElement('div');
+                preview.className = 'icon-preview';
+                
+                const iconDiv = document.createElement('div');
+                iconDiv.className = 'icon';
+                iconDiv.style.width = '80px';
+                iconDiv.style.height = '80px';
+                iconDiv.style.fontSize = '40px';
+                iconDiv.textContent = '🏕️';
+                
+                const label = document.createElement('div');
+                label.className = 'size-label';
+                label.textContent = `${size}x${size}`;
+                
+                const downloadBtn = document.createElement('button');
+                downloadBtn.className = 'download-btn';
+                downloadBtn.style.fontSize = '12px';
+                downloadBtn.style.padding = '6px 12px';
+                downloadBtn.textContent = 'تحميل';
+                downloadBtn.onclick = () => downloadIcon(size, name);
+                
+                preview.appendChild(iconDiv);
+                preview.appendChild(label);
+                preview.appendChild(downloadBtn);
+                container.appendChild(preview);
+            });
+        }
+
+        // إضافة دعم roundRect للمتصفحات القديمة
+        if (!CanvasRenderingContext2D.prototype.roundRect) {
+            CanvasRenderingContext2D.prototype.roundRect = function(x, y, width, height, radius) {
+                this.beginPath();
+                this.moveTo(x + radius, y);
+                this.lineTo(x + width - radius, y);
+                this.quadraticCurveTo(x + width, y, x + width, y + radius);
+                this.lineTo(x + width, y + height - radius);
+                this.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+                this.lineTo(x + radius, y + height);
+                this.quadraticCurveTo(x, y + height, x, y + height - radius);
+                this.lineTo(x, y + radius);
+                this.quadraticCurveTo(x, y, x + radius, y);
+                this.closePath();
+            };
+        }
+
+        // عرض المعاينات عند تحميل الصفحة
+        displayPreviews();
+    </script>
+</body>
+</html>

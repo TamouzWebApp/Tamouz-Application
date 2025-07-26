@@ -41,7 +41,10 @@ window.APP_CONFIG = {
     performance: {
         debounceDelay: 300,
         throttleDelay: 100,
-        cacheTimeout: 5 * 60 * 1000 // 5 minutes
+        cacheTimeout: 5 * 60 * 1000, // 5 minutes
+        enableServiceWorker: true,
+        enablePushNotifications: true,
+        enableBackgroundSync: true
     },
     
     // Security settings
@@ -49,6 +52,17 @@ window.APP_CONFIG = {
         maxLoginAttempts: 5,
         sessionTimeout: 24 * 60 * 60 * 1000, // 24 hours
         requireStrongPassword: false
+    },
+    
+    // PWA settings
+    pwa: {
+        enableInstallPrompt: true,
+        enableOfflineMode: true,
+        enablePushNotifications: true,
+        enableBackgroundSync: true,
+        cacheStrategy: 'cacheFirst', // cacheFirst, networkFirst, staleWhileRevalidate
+        updateCheckInterval: 60000, // 1 minute
+        maxCacheAge: 7 * 24 * 60 * 60 * 1000 // 7 days
     }
 };
 

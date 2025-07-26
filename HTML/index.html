@@ -3,6 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="application-name" content="ScoutPluse">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="ScoutPluse">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#10b981">
+    <meta name="msapplication-tap-highlight" content="no">
+    
+    <!-- Manifest -->
+    <link rel="manifest" href="../manifest.json">
+    
+    <!-- Apple Touch Icons -->
+    <link rel="apple-touch-icon" href="../icons/icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="../icons/icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../icons/icon-192x192.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="../icons/icon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../icons/icon-16x16.png">
+    <link rel="shortcut icon" href="../icons/favicon.ico">
+    
     <title>ScoutPluse - Scout Management Platform by KinanKassab</title>
     <meta name="description" content="Modern scout management platform for troops, events, and member management">
     <meta name="author" content="KinanKassab">
@@ -21,7 +44,7 @@
     <link rel="stylesheet" href="../CSS/events.css">
     <link rel="stylesheet" href="../CSS/information.css">
     <link rel="stylesheet" href="../CSS/profile.css">
-    <link rel="stylesheet" href="../CSS/settings.css">
+    <link rel="stylesheet" href="../CSS/pwa.css">
     
     <!-- Theme detection script (inline for performance) -->
     <script>
@@ -34,6 +57,27 @@
     </script>
 </head>
 <body>
+    <!-- PWA Splash Screen -->
+    <div id="pwaSplash" class="pwa-splash">
+        <div class="splash-logo">🏕️</div>
+        <div class="splash-title">ScoutPluse</div>
+        <div class="splash-subtitle">منصة إدارة الكشافة</div>
+        <div class="splash-loading">
+            جاري التحميل<span class="loading-dots"></span>
+        </div>
+    </div>
+
+    <!-- Connection Indicator -->
+    <div id="connectionIndicator" class="connection-indicator online">
+        <div class="connection-dot"></div>
+        <span id="connectionText">متصل</span>
+    </div>
+
+    <!-- Offline Indicator -->
+    <div id="offlineIndicator" class="offline-indicator" style="display: none;">
+        📡 أنت تعمل بدون اتصال - البيانات محفوظة محلياً
+    </div>
+
     <!-- Login Screen -->
     <div id="loginScreen" class="login-screen">
         <div class="login-container">
@@ -460,6 +504,7 @@
     <script src="../JS/services/auto-sync.js"></script>
     <script src="../JS/services/theme.js"></script>
     <script src="../JS/services/translations.js"></script>
+    <script src="../JS/services/pwa.js"></script>
     
     <!-- Core Navigation -->
     <script src="../JS/core/navigation.js"></script>
@@ -472,5 +517,54 @@
     
     <!-- Main App Controller -->
     <script src="../JS/core/app.js"></script>
+    
+    <!-- PWA Initialization -->
+    <script>
+        // إخفاء شاشة البداية بعد تحميل التطبيق
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const splash = document.getElementById('pwaSplash');
+                if (splash) {
+                    splash.classList.add('hidden');
+                    setTimeout(() => {
+                        splash.remove();
+                    }, 500);
+                }
+            }, 1500);
+        });
+        
+        // تحديث مؤشر الاتصال
+        function updateConnectionIndicator() {
+            const indicator = document.getElementById('connectionIndicator');
+            const text = document.getElementById('connectionText');
+            const offlineIndicator = document.getElementById('offlineIndicator');
+            
+            if (navigator.onLine) {
+                indicator.classList.add('online');
+                indicator.classList.remove('offline');
+                text.textContent = 'متصل';
+                offlineIndicator.style.display = 'none';
+            } else {
+                indicator.classList.add('offline');
+                indicator.classList.remove('online');
+                text.textContent = 'غير متصل';
+                offlineIndicator.style.display = 'block';
+            }
+        }
+        
+        // مراقبة حالة الاتصال
+        window.addEventListener('online', updateConnectionIndicator);
+        window.addEventListener('offline', updateConnectionIndicator);
+        
+        // تحديث أولي
+        updateConnectionIndicator();
+        
+        // تحقق من وضع PWA
+        if (window.matchMedia('(display-mode: standalone)').matches || 
+            window.navigator.standalone === true) {
+            document.body.classList.add('pwa-installed');
+            console.log('📱 Running as PWA');
+        }
+    </script>
 </body>
 </html>

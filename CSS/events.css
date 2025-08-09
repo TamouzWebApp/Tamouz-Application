@@ -1,0 +1,896 @@
+/* 
+===========================================
+SCOUTPLUSE - أنماط الأحداث
+===========================================
+
+أنماط شاملة لنظام إدارة الأحداث
+مع دعم كامل للتصميم المتجاوب والمظاهر المتعددة
+*/
+
+/* ===========================================
+   حاوي صفحة الأحداث
+   ========================================== */
+
+.events-page {
+    padding: var(--spacing-6);
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* ===========================================
+   رأس الصفحة
+   ========================================== */
+
+.events-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-8);
+    padding-bottom: var(--spacing-4);
+    border-bottom: 2px solid var(--border-light);
+}
+
+.events-header h1 {
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--text-primary);
+    background: linear-gradient(135deg, var(--primary-600), var(--secondary-600));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0;
+}
+
+.events-header-actions {
+    display: flex;
+    gap: var(--spacing-3);
+    align-items: center;
+}
+
+/* ===========================================
+   شريط البحث والفلاتر
+   ========================================== */
+
+.events-controls {
+    display: flex;
+    gap: var(--spacing-4);
+    margin-bottom: var(--spacing-8);
+    flex-wrap: wrap;
+    align-items: center;
+    background: var(--bg-primary);
+    padding: var(--spacing-6);
+    border-radius: var(--radius-3xl);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+}
+
+.search-container {
+    flex: 1;
+    min-width: 300px;
+    position: relative;
+}
+
+.search-input {
+    width: 100%;
+    padding: var(--spacing-3) var(--spacing-3) var(--spacing-3) 3rem;
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-xl);
+    font-size: var(--font-size-base);
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    transition: all var(--transition-fast);
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--primary-500);
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+    background-color: var(--bg-primary);
+}
+
+.search-icon {
+    position: absolute;
+    left: var(--spacing-3);
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    pointer-events: none;
+}
+
+.category-filters {
+    display: flex;
+    gap: var(--spacing-2);
+    flex-wrap: wrap;
+}
+
+.category-filter {
+    padding: var(--spacing-2) var(--spacing-4);
+    border: 2px solid var(--border-color);
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
+    border-radius: var(--radius-xl);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    white-space: nowrap;
+}
+
+.category-filter:hover {
+    border-color: var(--primary-300);
+    background: var(--primary-50);
+    color: var(--text-primary);
+    transform: translateY(-1px);
+}
+
+.dark .category-filter:hover {
+    background: var(--primary-900);
+    border-color: var(--primary-700);
+}
+
+.category-filter.active {
+    border-color: var(--primary-600);
+    background: linear-gradient(135deg, var(--primary-100), var(--secondary-100));
+    color: var(--primary-700);
+    box-shadow: var(--shadow-sm);
+}
+
+.dark .category-filter.active {
+    background: linear-gradient(135deg, var(--primary-900), var(--secondary-900));
+    color: var(--primary-300);
+}
+
+/* ===========================================
+   شبكة الأحداث
+   ========================================== */
+
+.events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: var(--spacing-6);
+    margin-bottom: var(--spacing-8);
+}
+
+/* ===========================================
+   بطاقة الحدث
+   ========================================== */
+
+.event-card {
+    background: var(--bg-primary);
+    border-radius: var(--radius-3xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-fast);
+    cursor: pointer;
+    border: 1px solid var(--border-light);
+    position: relative;
+    height: fit-content;
+}
+
+.event-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-2xl);
+    border-color: var(--primary-200);
+}
+
+.event-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-500), var(--secondary-500));
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+}
+
+.event-card:hover::before {
+    opacity: 1;
+}
+
+/* ===========================================
+   صورة الحدث
+   ========================================== */
+
+.event-image {
+    position: relative;
+    height: 220px;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--gray-100), var(--gray-200));
+}
+
+.event-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-normal);
+}
+
+.event-card:hover .event-image img {
+    transform: scale(1.08);
+}
+
+.event-category-badge {
+    position: absolute;
+    top: var(--spacing-4);
+    right: var(--spacing-4);
+    padding: var(--spacing-2) var(--spacing-3);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: var(--shadow-lg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: white;
+}
+
+.event-status-badge {
+    position: absolute;
+    top: var(--spacing-4);
+    left: var(--spacing-4);
+    padding: var(--spacing-1) var(--spacing-2);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.status-upcoming {
+    background: rgba(34, 197, 94, 0.9);
+    color: white;
+}
+
+.status-past {
+    background: rgba(107, 114, 128, 0.9);
+    color: white;
+}
+
+.status-cancelled {
+    background: rgba(239, 68, 68, 0.9);
+    color: white;
+}
+
+.joined-badge {
+    position: absolute;
+    bottom: var(--spacing-4);
+    left: var(--spacing-4);
+    background: var(--green-600);
+    color: white;
+    padding: var(--spacing-1) var(--spacing-2);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    box-shadow: var(--shadow-sm);
+}
+
+/* ===========================================
+   محتوى الحدث
+   ========================================== */
+
+.event-content {
+    padding: var(--spacing-6);
+}
+
+.event-title {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-3);
+    line-height: var(--line-height-tight);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.event-description {
+    color: var(--text-secondary);
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-relaxed);
+    margin-bottom: var(--spacing-4);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.event-details {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2);
+    margin-bottom: var(--spacing-5);
+}
+
+.event-detail {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+}
+
+.event-detail svg {
+    flex-shrink: 0;
+    color: var(--primary-600);
+}
+
+/* ===========================================
+   قسم الحضور
+   ========================================== */
+
+.attendance-section {
+    margin-bottom: var(--spacing-5);
+}
+
+.attendance-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+    margin-bottom: var(--spacing-2);
+}
+
+.attendance-count {
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+}
+
+.progress-bar {
+    height: 8px;
+    background: var(--gray-200);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+    position: relative;
+}
+
+.dark .progress-bar {
+    background: var(--gray-700);
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-500), var(--secondary-500));
+    border-radius: var(--radius-full);
+    transition: width var(--transition-normal);
+    position: relative;
+}
+
+.progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* ===========================================
+   أزرار الحدث
+   ========================================== */
+
+.event-actions {
+    display: flex;
+    gap: var(--spacing-2);
+    flex-wrap: wrap;
+}
+
+.event-btn {
+    flex: 1;
+    padding: var(--spacing-3) var(--spacing-4);
+    border-radius: var(--radius-xl);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    transition: all var(--transition-fast);
+    cursor: pointer;
+    border: 2px solid transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-2);
+    min-height: 48px;
+}
+
+.event-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* أزرار إدارة الأحداث للمدير */
+.event-edit-btn,
+.event-delete-btn {
+    flex: 0 0 auto;
+    min-width: 48px;
+    padding: var(--spacing-2) var(--spacing-3);
+}
+
+/* زر التحرير */
+.event-edit-btn {
+    background: var(--amber-50);
+    color: var(--amber-700);
+    border-color: var(--amber-200);
+}
+
+.event-edit-btn:hover {
+    background: var(--amber-100);
+    border-color: var(--amber-300);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.dark .event-edit-btn {
+    background: var(--amber-900);
+    color: var(--amber-300);
+    border-color: var(--amber-700);
+}
+
+.dark .event-edit-btn:hover {
+    background: var(--amber-800);
+    border-color: var(--amber-600);
+}
+
+/* زر الحذف */
+.event-delete-btn {
+    background: var(--red-50);
+    color: var(--red-700);
+    border-color: var(--red-200);
+}
+
+.event-delete-btn:hover {
+    background: var(--red-100);
+    border-color: var(--red-300);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.dark .event-delete-btn {
+    background: var(--red-900);
+    color: var(--red-300);
+    border-color: var(--red-700);
+}
+
+.dark .event-delete-btn:hover {
+    background: var(--red-800);
+    border-color: var(--red-600);
+}
+
+/* تحسين ترتيب الأزرار على الشاشات الصغيرة */
+@media (max-width: 768px) {
+    .event-actions {
+        flex-direction: column;
+        gap: var(--spacing-2);
+    }
+    
+    .event-edit-btn,
+    .event-delete-btn {
+        flex: 1;
+        min-width: auto;
+        width: 100%;
+    }
+}
+
+/* ===========================================
+   نموذج إنشاء الحدث
+   ========================================== */
+
+.event-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-5);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-4);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2);
+}
+
+.form-group label {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    padding: var(--spacing-3);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    font-size: var(--font-size-base);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    transition: all var(--transition-fast);
+    font-family: inherit;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-500);
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+    transform: translateY(-1px);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.form-actions {
+    display: flex;
+    gap: var(--spacing-3);
+    justify-content: flex-end;
+    padding-top: var(--spacing-4);
+    border-top: 1px solid var(--border-light);
+}
+
+/* ===========================================
+   حالات فارغة وتحميل
+   ========================================== */
+
+.events-empty {
+    text-align: center;
+    padding: var(--spacing-16) var(--spacing-6);
+    color: var(--text-muted);
+    background: var(--bg-primary);
+    border-radius: var(--radius-3xl);
+    border: 2px dashed var(--border-color);
+    grid-column: 1 / -1;
+}
+
+.events-empty svg {
+    margin-bottom: var(--spacing-4);
+    color: var(--text-muted);
+    opacity: 0.6;
+}
+
+.events-empty h3 {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-2);
+}
+
+.events-empty p {
+    font-size: var(--font-size-base);
+    color: var(--text-muted);
+    line-height: var(--line-height-relaxed);
+    margin: 0;
+}
+
+.events-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: var(--spacing-16);
+    color: var(--text-muted);
+    gap: var(--spacing-3);
+    grid-column: 1 / -1;
+}
+
+.loading-spinner {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* ===========================================
+   التصميم المتجاوب
+   ========================================== */
+
+@media (max-width: 768px) {
+    .events-page {
+        padding: var(--spacing-4);
+    }
+    
+    .events-header {
+        flex-direction: column;
+        gap: var(--spacing-4);
+        align-items: stretch;
+        margin-bottom: var(--spacing-6);
+    }
+    
+    .events-header h1 {
+        font-size: var(--font-size-3xl);
+        text-align: center;
+        margin-bottom: var(--spacing-2);
+    }
+    
+    .events-header-actions {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    .events-controls {
+        flex-direction: column;
+        gap: var(--spacing-4);
+        padding: var(--spacing-4);
+        margin-bottom: var(--spacing-6);
+    }
+    
+    .search-container {
+        min-width: auto;
+        width: 100%;
+    }
+    
+    .search-input {
+        width: 100%;
+        font-size: 16px; /* منع التكبير على iOS */
+        padding: var(--spacing-3) var(--spacing-3) var(--spacing-3) 3rem;
+    }
+    
+    .category-filters {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: var(--spacing-2);
+    }
+    
+    .events-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-4);
+    }
+    
+    .event-image {
+        height: 180px;
+    }
+    
+    .event-content {
+        padding: var(--spacing-4);
+    }
+    
+    .event-title {
+        font-size: var(--font-size-lg);
+        line-height: var(--line-height-tight);
+    }
+    
+    .event-description {
+        font-size: var(--font-size-sm);
+        -webkit-line-clamp: 2;
+    }
+    
+    .event-actions {
+        flex-direction: column;
+        gap: var(--spacing-2);
+    }
+    
+    .event-btn {
+        width: 100%;
+        justify-content: center;
+        min-height: 44px;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-3);
+    }
+    
+    .form-actions {
+        flex-direction: column;
+        gap: var(--spacing-3);
+    }
+    
+    .form-actions .btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .events-page {
+        padding: var(--spacing-3);
+    }
+    
+    .events-header {
+        margin-bottom: var(--spacing-4);
+    }
+    
+    .events-header h1 {
+        font-size: var(--font-size-2xl);
+    }
+    
+    .events-controls {
+        padding: var(--spacing-3);
+        margin-bottom: var(--spacing-4);
+    }
+    
+    .category-filters {
+        gap: var(--spacing-1);
+        justify-content: flex-start;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: var(--spacing-2);
+    }
+    
+    .category-filter {
+        padding: var(--spacing-1) var(--spacing-2);
+        font-size: var(--font-size-xs);
+        white-space: nowrap;
+        flex-shrink: 0;
+        min-height: 32px;
+    }
+    
+    .event-image {
+        height: 160px;
+    }
+    
+    .event-content {
+        padding: var(--spacing-3);
+    }
+    
+    .event-title {
+        font-size: var(--font-size-base);
+        margin-bottom: var(--spacing-2);
+    }
+    
+    .event-description {
+        font-size: var(--font-size-xs);
+        margin-bottom: var(--spacing-3);
+    }
+    
+    .event-details {
+        gap: var(--spacing-1);
+        margin-bottom: var(--spacing-3);
+    }
+    
+    .event-detail {
+        font-size: var(--font-size-xs);
+    }
+    
+    .event-detail svg {
+        width: 14px;
+        height: 14px;
+    }
+    
+    .attendance-section {
+        margin-bottom: var(--spacing-3);
+    }
+    
+    .attendance-info {
+        font-size: var(--font-size-xs);
+    }
+    
+    .event-btn {
+        padding: var(--spacing-2) var(--spacing-3);
+        font-size: var(--font-size-xs);
+        min-height: 40px;
+    }
+    
+    .event-btn svg {
+        width: 14px;
+        height: 14px;
+    }
+    
+    /* تحسين النموذج للشاشات الصغيرة */
+    .form-group label {
+        font-size: var(--font-size-sm);
+        margin-bottom: var(--spacing-1);
+    }
+    
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        font-size: 16px; /* منع التكبير على iOS */
+        padding: var(--spacing-2);
+        min-height: 44px;
+    }
+    
+    .form-group textarea {
+        min-height: 80px;
+    }
+    
+    /* تحسين الحالة الفارغة */
+    .events-empty {
+        padding: var(--spacing-8);
+        margin: var(--spacing-4) 0;
+    }
+    
+    .events-empty h3 {
+        font-size: var(--font-size-lg);
+    }
+    
+    .events-empty p {
+        font-size: var(--font-size-sm);
+    }
+    
+    .events-loading {
+        padding: var(--spacing-8);
+    }
+    
+    /* تحسين البحث للشاشات الصغيرة */
+    .search-input {
+        padding: var(--spacing-2) var(--spacing-2) var(--spacing-2) 2.5rem;
+    }
+    
+    .search-icon {
+        left: var(--spacing-2);
+        width: 16px;
+        height: 16px;
+    }
+}
+
+/* ===========================================
+   أنماط الطباعة
+   ========================================== */
+
+@media print {
+    .events-header-actions,
+    .events-controls,
+    .event-actions {
+        display: none !important;
+    }
+    
+    .events-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .event-card {
+        break-inside: avoid;
+        box-shadow: none;
+        border: 1px solid #ccc;
+    }
+}
+
+/* ===========================================
+   وضع التباين العالي
+   ========================================== */
+
+@media (prefers-contrast: high) {
+    .event-card {
+        border-width: 2px;
+    }
+    
+    .category-filter {
+        border-width: 2px;
+    }
+    
+    .event-btn {
+        border-width: 2px;
+    }
+}
+
+/* ===========================================
+   تقليل الحركة
+   ========================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    .event-card,
+    .event-btn,
+    .category-filter {
+        transition: none;
+    }
+    
+    .event-card:hover .event-image img {
+        transform: none;
+    }
+    
+    .progress-fill::after {
+        animation: none;
+    }
+    
+    .loading-spinner {
+        animation: none;
+    }
+}

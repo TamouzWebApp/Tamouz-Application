@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ScoutPluse - منصة إدارة الكشافة الحديثة لإدارة الفرق والأحداث والأعضاء بواسطة KinanKassab">
+    <meta name="keywords" content="كشافة, إدارة, فرق, أحداث, تعليم, مغامرات, ScoutPluse, KinanKassab, scout management">
+    <meta name="author" content="KinanKassab">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="ScoutPluse - منصة إدارة الكشافة">
+    <meta property="og:description" content="منصة حديثة ومتجاوبة لإدارة الفرق الكشفية والأحداث والأعضاء - تطوير KinanKassab">
+    <meta property="og:image" content="https://tamouzwebapp.github.io/Tamouz-Application/assets/og-image.png">
+    <meta property="og:url" content="https://tamouzwebapp.github.io/Tamouz-Application/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="ScoutPluse">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ScoutPluse - منصة إدارة الكشافة">
+    <meta name="twitter:description" content="منصة حديثة ومتجاوبة لإدارة الفرق الكشفية والأحداث والأعضاء">
+    <meta name="twitter:image" content="https://tamouzwebapp.github.io/Tamouz-Application/assets/og-image.png">
+    
+    <title>ScoutPluse - منصة إدارة الكشافة الحديثة | KinanKassab</title>
+    
+    <!-- Favicon and Site Icons -->
+    <link rel="icon" type="image/png" sizes="16x16" href="./Logo.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./Logo.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="./Logo.png">
+    <link rel="icon" type="image/png" sizes="72x72" href="./Logo.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="./Logo.png">
+    <link rel="icon" type="image/png" sizes="128x128" href="./Logo.png">
+    <link rel="icon" type="image/png" sizes="144x144" href="./Logo.png">
+    <link rel="icon" type="image/png" sizes="152x152" href="./Logo.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="./Logo.png">
+    <link rel="icon" type="image/png" sizes="384x384" href="./Logo.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="./Logo.png">
+    <link rel="shortcut icon" href="./Logo.png">
+    
+    <!-- Apple Touch Icons -->
+    <link rel="apple-touch-icon" href="./Logo.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="./Logo.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="./Logo.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="./Logo.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="./Logo.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="./Logo.png">
+    
+    <!-- PWA Support -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#10b981">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="ScoutPluse">
+    <meta name="msapplication-TileColor" content="#10b981">
+    <meta name="msapplication-TileImage" content="./Logo.png">
+    <meta name="msapplication-config" content="none">
+    
+    <!-- Preconnect to Google Fonts only -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Google Fonts - Cairo for Arabic and Inter for English -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Preload critical CSS -->
+    <link rel="preload" href="CSS/main.css" as="style">
+    <link rel="preload" href="CSS/components.css" as="style">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="CSS/main.css">
+    <link rel="stylesheet" href="CSS/components.css">
+    <link rel="stylesheet" href="CSS/responsive.css">
+    <link rel="stylesheet" href="CSS/auth.css">
+    <link rel="stylesheet" href="CSS/events.css">
+    <link rel="stylesheet" href="CSS/information.css">
+    <link rel="stylesheet" href="CSS/profile.css">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "ScoutPluse",
+        "description": "منصة إدارة الكشافة الحديثة لإدارة الفرق والأحداث والأعضاء",
+        "url": "https://tamouzwebapp.github.io/Tamouz-Application/",
+        "author": {
+            "@type": "Person",
+            "name": "KinanKassab"
+        },
+        "applicationCategory": "EducationalApplication",
+        "operatingSystem": "Web Browser",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        }
+    }
+    </script>
+    
+    <!-- Theme detection script (inline for performance) -->
+    <script>
+        (function() {
+            const theme = localStorage.getItem('scoutpluse_theme') || 'auto';
+            if (theme === 'dark' || (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            }
+            
+            // Prevent zoom on iOS when tapping inputs
+            if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+                document.addEventListener('touchstart', function() {}, {passive: true});
+            }
+        })();
+    </script>
+</head>
+<body ontouchstart="">
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-screen">
+        <div class="login-container">
+            <div class="login-header">
+                <div class="logo">
+                    <img src="./Logo.png" alt="ScoutPluse Logo" width="48" height="48">
+                </div>
+                <h1>ScoutPluse</h1>
+                <p>مرحباً بك في منصة إدارة الكشافة الحديثة</p>
+            </div>
+            
+            <div class="login-form-container">
+                <form id="loginForm" class="login-form" novalidate>
+                    <div class="form-group">
+                        <label for="email">البريد الإلكتروني</label>
+                        <div class="input-group">
+                            <svg class="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                            <input type="email" id="email" required autocomplete="email" placeholder="أدخل بريدك الإلكتروني" inputmode="email" aria-describedby="email-error">
+                        </div>
+                        <div id="email-error" class="field-error" role="alert" aria-live="polite"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">كلمة المرور</label>
+                        <div class="input-group">
+                            <svg class="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                <circle cx="12" cy="16" r="1"></circle>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                            </svg>
+                            <input type="password" id="password" required autocomplete="current-password" placeholder="أدخل كلمة المرور" inputmode="text" aria-describedby="password-error">
+                            <button type="button" class="password-toggle" id="passwordToggle" aria-label="إظهار/إخفاء كلمة المرور">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                </svg>
+                            </button>
+                        </div>
+                        <div id="password-error" class="field-error" role="alert" aria-live="polite"></div>
+                    </div>
+                    
+                    <div id="loginError" class="error-message" style="display: none;" role="alert" aria-live="assertive"></div>
+                    
+                    <button type="submit" class="btn btn-primary btn-full" id="loginBtn">
+                        <div class="loading-spinner" style="display: none;" aria-hidden="true">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 12a9 9 0 11-6.219-8.56"></path>
+                            </svg>
+                        </div>
+                        <span>تسجيل الدخول</span>
+                    </button>
+                </form>
+                
+                <div class="demo-accounts">
+                    <p class="demo-title">حسابات تجريبية</p>
+                    <div class="demo-account-list">
+                        <button type="button" class="demo-account" data-email="admin@scouts.org" tabindex="0" aria-label="تسجيل دخول كمدير">
+                            <div class="demo-role">مدير النظام</div>
+                            <div class="demo-email">admin@scouts.org</div>
+                        </button>
+                        <button type="button" class="demo-account" data-email="Bashar3kazi@scouts.org" tabindex="0" aria-label="تسجيل دخول كقائد">
+                            <div class="demo-role">قائد الفرقة</div>
+                            <div class="demo-email">Bashar3kazi@scouts.org</div>
+                        </button>
+                        <button type="button" class="demo-account" data-email="KinanKassab@scouts.org" tabindex="0" aria-label="تسجيل دخول كعضو">
+                            <div class="demo-role">عضو كشفي</div>
+                            <div class="demo-email">KinanKassab@scouts.org</div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Application -->
+    <div id="mainApp" class="main-app" style="display: none;">
+        <!-- Mobile Header -->
+        <header class="mobile-header">
+            <div class="mobile-header-left">
+                <button class="mobile-back-btn" id="mobileBackBtn" aria-label="العودة للخلف">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <polyline points="15,18 9,12 15,6"></polyline>
+                    </svg>
+                </button>
+                <div class="mobile-logo">
+                    <div class="logo-icon">
+                        <img src="./Logo.png" alt="ScoutPluse Logo" width="24" height="24">
+                    </div>
+                    <div class="logo-text">
+                        <span class="logo-title">ScoutPluse</span>
+                        <span class="logo-subtitle">منصة الكشافة</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mobile-header-right">
+                <div class="mobile-actions">
+                    <button class="theme-toggle" id="mobileThemeToggle" aria-label="تبديل المظهر">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line x1="1" y1="12" x2="3" y2="12"></line>
+                            <line x1="21" y1="12" x2="23" y2="12"></line>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                    </button>
+                    
+                    <div class="user-profile">
+                        <div class="user-avatar" id="mobileUserAvatar" aria-label="الملف الشخصي">
+                            <span class="avatar-text">A</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Sidebar Overlay (removed) -->
+
+        <!-- Main Content -->
+        <main class="main-content" role="main">
+            <!-- Dashboard Page -->
+            <div id="dashboardPage" class="page active">
+                <div class="page-header">
+                    <h1 id="welcomeMessage" data-translate="dashboard.welcome">مرحباً بعودتك، مستخدم النظام!</h1>
+                    <p data-translate="dashboard.subtitle">إليك ما يحدث مع فرقتك اليوم.</p>
+                    <div class="page-actions">
+                    </div>
+                </div>
+                
+                <div class="dashboard-content">
+                    <section class="dashboard-section" aria-labelledby="recent-events-heading">
+                        <h2 id="recent-events-heading">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="16" y1="2" x2="16" y2="6"></line>
+                                <line x1="8" y1="2" x2="8" y2="6"></line>
+                                <line x1="3" y1="10" x2="21" y2="10"></line>
+                            </svg>
+                            <span data-translate="dashboard.recent_events">أحدث الأحداث</span>
+                        </h2>
+                        <div id="recentEvents" class="recent-events" role="region" aria-live="polite">
+                            <!-- Events will be loaded here -->
+                        </div>
+                    </section>
+                    
+                    <div class="dashboard-sidebar">
+                        <section class="dashboard-section" aria-labelledby="quick-actions-heading">
+                            <h2 id="quick-actions-heading">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <polyline points="22,12 18,12 15,21 9,3 6,12 2,12"></polyline>
+                                </svg>
+                                الإجراءات السريعة
+                            </h2>
+                            <div id="quickActions" class="quick-actions" role="region">
+                                <!-- Quick actions will be loaded here -->
+                            </div>
+                        </section>
+                        
+                        <section class="dashboard-section" aria-labelledby="troop-overview-heading">
+                            <h2 id="troop-overview-heading">نظرة عامة على الفرقة</h2>
+                            <div id="troopOverview" class="troop-overview" role="region">
+                                <!-- Troop overview will be loaded here -->
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Events Page -->
+            <div id="eventsPage" class="page">
+                <div class="page-header">
+                    <h1 data-translate="events.title">الأحداث</h1>
+                    <div class="page-actions">
+                        <button class="btn btn-primary" id="createEventBtn">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg>
+                            <span data-translate="events.create">إنشاء حدث</span>
+                        </button>
+
+                    </div>
+                </div>
+                
+                <!-- Search and Filter Controls -->
+                <div class="events-controls" role="search">
+                    <div class="search-container">
+                        <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.35-4.35"></path>
+                        </svg>
+                        <input type="text" id="eventsSearch" class="search-input" placeholder="البحث في الأحداث بالعنوان أو الوصف أو المكان..." inputmode="search" aria-label="البحث في الأحداث">
+                    </div>
+                    
+                    <div class="category-filters" role="group" aria-label="تصفية الأحداث حسب الفئة">
+                        <button class="category-filter active" data-category="all" aria-pressed="true">جميع الأحداث</button>
+                        <button class="category-filter" data-category="ramita" aria-pressed="false">🌲 رميتا</button>
+                        <button class="category-filter" data-category="ma3lola" aria-pressed="false">🤝 معلولا</button>
+                        <button class="category-filter" data-category="sergila" aria-pressed="false">📚 سرجيلا</button>
+                        <button class="category-filter" data-category="bousra" aria-pressed="false">🏆 بوسرا</button>
+                    </div>
+                </div>
+                
+                <!-- Events Grid -->
+                <div id="eventsGrid" class="events-grid" role="region" aria-live="polite" aria-label="قائمة الأحداث">
+                    <!-- Events will be loaded here -->
+                    <div class="events-loading">
+                        <svg class="loading-spinner" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <path d="M21 12a9 9 0 11-6.219-8.56"></path>
+                        </svg>
+                        <span>جاري تحميل الأحداث...</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Information Page -->
+            <div id="informationPage" class="page">
+                <div class="page-header">
+                    <h1 data-translate="information.title">المعلومات</h1>
+                    <p data-translate="information.subtitle">معرفة ومصادر الكشافة</p>
+                    <div class="page-actions">
+
+                    </div>
+                </div>
+                
+                <div id="informationContent" class="information-content" role="region">
+                    <!-- Information content will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Profile Page -->
+            <div id="profilePage" class="page">
+                <div class="page-header">
+                    <h1 data-translate="profile.title">الملف الشخصي</h1>
+                    <p data-translate="profile.subtitle">إدارة معلوماتك الشخصية وتفضيلاتك</p>
+                    <div class="page-actions">
+
+                    </div>
+                </div>
+                
+                <div id="profileContent" class="profile-content" role="region">
+                    <!-- Profile content will be loaded here -->
+                </div>
+            </div>
+
+        </main>
+
+        <!-- Bottom Navigation (Mobile) -->
+        <nav class="bottom-nav" role="navigation" aria-label="التنقل الرئيسي">
+            <a href="#dashboard" class="bottom-nav-item active" data-page="dashboard" tabindex="0" role="tab" aria-selected="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
+                </svg>
+                <span data-translate="nav.dashboard">لوحة التحكم</span>
+            </a>
+            <a href="#events" class="bottom-nav-item" data-page="events" tabindex="0" role="tab" aria-selected="false">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/>
+                </svg>
+                <span data-translate="nav.events">الأحداث</span>
+            </a>
+            <a href="#information" class="bottom-nav-item" data-page="information" tabindex="0" role="tab" aria-selected="false">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/>
+                    <path d="M12 16v-4"/>
+                    <path d="M12 8h.01"/>
+                </svg>
+                <span data-translate="nav.information">المعلومات</span>
+            </a>
+            <a href="#profile" class="bottom-nav-item" data-page="profile" tabindex="0" role="tab" aria-selected="false">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+                <span data-translate="nav.profile">الملف الشخصي</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- Footer with Developer Credit -->
+    <footer class="app-footer">
+        <div class="footer-content">
+            <p>تم التطوير بواسطة <strong>KinanKassab</strong> | <a href="https://github.com/kinankassab" target="_blank" rel="noopener" aria-label="ملف KinanKassab على GitHub">GitHub</a></p>
+        </div>
+    </footer>
+
+    <!-- Modal -->
+    <div id="eventModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-hidden="true">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">عنوان النافذة</h2>
+                <button class="modal-close" id="closeModal" aria-label="إغلاق النافذة">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Modal content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Troop Members Modal -->
+    <div id="troopMembersModal" class="troop-members-modal" role="dialog" aria-modal="true" aria-labelledby="troopMembersTitle" aria-hidden="true">
+        <div class="troop-members-content">
+            <div class="troop-members-header">
+                <h3 id="troopMembersTitle">أعضاء الفرقة</h3>
+                <button class="troop-members-close" id="closeTroopMembersModal" aria-label="إغلاق النافذة">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="troop-members-list" id="troopMembersList">
+                <!-- Troop members will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <!-- Core Scripts -->
+    <script src="JS/data/config.js"></script>
+    <script src="JS/utils/helpers.js"></script>
+    
+    <!-- Debug script for development -->
+    <script>
+        // Debug information
+        console.log('🌐 ScoutPluse - Debug Mode Active');
+        console.log('📁 Current URL:', window.location.href);
+        console.log('🔧 User Agent:', navigator.userAgent);
+        console.log('📱 Screen Size:', window.innerWidth + 'x' + window.innerHeight);
+    </script>
+    
+    <!-- Components -->
+    <script src="JS/components/status-indicator.js"></script>
+    
+    <!-- Services -->
+    <script src="JS/services/auth.js"></script>
+    <script src="JS/services/local-storage.js"></script>
+    <script src="JS/services/data-manager.js"></script>
+    <script src="JS/services/auto-sync.js"></script>
+    <script src="JS/services/theme.js"></script>
+    <script src="JS/services/translations.js"></script>
+    
+    <!-- Core Navigation -->
+    <script src="JS/core/navigation.js"></script>
+    
+    <!-- Pages -->
+    <script src="JS/pages/dashboard.js"></script>
+    <script src="JS/pages/events.js"></script>
+    <script src="JS/pages/information.js"></script>
+    <script src="JS/pages/profile.js"></script>
+    
+    <!-- Main App Controller -->
+    <script src="JS/core/app.js"></script>
+    
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(registration => {
+                        console.log('SW registered: ', registration);
+                    })
+                    .catch(registrationError => {
+                        console.log('SW registration failed: ', registrationError);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>

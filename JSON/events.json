@@ -1,0 +1,94 @@
+{
+    "events": [
+        {
+            "id": "1",
+            "title": "رحلة تخييم نهاية الأسبوع",
+            "description": "مغامرة تخييم لثلاثة أيام مع أنشطة المشي والنار. تعلم مهارات البقاء في الهواء الطلق واستمتع بالطبيعة.",
+            "date": "2025-01-20",
+            "time": "09:00",
+            "location": "موقع التخييم الجبلي",
+            "attendees": [],
+            "maxAttendees": 25,
+            "category": "ramita",
+            "image": "https:\/\/images.pexels.com\/photos\/1061640\/pexels-photo-1061640.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+            "status": "upcoming",
+            "troop": "فرقة رميتا",
+            "createdBy": "1",
+            "createdAt": "2025-01-15T10:00:00Z",
+            "updatedAt": "2025-01-15T10:00:00Z"
+        },
+        {
+            "id": "2",
+            "title": "مشروع خدمة المجتمع",
+            "description": "ساعد في تنظيف الحديقة المحلية وزراعة أشجار جديدة. اترك أثراً إيجابياً في مجتمعنا.",
+            "date": "2025-01-25",
+            "time": "14:00",
+            "location": "الحديقة المركزية",
+            "attendees": [
+                "2"
+            ],
+            "maxAttendees": 20,
+            "category": "ma3lola",
+            "image": "https:\/\/images.pexels.com\/photos\/2885320\/pexels-photo-2885320.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+            "status": "upcoming",
+            "troop": "فرقة معلولا",
+            "createdBy": "2",
+            "createdAt": "2025-01-14T15:30:00Z",
+            "updatedAt": "2025-08-09T17:20:25+00:00"
+        },
+        {
+            "id": "3",
+            "title": "ورشة الإسعافات الأولية",
+            "description": "تعلم مهارات الإسعافات الأولية الأساسية. مدربون معتمدون سيرشدونك عبر التمارين العملية.",
+            "date": "2025-01-28",
+            "time": "10:00",
+            "location": "قاعة الكشافة",
+            "attendees": [
+                "2"
+            ],
+            "maxAttendees": 15,
+            "category": "sergila",
+            "image": "https:\/\/images.pexels.com\/photos\/1170979\/pexels-photo-1170979.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+            "status": "upcoming",
+            "troop": "فرقة سرجيلا",
+            "createdBy": "1",
+            "createdAt": "2025-01-13T09:15:00Z",
+            "updatedAt": "2025-08-09T17:20:29+00:00"
+        },
+        {
+            "id": "4",
+            "title": "الألعاب الكشفية السنوية",
+            "description": "ألعاب تقليدية ومسابقات بين الفرق. أظهر مهاراتك وروح الفريق.",
+            "date": "2025-11-29",
+            "time": "09:00",
+            "location": "المجمع الرياضي",
+            "attendees": [],
+            "maxAttendees": 50,
+            "category": "ramita",
+            "image": "https:\/\/images.pexels.com\/photos\/163403\/box-sport-men-training-163403.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+            "status": "past",
+            "troop": "فرقة بوسرا",
+            "createdBy": "1",
+            "createdAt": "2025-01-05T12:00:00Z",
+            "updatedAt": "2025-08-09T17:19:43+00:00"
+        },
+        {
+            "id": "5",
+            "title": "رحلة استكشافية",
+            "description": "رحلة استكشافية لمدة يومين في الجبال. تعلم مهارات الملاحة والاستكشاف.",
+            "date": "2025-02-15",
+            "time": "08:00",
+            "location": "الجبال الشرقية",
+            "attendees": [],
+            "maxAttendees": 15,
+            "category": "ramita",
+            "image": "https:\/\/images.pexels.com\/photos\/2885320\/pexels-photo-2885320.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+            "status": "upcoming",
+            "troop": "فرقة رميتا",
+            "createdBy": "2",
+            "createdAt": "2025-01-16T14:30:00Z",
+            "updatedAt": "2025-01-16T14:30:00Z"
+        }
+    ],
+    "lastUpdated": "2025-08-09T17:20:29+00:00"
+}

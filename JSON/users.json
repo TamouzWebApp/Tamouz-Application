@@ -1,0 +1,63 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "Admin",
+      "email": "admin@scouts.org",
+      "password": "admin",
+      "role": "admin",
+      "troop": "Development",
+      "phone": "None",
+      "joinDate": "None",
+      "bio": "System administrator with full access to all features."
+    },
+    {
+      "id": "2",
+      "name": "Bashar 3kazi",
+      "email": "Bashar3kazi@scouts.org",
+      "password": "Bashar",
+      "role": "leader",
+      "troop": "Ramita",
+      "badges": [],
+      "phone": "None",
+      "joinDate": "2019-09-20",
+      "bio": "Experienced scout leader passionate about youth development and outdoor activities."
+    },
+    {
+      "id": "3",
+      "name": "Kinan Kassab",
+      "email": "KinanKassab@scouts.org",
+      "password": "Kinan",
+      "role": "member",
+      "troop": "Ramita",
+      "badges": [],
+      "phone": "+963 982 175 721",
+      "joinDate": "2023-09-20",
+      "bio": "Active scout member interested in camping, hiking, and community service."
+    },
+    {
+      "id": "4",
+      "name": "Guest",
+      "email": "Guest@scout.org",
+      "password": "Guest",
+      "role": "guest",
+      "troop": "None",
+      "badges": [],
+      "phone": "None",
+      "joinDate": "None",
+      "bio": "Guest user with limited access to view-only features."
+    },
+    {
+    "id": "2",
+    "name": "Bashar 3kazi",
+    "email": "Test@scouts.org",
+    "password": "Test",
+    "role": "leader",
+    "troop": "Ma3lola",
+    "badges": [],
+    "phone": "None",
+    "joinDate": "2019-09-20",
+    "bio": "Experienced scout leader passionate about youth development and outdoor activities."
+  }
+  ]
+} 

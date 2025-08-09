@@ -1,0 +1,29 @@
+{
+  "name": "ScoutPluse",
+  "short_name": "ScoutPluse",
+  "description": "Modern scout management platform for troops, events, and member management",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#10b981",
+  "theme_color": "#10b981",
+  "orientation": "portrait-primary",
+  "scope": "./",
+  "icons": [
+    {
+      "src": "./Logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./Logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "productivity", "utilities"],
+  "lang": "ar",
+  "dir": "rtl",
+  "prefer_related_applications": false
+}

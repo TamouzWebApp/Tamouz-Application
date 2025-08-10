@@ -168,7 +168,11 @@ class LocalStorageService {
                 const data = await response.json();
                 const usersObject = {};
                 data.users.forEach(user => {
+<<<<<<< HEAD
                     usersObject[user.username] = user;
+=======
+                    usersObject[user.email] = user;
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
                 });
                 this.saveUsers(usersObject);
                 console.log(`✅ Loaded ${data.users.length} initial users`);

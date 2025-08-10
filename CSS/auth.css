@@ -266,7 +266,11 @@ Input fields with icons and interactive elements
 /* Input fields */
 .input-group input {
     width: 100%;
+<<<<<<< HEAD
     padding: var(--spacing-4) var(--spacing-10) var(--spacing-4) var(--spacing-5);
+=======
+    padding: var(--spacing-4) var(--spacing-4) var(--spacing-4) 3rem;
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
     border: 2px solid #e5e7eb;
     border-radius: var(--radius-lg);
     font-size: var(--font-size-base);
@@ -276,21 +280,27 @@ Input fields with icons and interactive elements
     font-family: inherit;
 }
 
+<<<<<<< HEAD
 /* Password input with toggle button on the left */
 .input-group input[type="password"] {
     padding: var(--spacing-4) var(--spacing-10) var(--spacing-4) var(--spacing-5);
 }
 
+=======
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
 .dark .input-group input {
     background-color: #374151;
     color: #f9fafb;
     border-color: #4b5563;
 }
 
+<<<<<<< HEAD
 .dark .input-group input[type="password"] {
     padding: var(--spacing-4) var(--spacing-10) var(--spacing-4) var(--spacing-5);
 }
 
+=======
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
 /* Input focus state */
 .input-group input:focus {
     outline: none;
@@ -344,7 +354,11 @@ Show/hide password functionality
 
 .password-toggle {
     position: absolute;
+<<<<<<< HEAD
     left: var(--spacing-4);
+=======
+    right: var(--spacing-4);
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
     top: 50%;
     transform: translateY(-50%);
     background: none;
@@ -484,7 +498,11 @@ Quick access to demo user accounts
 }
 
 /* Demo account email */
+<<<<<<< HEAD
 .demo-username {
+=======
+.demo-email {
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
     font-size: var(--font-size-xs);
     color: var(--text-secondary);
     font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
@@ -598,15 +616,22 @@ Mobile and tablet optimizations
     }
     
     .input-group input {
+<<<<<<< HEAD
         padding: var(--spacing-4) var(--spacing-10) var(--spacing-4) var(--spacing-5);
+=======
+        padding: var(--spacing-3) var(--spacing-3) var(--spacing-3) 2.5rem;
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
         font-size: var(--font-size-sm);
         min-height: 44px;
     }
     
+<<<<<<< HEAD
     .input-group input[type="password"] {
         padding: var(--spacing-4) var(--spacing-10) var(--spacing-4) var(--spacing-5);
     }
     
+=======
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
     .input-icon {
         left: var(--spacing-3);
         width: 16px;
@@ -614,7 +639,11 @@ Mobile and tablet optimizations
     }
     
     .password-toggle {
+<<<<<<< HEAD
         left: var(--spacing-3);
+=======
+        right: var(--spacing-3);
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
         min-width: 36px;
         min-height: 36px;
     }
@@ -639,7 +668,11 @@ Mobile and tablet optimizations
         font-size: var(--font-size-sm);
     }
     
+<<<<<<< HEAD
     .demo-username {
+=======
+    .demo-email {
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
         font-size: 11px;
     }
     

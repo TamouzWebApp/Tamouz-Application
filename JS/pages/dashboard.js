@@ -88,7 +88,10 @@ class DashboardService {
     loadDashboard() {
         console.log('📊 Loading dashboard content...');
         
+<<<<<<< HEAD
         this.updateDateDisplay();
+=======
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
         this.loadRecentEvents();
         this.loadQuickActions();
         this.loadTroopOverview();
@@ -622,12 +625,19 @@ class DashboardService {
      */
     formatDate(dateString) {
         const date = new Date(dateString);
+<<<<<<< HEAD
         return date.toLocaleDateString('ar', {
             weekday: 'long',
             year: 'numeric',
             month: 'long',
             day: 'numeric',
             calendar: 'gregory'
+=======
+        return date.toLocaleDateString('en-US', {
+            weekday: 'short',
+            month: 'short',
+            day: 'numeric'
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
         });
     }
 
@@ -643,6 +653,7 @@ class DashboardService {
     }
 
     /**
+<<<<<<< HEAD
      * Update Date Display
      */
     updateDateDisplay() {
@@ -668,6 +679,8 @@ class DashboardService {
     }
 
     /**
+=======
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
      * Refresh Dashboard
      */
     refresh() {

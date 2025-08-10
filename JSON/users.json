@@ -3,7 +3,10 @@
     {
       "id": "1",
       "name": "Admin",
+<<<<<<< HEAD
       "username": "admin",
+=======
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
       "email": "admin@scouts.org",
       "password": "admin",
       "role": "admin",
@@ -15,7 +18,10 @@
     {
       "id": "2",
       "name": "Bashar 3kazi",
+<<<<<<< HEAD
       "username": "bashar",
+=======
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
       "email": "Bashar3kazi@scouts.org",
       "password": "Bashar",
       "role": "leader",
@@ -28,7 +34,10 @@
     {
       "id": "3",
       "name": "Kinan Kassab",
+<<<<<<< HEAD
       "username": "kinan",
+=======
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
       "email": "KinanKassab@scouts.org",
       "password": "Kinan",
       "role": "member",
@@ -41,7 +50,10 @@
     {
       "id": "4",
       "name": "Guest",
+<<<<<<< HEAD
       "username": "guest",
+=======
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
       "email": "Guest@scout.org",
       "password": "Guest",
       "role": "guest",
@@ -52,9 +64,14 @@
       "bio": "Guest user with limited access to view-only features."
     },
     {
+<<<<<<< HEAD
     "id": "5",
     "name": "Bashar 3kazi",
     "username": "test",
+=======
+    "id": "2",
+    "name": "Bashar 3kazi",
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
     "email": "Test@scouts.org",
     "password": "Test",
     "role": "leader",

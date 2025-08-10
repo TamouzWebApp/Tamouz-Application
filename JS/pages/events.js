@@ -22,10 +22,17 @@ class EventsService {
         
         // نظام الفئات
         this.categories = [
+<<<<<<< HEAD
             { id: 'ramita', name: '🌲 فرقة رميتا', color: '#10b981', icon: '🌲' },
             { id: 'ma3lola', name: '🤝 فرقة معلولا', color: '#3b82f6', icon: '🤝' },
             { id: 'sergila', name: '📚 فرقة سرجيلا', color: '#f59e0b', icon: '📚' },
             { id: 'bousra', name: '🏆 فرقة بوسرا', color: '#ef4444', icon: '🏆' }
+=======
+            { id: 'ramita', name: 'رميتا', color: '#10b981', icon: '🌲' },
+            { id: 'ma3lola', name: 'معلولا', color: '#3b82f6', icon: '🤝' },
+            { id: 'sergila', name: 'سرجيلا', color: '#f59e0b', icon: '📚' },
+            { id: 'bousra', name: 'بوسرا', color: '#ef4444', icon: '🏆' }
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
         ];
         
         this.init();
@@ -223,9 +230,15 @@ class EventsService {
         window.addEventListener('eventsUpdated', (e) => {
             console.log('🔄 Events update received');
             const newEvents = e.detail.events || [];
+<<<<<<< HEAD
                 this.events = newEvents;
                 this.renderEventsPage();
                 console.log(`✅ Updated events display with ${newEvents.length} events`);
+=======
+            this.events = newEvents;
+            this.renderEventsPage();
+            console.log(`✅ Updated events display with ${newEvents.length} events`);
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
         });
 
         // Listen for auto sync events
@@ -448,7 +461,11 @@ class EventsService {
         }
         
         if (!this.canCreateEvents()) {
+<<<<<<< HEAD
             this.showNotification('🚫 عذراً، ليس لديك صلاحية لإنشاء الأحداث. فقط القادة والمدراء يمكنهم إنشاء الأحداث الجديدة.', 'error');
+=======
+            this.showNotification('ليس لديك صلاحية لإنشاء الأحداث. فقط القائد والمدير يمكنهم إنشاء الأحداث.', 'error');
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
             return false;
         }
         
@@ -465,6 +482,7 @@ class EventsService {
             };
 
             // إنشاء الحدث محلياً أولاً
+<<<<<<< HEAD
                 const localEvent = {
                     ...newEvent,
                     id: this.generateEventId(),
@@ -474,6 +492,17 @@ class EventsService {
             
             // إضافة للقائمة المحلية
                 this.events.unshift(localEvent);
+=======
+            const localEvent = {
+                ...newEvent,
+                id: this.generateEventId(),
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString()
+            };
+            
+            // إضافة للقائمة المحلية
+            this.events.unshift(localEvent);
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
             
             // محاولة الإرسال للخادم
             const serverEvent = await this.addEventToServer(localEvent);
@@ -545,32 +574,52 @@ class EventsService {
     async joinEvent(eventId) {
         if (!this.currentUser) {
             console.log('❌ Must be logged in to join events');
+<<<<<<< HEAD
             this.showNotification('🔑 يرجى تسجيل الدخول أولاً للتمكن من الانضمام للأحداث الكشفية.', 'error');
+=======
+            this.showNotification('يجب تسجيل الدخول أولاً للانضمام للأحداث', 'error');
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
             return false;
         }
         
         if (!this.canJoinEvents()) {
             console.log('❌ No permission to join events');
+<<<<<<< HEAD
             this.showNotification('🚫 عذراً، ليس لديك صلاحية للانضمام للأحداث. فقط الأعضاء والقادة يمكنهم الانضمام.', 'error');
+=======
+            this.showNotification('ليس لديك صلاحية للانضمام للأحداث', 'error');
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
             return false;
         }
 
         const event = this.findEvent(eventId);
         if (!event) {
             console.log('❌ Event not found');
+<<<<<<< HEAD
             this.showNotification('❓ عذراً، لم يتم العثور على هذا الحدث. ربما تم حذفه.', 'error');
+=======
+            this.showNotification('الحدث غير موجود', 'error');
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
             return false;
         }
 
         if (event.attendees?.includes(this.currentUser.id)) {
             console.log('❌ Already joined this event');
+<<<<<<< HEAD
             this.showNotification('✅ أنت منضم لهذا الحدث بالفعل! يمكنك مراجعة تفاصيل الحدث في أي وقت.', 'warning');
+=======
+            this.showNotification('أنت منضم لهذا الحدث بالفعل', 'warning');
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
             return false;
         }
 
         if ((event.attendees?.length || 0) >= (event.maxAttendees || 0)) {
             console.log('❌ Event is full');
+<<<<<<< HEAD
             this.showNotification('😔 عذراً، الحدث ممتلئ بالكامل! لا توجد أماكن متاحة للانضمام.', 'warning');
+=======
+            this.showNotification('الحدث ممتلئ بالكامل', 'warning');
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
             return false;
         }
 
@@ -596,7 +645,11 @@ class EventsService {
             await this.updateEventOnServer(eventId, { attendees: event.attendees });
             
             // عرض رسالة نجاح
+<<<<<<< HEAD
             this.showNotification(`🎉 تم انضمامك للحدث "${event.title}" بنجاح! سنراك هناك.`, 'success');
+=======
+            this.showNotification(`تم الانضمام للحدث "${event.title}" بنجاح!`, 'success');
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
             
             console.log(`✅ Joined "${event.title}" successfully`);
             this.renderEventsPage();
@@ -825,15 +878,23 @@ class EventsService {
 
                     <div class="attendance-section">
                         <div class="attendance-info">
+<<<<<<< HEAD
                             <span>👥 عدد المشاركين</span>
                             <span class="attendance-count">${event.attendees?.length || 0} من أصل ${event.maxAttendees || 0}</span>
+=======
+                            <span>الحضور</span>
+                            <span class="attendance-count">${event.attendees?.length || 0}/${event.maxAttendees || 0}</span>
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
                         </div>
                         <div class="progress-bar">
                             <div class="progress-fill" style="width: ${attendancePercentage}%"></div>
                         </div>
+<<<<<<< HEAD
                         <div class="attendance-percentage">
                             نسبة الإشغال: ${attendancePercentage}%
                         </div>
+=======
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
                     </div>
 
                     <div class="event-actions">
@@ -856,7 +917,11 @@ class EventsService {
                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
                         <circle cx="12" cy="12" r="3"></circle>
                     </svg>
+<<<<<<< HEAD
                     👁️ مشاهدة تفاصيل الحدث
+=======
+                    عرض التفاصيل
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
                 </button>
             `;
         }
@@ -870,11 +935,20 @@ class EventsService {
                     <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
                     <circle cx="12" cy="12" r="3"></circle>
                 </svg>
+<<<<<<< HEAD
                 👁️ عرض التفاصيل
+=======
+                عرض
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
             </button>
         `);
 
         // أزرار التحرير والحذف للمدير وجميع القادة
+<<<<<<< HEAD
+=======
+        console.log('🔍 Current user role:', this.currentUser?.role);
+        console.log('🔍 Is admin or leader?', ['admin', 'leader'].includes(this.currentUser?.role));
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
         
         const canManageEvent = this.currentUser && ['admin', 'leader'].includes(this.currentUser.role);
         
@@ -885,7 +959,11 @@ class EventsService {
                         <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
                         <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
                     </svg>
+<<<<<<< HEAD
                     ✏️ تحرير
+=======
+                    تحرير
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
                 </button>
             `);
             
@@ -897,7 +975,11 @@ class EventsService {
                         <line x1="10" y1="11" x2="10" y2="17"></line>
                         <line x1="14" y1="11" x2="14" y2="17"></line>
                     </svg>
+<<<<<<< HEAD
                     🗑️ حذف
+=======
+                    حذف
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
                 </button>
             `);
         }
@@ -910,7 +992,11 @@ class EventsService {
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <polyline points="20,6 9,17 4,12"></polyline>
                         </svg>
+<<<<<<< HEAD
                         ✅ منضم بالفعل
+=======
+                        منضم
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
                     </button>
                 `);
             } else if (isFull) {
@@ -921,7 +1007,11 @@ class EventsService {
                             <line x1="15" y1="9" x2="9" y2="15"></line>
                             <line x1="9" y1="9" x2="15" y2="15"></line>
                         </svg>
+<<<<<<< HEAD
                         ❌ الحدث ممتلئ
+=======
+                        ممتلئ
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
                     </button>
                 `);
             } else {
@@ -933,7 +1023,11 @@ class EventsService {
                             <line x1="20" y1="8" x2="20" y2="14"></line>
                             <line x1="23" y1="11" x2="17" y2="11"></line>
                         </svg>
+<<<<<<< HEAD
                         🤝 انضم للحدث
+=======
+                        انضم
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
                     </button>
                 `);
             }
@@ -1138,11 +1232,19 @@ class EventsService {
             <form id="editEventForm" class="event-form">
                 <div class="form-row">
                     <div class="form-group">
+<<<<<<< HEAD
                         <label for="editEventTitle">📝 عنوان الحدث *</label>
                         <input type="text" id="editEventTitle" required placeholder="أدخل عنوان الحدث" value="${event.title}" inputmode="text">
                     </div>
                     <div class="form-group">
                         <label for="editEventCategory">🏷️ الفرقة الكشفية *</label>
+=======
+                        <label for="editEventTitle">عنوان الحدث *</label>
+                        <input type="text" id="editEventTitle" required placeholder="أدخل عنوان الحدث" value="${event.title}" inputmode="text">
+                    </div>
+                    <div class="form-group">
+                        <label for="editEventCategory">الفئة *</label>
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
                         <select id="editEventCategory" required>
                             ${categoryOptions}
                         </select>
@@ -1150,41 +1252,71 @@ class EventsService {
                 </div>
                 
                 <div class="form-group">
+<<<<<<< HEAD
                     <label for="editEventDescription">📄 وصف الحدث *</label>
                     <textarea id="editEventDescription" required placeholder="اكتب وصفاً مفصلاً عن الحدث..." rows="4" inputmode="text">${event.description}</textarea>
+=======
+                    <label for="editEventDescription">الوصف *</label>
+                    <textarea id="editEventDescription" required placeholder="وصف الحدث..." rows="3" inputmode="text">${event.description}</textarea>
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
                 </div>
                 
                 <div class="form-row">
                     <div class="form-group">
+<<<<<<< HEAD
                         <label for="editEventDate">📅 تاريخ الحدث *</label>
                         <input type="date" id="editEventDate" required value="${event.date}">
                     </div>
                     <div class="form-group">
                         <label for="editEventTime">🕐 وقت بداية الحدث *</label>
+=======
+                        <label for="editEventDate">التاريخ *</label>
+                        <input type="date" id="editEventDate" required value="${event.date}">
+                    </div>
+                    <div class="form-group">
+                        <label for="editEventTime">الوقت *</label>
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
                         <input type="time" id="editEventTime" required value="${event.time}">
                     </div>
                 </div>
                 
                 <div class="form-row">
                     <div class="form-group">
+<<<<<<< HEAD
                         <label for="editEventLocation">📍 مكان إقامة الحدث *</label>
                         <input type="text" id="editEventLocation" required placeholder="مكان الحدث" value="${event.location}" inputmode="text">
                     </div>
                     <div class="form-group">
                         <label for="editEventMaxAttendees">👥 العدد الأقصى للمشاركين *</label>
                         <input type="number" id="editEventMaxAttendees" required min="1" max="100" value="${event.maxAttendees}" inputmode="numeric">
+=======
+                        <label for="editEventLocation">المكان *</label>
+                        <input type="text" id="editEventLocation" required placeholder="مكان الحدث" value="${event.location}" inputmode="text">
+                    </div>
+                    <div class="form-group">
+                        <label for="editEventMaxAttendees">الحد الأقصى للحضور *</label>
+                        <input type="number" id="editEventMaxAttendees" required min="1" value="${event.maxAttendees}" inputmode="numeric">
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
                     </div>
                 </div>
                 
                 <div class="form-actions">
                     <button type="button" class="btn btn-outline" onclick="window.EventsService.getInstance().closeModal()">
+<<<<<<< HEAD
                         ❌ إلغاء التعديل
+=======
+                        إلغاء
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
                     </button>
                     <button type="submit" class="btn btn-primary">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
                         </svg>
+<<<<<<< HEAD
                         💾 حفظ التعديلات
+=======
+                        حفظ التعديلات
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
                     </button>
                 </div>
             </form>
@@ -1267,7 +1399,11 @@ class EventsService {
             return;
         }
 
+<<<<<<< HEAD
         const confirmMessage = `🗑️ تأكيد حذف الحدث\n\nهل أنت متأكد من حذف الحدث "${event.title}"؟\n\n⚠️ تحذير: هذا الإجراء لا يمكن التراجع عنه وسيتم حذف جميع بيانات الحدث والمشاركين.`;
+=======
+        const confirmMessage = `هل أنت متأكد من حذف الحدث "${event.title}"؟\n\nهذا الإجراء لا يمكن التراجع عنه.`;
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
         
         if (confirm(confirmMessage)) {
             this.deleteEvent(event.id);
@@ -1349,7 +1485,11 @@ class EventsService {
             this.renderEventsPage();
             
             console.log(`✅ تم حذف الحدث "${eventTitle}" بنجاح`);
+<<<<<<< HEAD
             this.showNotification(`🗑️ تم حذف الحدث "${eventTitle}" بنجاح من النظام.`, 'success');
+=======
+            this.showNotification(`تم حذف الحدث "${eventTitle}" بنجاح`, 'success');
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
             
             return true;
             
@@ -1431,6 +1571,7 @@ class EventsService {
             <form id="createEventForm" class="event-form">
                 <div class="form-row">
                     <div class="form-group">
+<<<<<<< HEAD
                         <label for="eventTitle">📝 عنوان الحدث *</label>
                         <input type="text" id="eventTitle" required placeholder="مثال: رحلة تخييم نهاية الأسبوع" inputmode="text">
                     </div>
@@ -1438,48 +1579,87 @@ class EventsService {
                         <label for="eventCategory">🏷️ الفرقة الكشفية *</label>
                         <select id="eventCategory" required>
                             <option value="">اختر الفرقة المنظمة</option>
+=======
+                        <label for="eventTitle">عنوان الحدث *</label>
+                        <input type="text" id="eventTitle" required placeholder="أدخل عنوان الحدث" inputmode="text">
+                    </div>
+                    <div class="form-group">
+                        <label for="eventCategory">الفئة *</label>
+                        <select id="eventCategory" required>
+                            <option value="">اختر الفئة</option>
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
                             ${categoryOptions}
                         </select>
                     </div>
                 </div>
                 
                 <div class="form-group">
+<<<<<<< HEAD
                     <label for="eventDescription">📄 وصف الحدث *</label>
                     <textarea id="eventDescription" required placeholder="اكتب وصفاً مفصلاً عن الحدث وأهدافه والأنشطة المتوقعة..." rows="4" inputmode="text"></textarea>
+=======
+                    <label for="eventDescription">الوصف *</label>
+                    <textarea id="eventDescription" required placeholder="وصف الحدث..." rows="3" inputmode="text"></textarea>
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
                 </div>
                 
                 <div class="form-row">
                     <div class="form-group">
+<<<<<<< HEAD
                         <label for="eventDate">📅 تاريخ الحدث *</label>
                         <input type="date" id="eventDate" required>
                     </div>
                     <div class="form-group">
                         <label for="eventTime">🕐 وقت بداية الحدث *</label>
+=======
+                        <label for="eventDate">التاريخ *</label>
+                        <input type="date" id="eventDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventTime">الوقت *</label>
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
                         <input type="time" id="eventTime" required>
                     </div>
                 </div>
                 
                 <div class="form-row">
                     <div class="form-group">
+<<<<<<< HEAD
                         <label for="eventLocation">📍 مكان إقامة الحدث *</label>
                         <input type="text" id="eventLocation" required placeholder="مثال: مخيم الكشافة الرئيسي" inputmode="text">
                     </div>
                     <div class="form-group">
                         <label for="eventMaxAttendees">👥 العدد الأقصى للمشاركين *</label>
                         <input type="number" id="eventMaxAttendees" required min="1" max="100" placeholder="25" inputmode="numeric">
+=======
+                        <label for="eventLocation">المكان *</label>
+                        <input type="text" id="eventLocation" required placeholder="مكان الحدث" inputmode="text">
+                    </div>
+                    <div class="form-group">
+                        <label for="eventMaxAttendees">الحد الأقصى للحضور *</label>
+                        <input type="number" id="eventMaxAttendees" required min="1" placeholder="25" inputmode="numeric">
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
                     </div>
                 </div>
                 
                 <div class="form-actions">
                     <button type="button" class="btn btn-outline" onclick="window.EventsService.getInstance().closeModal()">
+<<<<<<< HEAD
                         ❌ إلغاء
+=======
+                        إلغاء
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
                     </button>
                     <button type="submit" class="btn btn-primary">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <line x1="12" y1="5" x2="12" y2="19"></line>
                             <line x1="5" y1="12" x2="19" y2="12"></line>
                         </svg>
+<<<<<<< HEAD
                         ✅ إنشاء الحدث
+=======
+                        إنشاء الحدث
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
                     </button>
                 </div>
             </form>
@@ -1693,6 +1873,7 @@ class EventsService {
      */
     getEmptyStateHTML() {
         const title = this.searchQuery || this.selectedCategory !== 'all' 
+<<<<<<< HEAD
             ? '🔍 لم نجد أي أحداث مطابقة!' 
             : '📅 لا توجد أحداث متاحة حالياً';
         
@@ -1702,6 +1883,14 @@ class EventsService {
 
         const actionText = this.canCreateEvents() ? 
             '<br><br>💡 يمكنك إنشاء حدث جديد بالنقر على زر "إنشاء حدث" أعلاه.' : '';
+=======
+            ? 'لا توجد أحداث' 
+            : 'لا توجد أحداث متاحة';
+        
+        let description = this.searchQuery || this.selectedCategory !== 'all'
+            ? 'جرب تعديل معايير البحث أو الفلترة'
+            : 'لا توجد أحداث متاحة حتى الآن.';
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
 
         return `
             <div class="events-empty">
@@ -1712,7 +1901,11 @@ class EventsService {
                     <line x1="3" y1="10" x2="21" y2="10"></line>
                 </svg>
                 <h3>${title}</h3>
+<<<<<<< HEAD
                 <p>${description}${actionText}</p>
+=======
+                <p>${description}</p>
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
             </div>
         `;
     }
@@ -1726,8 +1919,12 @@ class EventsService {
                 <svg class="loading-spinner" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M21 12a9 9 0 11-6.219-8.56"></path>
                 </svg>
+<<<<<<< HEAD
                 <span>📱 جاري تحميل الأحداث الكشفية...</span>
                 <small style="margin-top: 8px; color: var(--text-muted);">يرجى الانتظار بينما نحضر لك أحدث الأحداث</small>
+=======
+                <span>جاري تحميل الأحداث...</span>
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
             </div>
         `;
     }
@@ -1829,12 +2026,20 @@ class EventsService {
      */
     formatDate(dateString) {
         const date = new Date(dateString);
+<<<<<<< HEAD
         return date.toLocaleDateString('ar', {
             weekday: 'long',
             month: 'long',
             day: 'numeric',
             year: 'numeric',
             calendar: 'gregory'
+=======
+        return date.toLocaleDateString('ar-SA', {
+            weekday: 'short',
+            month: 'short',
+            day: 'numeric',
+            year: 'numeric'
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
         });
     }
 
@@ -1843,6 +2048,7 @@ class EventsService {
      */
     getStatusDisplayName(status) {
         const statusMap = {
+<<<<<<< HEAD
             'upcoming': '🟢 قادم',
             'past': '⚪ منتهي',
             'cancelled': '🔴 ملغي',
@@ -1850,6 +2056,13 @@ class EventsService {
             'pending': '🟠 في الانتظار'
         };
         return statusMap[status] || '❓ غير محدد';
+=======
+            'upcoming': 'قادم',
+            'past': 'منتهي',
+            'cancelled': 'ملغي'
+        };
+        return statusMap[status] || status;
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
     }
 
     /**
@@ -1857,6 +2070,7 @@ class EventsService {
      */
     getFieldDisplayName(field) {
         const fieldMap = {
+<<<<<<< HEAD
             'title': '📝 العنوان',
             'description': '📄 الوصف',
             'date': '📅 التاريخ',
@@ -1867,6 +2081,14 @@ class EventsService {
             'attendees': '👥 المشاركون',
             'troop': '🏕️ الفرقة',
             'status': '📊 الحالة'
+=======
+            'title': 'العنوان',
+            'description': 'الوصف',
+            'date': 'التاريخ',
+            'time': 'الوقت',
+            'location': 'المكان',
+            'category': 'الفئة'
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
         };
         return fieldMap[field] || field;
     }

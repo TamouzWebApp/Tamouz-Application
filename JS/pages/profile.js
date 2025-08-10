@@ -573,11 +573,18 @@ class ProfileService {
     formatDate(dateString) {
         if (!dateString) return '';
         const date = new Date(dateString);
+<<<<<<< HEAD
         return date.toLocaleDateString('ar', {
             month: 'long',
             day: 'numeric',
             year: 'numeric',
             calendar: 'gregory'
+=======
+        return date.toLocaleDateString('en-US', {
+            month: 'long',
+            day: 'numeric',
+            year: 'numeric'
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
         });
     }
 

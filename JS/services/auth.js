@@ -90,10 +90,17 @@ class AuthService {
             const data = await response.json();
             this.users = {};
             
+<<<<<<< HEAD
             // Convert array to object with username as key
             data.users.forEach(user => {
                 this.users[user.username] = user;
                 console.log(`👤 Loaded user: ${user.username} (${user.role})`);
+=======
+            // Convert array to object with email as key
+            data.users.forEach(user => {
+                this.users[user.email] = user;
+                console.log(`👤 Loaded user: ${user.email} (${user.role})`);
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
             });
             
             console.log(`✅ Successfully loaded ${data.users.length} users from JSON`);
@@ -105,10 +112,16 @@ class AuthService {
             
             // Initialize with fallback user data
             this.users = {
+<<<<<<< HEAD
                 'admin': {
                     id: '1',
                     name: 'Admin',
                     username: 'admin',
+=======
+                'admin@scouts.org': {
+                    id: '1',
+                    name: 'Admin',
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
                     email: 'admin@scouts.org',
                     password: 'admin',
                     role: 'admin',
@@ -117,10 +130,16 @@ class AuthService {
                     joinDate: 'None',
                     bio: 'System administrator with full access to all features.'
                 },
+<<<<<<< HEAD
                 'bashar': {
                     id: '2',
                     name: 'Bashar 3kazi',
                     username: 'bashar',
+=======
+                'Bashar3kazi@scouts.org': {
+                    id: '2',
+                    name: 'Bashar 3kazi',
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
                     email: 'Bashar3kazi@scouts.org',
                     password: 'Bashar',
                     role: 'leader',
@@ -130,10 +149,16 @@ class AuthService {
                     joinDate: '2019-09-20',
                     bio: 'Experienced scout leader passionate about youth development and outdoor activities.'
                 },
+<<<<<<< HEAD
                 'kinan': {
                     id: '3',
                     name: 'Kinan Kassab',
                     username: 'kinan',
+=======
+                'KinanKassab@scouts.org': {
+                    id: '3',
+                    name: 'Kinan Kassab',
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
                     email: 'KinanKassab@scouts.org',
                     password: 'Kinan',
                     role: 'member',
@@ -143,10 +168,16 @@ class AuthService {
                     joinDate: '2023-09-20',
                     bio: 'Active scout member interested in camping, hiking, and community service.'
                 },
+<<<<<<< HEAD
                 'guest': {
                     id: '4',
                     name: 'Guest',
                     username: 'guest',
+=======
+                'Guest@scout.org': {
+                    id: '4',
+                    name: 'Guest',
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
                     email: 'Guest@scout.org',
                     password: 'Guest',
                     role: 'guest',
@@ -166,6 +197,7 @@ class AuthService {
     /**
      * User Login
      * 
+<<<<<<< HEAD
      * Authenticates a user with username and password.
      * Simulates local authentication with delay for realistic UX.
      * 
@@ -175,6 +207,17 @@ class AuthService {
      */
     static async login(username, password) {
         console.log(`🔐 Attempting login for: ${username}`);
+=======
+     * Authenticates a user with email and password.
+     * Simulates local authentication with delay for realistic UX.
+     * 
+     * @param {string} email - User's email address
+     * @param {string} password - User's password
+     * @returns {Promise<Object|null>} User object if successful, null if failed
+     */
+    static async login(email, password) {
+        console.log(`🔐 Attempting login for: ${email}`);
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
         
         // Simulate local authentication delay for realistic UX
         await new Promise(resolve => setTimeout(resolve, 1000));
@@ -190,11 +233,19 @@ class AuthService {
         
         console.log(`📋 Available users: ${Object.keys(users).join(', ')}`);
         
+<<<<<<< HEAD
         const user = users[username];
         
         // Validate credentials
         if (user && user.password === password) {
             console.log(`✅ Login successful for: ${username}`);
+=======
+        const user = users[email];
+        
+        // Validate credentials
+        if (user && user.password === password) {
+            console.log(`✅ Login successful for: ${email}`);
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
             
             // Store user session
             localStorage.setItem(this.STORAGE_KEY, JSON.stringify(user));
@@ -211,7 +262,11 @@ class AuthService {
             return user;
         }
         
+<<<<<<< HEAD
         console.log(`❌ Login failed for: ${username}`);
+=======
+        console.log(`❌ Login failed for: ${email}`);
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
         return null;
     }
 
@@ -324,7 +379,11 @@ class LoginHandler {
         
         // Get form elements
         this.form = document.getElementById('loginForm');
+<<<<<<< HEAD
         this.usernameInput = document.getElementById('username');
+=======
+        this.emailInput = document.getElementById('email');
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
         this.passwordInput = document.getElementById('password');
         this.passwordToggle = document.getElementById('passwordToggle');
         this.loginBtn = document.getElementById('loginBtn');
@@ -360,8 +419,13 @@ class LoginHandler {
         });
         
         // Input validation on change
+<<<<<<< HEAD
         if (this.usernameInput) {
             this.usernameInput.addEventListener('input', this.validateUsername.bind(this));
+=======
+        if (this.emailInput) {
+            this.emailInput.addEventListener('input', this.validateEmail.bind(this));
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
         }
         
         if (this.passwordInput) {
@@ -384,11 +448,19 @@ class LoginHandler {
         console.log('📝 Login form submitted');
         
         // Get form values
+<<<<<<< HEAD
         const username = this.usernameInput.value.trim();
         const password = this.passwordInput.value;
         
         // Basic validation
         if (!this.validateForm(username, password)) {
+=======
+        const email = this.emailInput.value.trim();
+        const password = this.passwordInput.value;
+        
+        // Basic validation
+        if (!this.validateForm(email, password)) {
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
             return;
         }
         
@@ -397,10 +469,17 @@ class LoginHandler {
         this.hideError();
         
         try {
+<<<<<<< HEAD
             console.log(`🔐 Attempting authentication for: ${username}`);
             
             // Attempt login
             const user = await AuthService.login(username, password);
+=======
+            console.log(`🔐 Attempting authentication for: ${email}`);
+            
+            // Attempt login
+            const user = await AuthService.login(email, password);
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
             
             if (user) {
                 console.log('✅ Authentication successful');
@@ -414,8 +493,13 @@ class LoginHandler {
                 
             } else {
                 console.log('❌ Authentication failed');
+<<<<<<< HEAD
                 console.log(`🔍 User not found: ${username}`);
                 this.logError('Invalid username or password. Please try again.');
+=======
+                console.log(`🔍 User not found: ${email}`);
+                this.logError('Invalid email or password. Please try again.');
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
             }
             
         } catch (error) {
@@ -441,6 +525,7 @@ class LoginHandler {
      * 
      * Performs client-side validation of form inputs.
      * 
+<<<<<<< HEAD
      * @param {string} username - Username
      * @param {string} password - Password
      * @returns {boolean} True if valid, false otherwise
@@ -448,10 +533,20 @@ class LoginHandler {
     validateForm(username, password) {
         // Check for empty fields
         if (!username || !password) {
+=======
+     * @param {string} email - Email address
+     * @param {string} password - Password
+     * @returns {boolean} True if valid, false otherwise
+     */
+    validateForm(email, password) {
+        // Check for empty fields
+        if (!email || !password) {
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
             this.logError('Please fill in all fields.');
             return false;
         }
         
+<<<<<<< HEAD
         // Basic username validation
         if (username.length < 3) {
             this.logError('Username must be at least 3 characters long.');
@@ -462,6 +557,12 @@ class LoginHandler {
         const usernameRegex = /^[a-zA-Z0-9_]+$/;
         if (!usernameRegex.test(username)) {
             this.logError('Username can only contain letters, numbers, and underscores.');
+=======
+        // Basic email validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            this.logError('Please enter a valid email address.');
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
             return false;
         }
         
@@ -475,6 +576,7 @@ class LoginHandler {
     }
 
     /**
+<<<<<<< HEAD
      * Validate Username Input
      * 
      * Real-time username validation with visual feedback.
@@ -496,6 +598,25 @@ class LoginHandler {
                 errorDiv.classList.add('show');
             }
         } else if (username) {
+=======
+     * Validate Email Input
+     * 
+     * Real-time email validation with visual feedback.
+     */
+    validateEmail() {
+        const email = this.emailInput.value.trim();
+        const inputGroup = this.emailInput.closest('.input-group');
+        const errorDiv = document.getElementById('email-error');
+        
+        if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            inputGroup.classList.add('error');
+            inputGroup.classList.remove('success');
+            if (errorDiv) {
+                errorDiv.textContent = 'يرجى إدخال بريد إلكتروني صحيح';
+                errorDiv.classList.add('show');
+            }
+        } else if (email) {
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
             inputGroup.classList.add('success');
             inputGroup.classList.remove('error');
             if (errorDiv) {
@@ -576,6 +697,7 @@ class LoginHandler {
      * @param {Event} e - Click event from demo account button
      */
     fillDemoAccount(e) {
+<<<<<<< HEAD
         const username = e.currentTarget.dataset.username;
         
         console.log(`🎭 Demo account selected: ${username}`);
@@ -595,6 +717,23 @@ class LoginHandler {
             password = 'Guest';
         } else if (username === 'test') {
             password = 'Test';
+=======
+        const email = e.currentTarget.dataset.email;
+        
+        console.log(`🎭 Demo account selected: ${email}`);
+        
+        // Fill form fields
+        this.emailInput.value = email;
+        
+        // تحديد كلمة المرور حسب الحساب
+        let password = 'password';
+        if (email === 'admin@scouts.org') {
+            password = 'admin';
+        } else if (email === 'Bashar3kazi@scouts.org') {
+            password = 'Bashar';
+        } else if (email === 'KinanKassab@scouts.org') {
+            password = 'Kinan';
+>>>>>>> 412d59bb4c7d071bf3929587c37cfb7a636b9e1b
         }
         
         this.passwordInput.value = password;

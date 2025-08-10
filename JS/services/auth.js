@@ -90,10 +90,10 @@ class AuthService {
             const data = await response.json();
             this.users = {};
             
-            // Convert array to object with email as key
+            // Convert array to object with username as key
             data.users.forEach(user => {
-                this.users[user.email] = user;
-                console.log(`👤 Loaded user: ${user.email} (${user.role})`);
+                this.users[user.username] = user;
+                console.log(`👤 Loaded user: ${user.username} (${user.role})`);
             });
             
             console.log(`✅ Successfully loaded ${data.users.length} users from JSON`);
@@ -105,9 +105,10 @@ class AuthService {
             
             // Initialize with fallback user data
             this.users = {
-                'admin@scouts.org': {
+                'admin': {
                     id: '1',
                     name: 'Admin',
+                    username: 'admin',
                     email: 'admin@scouts.org',
                     password: 'admin',
                     role: 'admin',
@@ -116,9 +117,10 @@ class AuthService {
                     joinDate: 'None',
                     bio: 'System administrator with full access to all features.'
                 },
-                'Bashar3kazi@scouts.org': {
+                'bashar': {
                     id: '2',
                     name: 'Bashar 3kazi',
+                    username: 'bashar',
                     email: 'Bashar3kazi@scouts.org',
                     password: 'Bashar',
                     role: 'leader',
@@ -128,9 +130,10 @@ class AuthService {
                     joinDate: '2019-09-20',
                     bio: 'Experienced scout leader passionate about youth development and outdoor activities.'
                 },
-                'KinanKassab@scouts.org': {
+                'kinan': {
                     id: '3',
                     name: 'Kinan Kassab',
+                    username: 'kinan',
                     email: 'KinanKassab@scouts.org',
                     password: 'Kinan',
                     role: 'member',
@@ -140,9 +143,10 @@ class AuthService {
                     joinDate: '2023-09-20',
                     bio: 'Active scout member interested in camping, hiking, and community service.'
                 },
-                'Guest@scout.org': {
+                'guest': {
                     id: '4',
                     name: 'Guest',
+                    username: 'guest',
                     email: 'Guest@scout.org',
                     password: 'Guest',
                     role: 'guest',
@@ -162,15 +166,15 @@ class AuthService {
     /**
      * User Login
      * 
-     * Authenticates a user with email and password.
+     * Authenticates a user with username and password.
      * Simulates local authentication with delay for realistic UX.
      * 
-     * @param {string} email - User's email address
+     * @param {string} username - User's username
      * @param {string} password - User's password
      * @returns {Promise<Object|null>} User object if successful, null if failed
      */
-    static async login(email, password) {
-        console.log(`🔐 Attempting login for: ${email}`);
+    static async login(username, password) {
+        console.log(`🔐 Attempting login for: ${username}`);
         
         // Simulate local authentication delay for realistic UX
         await new Promise(resolve => setTimeout(resolve, 1000));
@@ -186,11 +190,11 @@ class AuthService {
         
         console.log(`📋 Available users: ${Object.keys(users).join(', ')}`);
         
-        const user = users[email];
+        const user = users[username];
         
         // Validate credentials
         if (user && user.password === password) {
-            console.log(`✅ Login successful for: ${email}`);
+            console.log(`✅ Login successful for: ${username}`);
             
             // Store user session
             localStorage.setItem(this.STORAGE_KEY, JSON.stringify(user));
@@ -207,7 +211,7 @@ class AuthService {
             return user;
         }
         
-        console.log(`❌ Login failed for: ${email}`);
+        console.log(`❌ Login failed for: ${username}`);
         return null;
     }
 
@@ -320,7 +324,7 @@ class LoginHandler {
         
         // Get form elements
         this.form = document.getElementById('loginForm');
-        this.emailInput = document.getElementById('email');
+        this.usernameInput = document.getElementById('username');
         this.passwordInput = document.getElementById('password');
         this.passwordToggle = document.getElementById('passwordToggle');
         this.loginBtn = document.getElementById('loginBtn');
@@ -356,8 +360,8 @@ class LoginHandler {
         });
         
         // Input validation on change
-        if (this.emailInput) {
-            this.emailInput.addEventListener('input', this.validateEmail.bind(this));
+        if (this.usernameInput) {
+            this.usernameInput.addEventListener('input', this.validateUsername.bind(this));
         }
         
         if (this.passwordInput) {
@@ -380,11 +384,11 @@ class LoginHandler {
         console.log('📝 Login form submitted');
         
         // Get form values
-        const email = this.emailInput.value.trim();
+        const username = this.usernameInput.value.trim();
         const password = this.passwordInput.value;
         
         // Basic validation
-        if (!this.validateForm(email, password)) {
+        if (!this.validateForm(username, password)) {
             return;
         }
         
@@ -393,10 +397,10 @@ class LoginHandler {
         this.hideError();
         
         try {
-            console.log(`🔐 Attempting authentication for: ${email}`);
+            console.log(`🔐 Attempting authentication for: ${username}`);
             
             // Attempt login
-            const user = await AuthService.login(email, password);
+            const user = await AuthService.login(username, password);
             
             if (user) {
                 console.log('✅ Authentication successful');
@@ -410,8 +414,8 @@ class LoginHandler {
                 
             } else {
                 console.log('❌ Authentication failed');
-                console.log(`🔍 User not found: ${email}`);
-                this.logError('Invalid email or password. Please try again.');
+                console.log(`🔍 User not found: ${username}`);
+                this.logError('Invalid username or password. Please try again.');
             }
             
         } catch (error) {
@@ -437,21 +441,27 @@ class LoginHandler {
      * 
      * Performs client-side validation of form inputs.
      * 
-     * @param {string} email - Email address
+     * @param {string} username - Username
      * @param {string} password - Password
      * @returns {boolean} True if valid, false otherwise
      */
-    validateForm(email, password) {
+    validateForm(username, password) {
         // Check for empty fields
-        if (!email || !password) {
+        if (!username || !password) {
             this.logError('Please fill in all fields.');
             return false;
         }
         
-        // Basic email validation
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-            this.logError('Please enter a valid email address.');
+        // Basic username validation
+        if (username.length < 3) {
+            this.logError('Username must be at least 3 characters long.');
+            return false;
+        }
+        
+        // Username format validation (alphanumeric and underscores only)
+        const usernameRegex = /^[a-zA-Z0-9_]+$/;
+        if (!usernameRegex.test(username)) {
+            this.logError('Username can only contain letters, numbers, and underscores.');
             return false;
         }
         
@@ -465,23 +475,27 @@ class LoginHandler {
     }
 
     /**
-     * Validate Email Input
+     * Validate Username Input
      * 
-     * Real-time email validation with visual feedback.
+     * Real-time username validation with visual feedback.
      */
-    validateEmail() {
-        const email = this.emailInput.value.trim();
-        const inputGroup = this.emailInput.closest('.input-group');
-        const errorDiv = document.getElementById('email-error');
+    validateUsername() {
+        const username = this.usernameInput.value.trim();
+        const inputGroup = this.usernameInput.closest('.input-group');
+        const errorDiv = document.getElementById('username-error');
         
-        if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        if (username && (username.length < 3 || !/^[a-zA-Z0-9_]+$/.test(username))) {
             inputGroup.classList.add('error');
             inputGroup.classList.remove('success');
             if (errorDiv) {
-                errorDiv.textContent = 'يرجى إدخال بريد إلكتروني صحيح';
+                if (username.length < 3) {
+                    errorDiv.textContent = 'اسم المستخدم يجب أن يكون 3 أحرف على الأقل';
+                } else {
+                    errorDiv.textContent = 'اسم المستخدم يمكن أن يحتوي على أحرف وأرقام و _ فقط';
+                }
                 errorDiv.classList.add('show');
             }
-        } else if (email) {
+        } else if (username) {
             inputGroup.classList.add('success');
             inputGroup.classList.remove('error');
             if (errorDiv) {
@@ -562,21 +576,25 @@ class LoginHandler {
      * @param {Event} e - Click event from demo account button
      */
     fillDemoAccount(e) {
-        const email = e.currentTarget.dataset.email;
+        const username = e.currentTarget.dataset.username;
         
-        console.log(`🎭 Demo account selected: ${email}`);
+        console.log(`🎭 Demo account selected: ${username}`);
         
         // Fill form fields
-        this.emailInput.value = email;
+        this.usernameInput.value = username;
         
         // تحديد كلمة المرور حسب الحساب
         let password = 'password';
-        if (email === 'admin@scouts.org') {
+        if (username === 'admin') {
             password = 'admin';
-        } else if (email === 'Bashar3kazi@scouts.org') {
+        } else if (username === 'bashar') {
             password = 'Bashar';
-        } else if (email === 'KinanKassab@scouts.org') {
+        } else if (username === 'kinan') {
             password = 'Kinan';
+        } else if (username === 'guest') {
+            password = 'Guest';
+        } else if (username === 'test') {
+            password = 'Test';
         }
         
         this.passwordInput.value = password;

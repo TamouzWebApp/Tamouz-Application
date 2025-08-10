@@ -5,7 +5,35 @@ SCOUTPLUSE - أنماط الأحداث
 
 أنماط شاملة لنظام إدارة الأحداث
 مع دعم كامل للتصميم المتجاوب والمظاهر المتعددة
+ومحسن للغة العربية RTL
 */
+
+/* ===========================================
+   إعدادات اللغة العربية والاتجاه
+   ========================================== */
+
+.events-page {
+    direction: rtl;
+    text-align: right;
+    font-family: 'Segoe UI', 'Cairo', 'Amiri', 'Noto Sans Arabic', 'Droid Arabic Naskh', Tahoma, Arial, sans-serif;
+}
+
+/* تأكد من أن جميع النصوص تتبع الاتجاه الصحيح */
+.events-page * {
+    direction: rtl;
+    text-align: right;
+}
+
+/* استثناءات للعناصر التي تحتاج اتجاه LTR */
+.events-page input[type="email"],
+.events-page input[type="url"],
+.events-page input[type="number"],
+.events-page input[type="tel"],
+.events-page input[type="time"],
+.events-page input[type="date"] {
+    direction: ltr;
+    text-align: left;
+}
 
 /* ===========================================
    حاوي صفحة الأحداث
@@ -34,11 +62,15 @@ SCOUTPLUSE - أنماط الأحداث
     font-size: var(--font-size-4xl);
     font-weight: var(--font-weight-bold);
     color: var(--text-primary);
-    background: linear-gradient(135deg, var(--primary-600), var(--secondary-600));
+    background: linear-gradient(135deg, #10b981, #3b82f6, #8b5cf6);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     margin: 0;
+    direction: rtl;
+    text-align: center;
+    font-family: 'Cairo', 'Amiri', sans-serif;
+    letter-spacing: 0.5px;
 }
 
 .events-header-actions {
@@ -72,13 +104,15 @@ SCOUTPLUSE - أنماط الأحداث
 
 .search-input {
     width: 100%;
-    padding: var(--spacing-3) var(--spacing-3) var(--spacing-3) 3rem;
+    padding: var(--spacing-3) 3rem var(--spacing-3) var(--spacing-3);
     border: 2px solid var(--border-color);
     border-radius: var(--radius-xl);
     font-size: var(--font-size-base);
     background-color: var(--bg-secondary);
     color: var(--text-primary);
     transition: all var(--transition-fast);
+    direction: rtl;
+    text-align: right;
 }
 
 .search-input:focus {
@@ -88,9 +122,14 @@ SCOUTPLUSE - أنماط الأحداث
     background-color: var(--bg-primary);
 }
 
+.search-input::placeholder {
+    direction: rtl;
+    text-align: right;
+}
+
 .search-icon {
     position: absolute;
-    left: var(--spacing-3);
+    right: var(--spacing-3);
     top: 50%;
     transform: translateY(-50%);
     color: var(--text-muted);
@@ -99,21 +138,29 @@ SCOUTPLUSE - أنماط الأحداث
 
 .category-filters {
     display: flex;
-    gap: var(--spacing-2);
+    gap: var(--spacing-3);
     flex-wrap: wrap;
+    justify-content: flex-start;
+    direction: rtl;
 }
 
 .category-filter {
-    padding: var(--spacing-2) var(--spacing-4);
+    padding: var(--spacing-3) var(--spacing-5);
     border: 2px solid var(--border-color);
     background: var(--bg-secondary);
     color: var(--text-secondary);
-    border-radius: var(--radius-xl);
+    border-radius: var(--radius-2xl);
     cursor: pointer;
     transition: all var(--transition-fast);
-    font-size: var(--font-size-sm);
-    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
     white-space: nowrap;
+    direction: rtl;
+    text-align: center;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .category-filter:hover {
@@ -279,43 +326,53 @@ SCOUTPLUSE - أنماط الأحداث
     font-size: var(--font-size-xl);
     font-weight: var(--font-weight-bold);
     color: var(--text-primary);
-    margin-bottom: var(--spacing-3);
-    line-height: var(--line-height-tight);
+    margin-bottom: var(--spacing-4);
+    line-height: 1.6;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    direction: rtl;
+    text-align: right;
+    font-family: 'Cairo', 'Amiri', 'Noto Sans Arabic', sans-serif;
 }
 
 .event-description {
     color: var(--text-secondary);
-    font-size: var(--font-size-sm);
-    line-height: var(--line-height-relaxed);
-    margin-bottom: var(--spacing-4);
+    font-size: var(--font-size-base);
+    line-height: 1.8;
+    margin-bottom: var(--spacing-5);
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    direction: rtl;
+    text-align: right;
+    font-family: 'Cairo', 'Noto Sans Arabic', sans-serif;
 }
 
 .event-details {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-2);
-    margin-bottom: var(--spacing-5);
+    gap: var(--spacing-3);
+    margin-bottom: var(--spacing-6);
+    direction: rtl;
 }
 
 .event-detail {
     display: flex;
     align-items: center;
-    gap: var(--spacing-2);
-    font-size: var(--font-size-sm);
+    gap: var(--spacing-3);
+    font-size: var(--font-size-base);
     color: var(--text-muted);
+    direction: rtl;
+    flex-direction: row-reverse;
 }
 
 .event-detail svg {
     flex-shrink: 0;
     color: var(--primary-600);
+    margin-left: var(--spacing-2);
 }
 
 /* ===========================================
@@ -330,14 +387,26 @@ SCOUTPLUSE - أنماط الأحداث
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: var(--font-size-sm);
+    font-size: var(--font-size-base);
     color: var(--text-muted);
-    margin-bottom: var(--spacing-2);
+    margin-bottom: var(--spacing-3);
+    direction: rtl;
 }
 
 .attendance-count {
-    font-weight: var(--font-weight-semibold);
+    font-weight: var(--font-weight-bold);
     color: var(--text-primary);
+    font-family: 'Cairo', sans-serif;
+    font-size: var(--font-size-lg);
+}
+
+.attendance-percentage {
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+    text-align: center;
+    margin-top: var(--spacing-2);
+    font-family: 'Cairo', sans-serif;
+    direction: rtl;
 }
 
 .progress-bar {
@@ -382,16 +451,17 @@ SCOUTPLUSE - أنماط الأحداث
 
 .event-actions {
     display: flex;
-    gap: var(--spacing-2);
+    gap: var(--spacing-3);
     flex-wrap: wrap;
+    direction: rtl;
 }
 
 .event-btn {
     flex: 1;
-    padding: var(--spacing-3) var(--spacing-4);
+    padding: var(--spacing-4) var(--spacing-5);
     border-radius: var(--radius-xl);
-    font-size: var(--font-size-sm);
-    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-bold);
     transition: all var(--transition-fast);
     cursor: pointer;
     border: 2px solid transparent;
@@ -399,7 +469,9 @@ SCOUTPLUSE - أنماط الأحداث
     align-items: center;
     justify-content: center;
     gap: var(--spacing-2);
-    min-height: 48px;
+    min-height: 52px;
+    direction: rtl;
+    font-family: 'Cairo', sans-serif;
 }
 
 .event-btn:disabled {
@@ -412,8 +484,10 @@ SCOUTPLUSE - أنماط الأحداث
 .event-edit-btn,
 .event-delete-btn {
     flex: 0 0 auto;
-    min-width: 48px;
-    padding: var(--spacing-2) var(--spacing-3);
+    min-width: 52px;
+    padding: var(--spacing-3) var(--spacing-4);
+    font-size: var(--font-size-sm);
+    border-radius: var(--radius-lg);
 }
 
 /* زر التحرير */
@@ -488,38 +562,55 @@ SCOUTPLUSE - أنماط الأحداث
 .event-form {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-5);
+    gap: var(--spacing-6);
+    direction: rtl;
 }
 
 .form-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: var(--spacing-4);
+    gap: var(--spacing-5);
+    direction: rtl;
 }
 
 .form-group {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-2);
+    gap: var(--spacing-3);
+    direction: rtl;
 }
 
 .form-group label {
-    font-size: var(--font-size-sm);
-    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-bold);
     color: var(--text-primary);
+    direction: rtl;
+    text-align: right;
+    font-family: 'Cairo', sans-serif;
 }
 
 .form-group input,
 .form-group select,
 .form-group textarea {
-    padding: var(--spacing-3);
+    padding: var(--spacing-4) var(--spacing-10) var(--spacing-4) var(--spacing-5);
     border: 2px solid var(--border-color);
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius-xl);
     font-size: var(--font-size-base);
     background-color: var(--bg-primary);
     color: var(--text-primary);
     transition: all var(--transition-fast);
-    font-family: inherit;
+    font-family: 'Cairo', sans-serif;
+    direction: rtl;
+    text-align: right;
+    min-height: 48px;
+}
+
+/* حقول خاصة تحتاج اتجاه LTR */
+.form-group input[type="time"],
+.form-group input[type="date"],
+.form-group input[type="number"] {
+    direction: ltr;
+    text-align: left;
 }
 
 .form-group input:focus,
@@ -640,7 +731,9 @@ SCOUTPLUSE - أنماط الأحداث
     .search-input {
         width: 100%;
         font-size: 16px; /* منع التكبير على iOS */
-        padding: var(--spacing-3) var(--spacing-3) var(--spacing-3) 3rem;
+        padding: var(--spacing-3) 3rem var(--spacing-3) var(--spacing-3);
+        direction: rtl;
+        text-align: right;
     }
     
     .category-filters {
@@ -821,11 +914,13 @@ SCOUTPLUSE - أنماط الأحداث
     
     /* تحسين البحث للشاشات الصغيرة */
     .search-input {
-        padding: var(--spacing-2) var(--spacing-2) var(--spacing-2) 2.5rem;
+        padding: var(--spacing-2) 2.5rem var(--spacing-2) var(--spacing-2);
+        direction: rtl;
+        text-align: right;
     }
     
     .search-icon {
-        left: var(--spacing-2);
+        right: var(--spacing-2);
         width: 16px;
         height: 16px;
     }

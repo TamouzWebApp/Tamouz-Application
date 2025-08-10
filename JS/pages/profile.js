@@ -573,10 +573,11 @@ class ProfileService {
     formatDate(dateString) {
         if (!dateString) return '';
         const date = new Date(dateString);
-        return date.toLocaleDateString('en-US', {
+        return date.toLocaleDateString('ar', {
             month: 'long',
             day: 'numeric',
-            year: 'numeric'
+            year: 'numeric',
+            calendar: 'gregory'
         });
     }
 

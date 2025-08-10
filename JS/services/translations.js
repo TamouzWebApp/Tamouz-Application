@@ -373,7 +373,11 @@ class TranslationService {
     formatDate(date, options = {}) {
         try {
             const dateObj = typeof date === 'string' ? new Date(date) : date;
-            return new Intl.DateTimeFormat(this.currentLanguage, options).format(dateObj);
+            const defaultOptions = {
+                calendar: 'gregory',
+                ...options
+            };
+            return new Intl.DateTimeFormat(this.currentLanguage, defaultOptions).format(dateObj);
         } catch (error) {
             console.warn('⚠️ Date formatting failed, using default');
             return date.toString();

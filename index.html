@@ -128,15 +128,15 @@
             <div class="login-form-container">
                 <form id="loginForm" class="login-form" novalidate>
                     <div class="form-group">
-                        <label for="email">البريد الإلكتروني</label>
+                        <label for="username">اسم المستخدم</label>
                         <div class="input-group">
                             <svg class="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                                <polyline points="22,6 12,13 2,6"></polyline>
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
                             </svg>
-                            <input type="email" id="email" required autocomplete="email" placeholder="أدخل بريدك الإلكتروني" inputmode="email" aria-describedby="email-error">
+                            <input type="text" id="username" required autocomplete="username" placeholder="أدخل اسم المستخدم" inputmode="text" aria-describedby="username-error">
                         </div>
-                        <div id="email-error" class="field-error" role="alert" aria-live="polite"></div>
+                        <div id="username-error" class="field-error" role="alert" aria-live="polite"></div>
                     </div>
                     
                     <div class="form-group">
@@ -173,17 +173,21 @@
                 <div class="demo-accounts">
                     <p class="demo-title">حسابات تجريبية</p>
                     <div class="demo-account-list">
-                        <button type="button" class="demo-account" data-email="admin@scouts.org" tabindex="0" aria-label="تسجيل دخول كمدير">
+                        <button type="button" class="demo-account" data-username="admin" tabindex="0" aria-label="تسجيل دخول كمدير">
                             <div class="demo-role">مدير النظام</div>
-                            <div class="demo-email">admin@scouts.org</div>
+                            <div class="demo-username">admin</div>
                         </button>
-                        <button type="button" class="demo-account" data-email="Bashar3kazi@scouts.org" tabindex="0" aria-label="تسجيل دخول كقائد">
+                        <button type="button" class="demo-account" data-username="bashar" tabindex="0" aria-label="تسجيل دخول كقائد">
                             <div class="demo-role">قائد الفرقة</div>
-                            <div class="demo-email">Bashar3kazi@scouts.org</div>
+                            <div class="demo-username">bashar</div>
                         </button>
-                        <button type="button" class="demo-account" data-email="KinanKassab@scouts.org" tabindex="0" aria-label="تسجيل دخول كعضو">
+                        <button type="button" class="demo-account" data-username="kinan" tabindex="0" aria-label="تسجيل دخول كعضو">
                             <div class="demo-role">عضو كشفي</div>
-                            <div class="demo-email">KinanKassab@scouts.org</div>
+                            <div class="demo-username">kinan</div>
+                        </button>
+                        <button type="button" class="demo-account" data-username="guest" tabindex="0" aria-label="تسجيل دخول كزائر">
+                            <div class="demo-role">زائر</div>
+                            <div class="demo-username">guest</div>
                         </button>
                     </div>
                 </div>

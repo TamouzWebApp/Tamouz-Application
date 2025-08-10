@@ -266,7 +266,7 @@ Input fields with icons and interactive elements
 /* Input fields */
 .input-group input {
     width: 100%;
-    padding: var(--spacing-4) var(--spacing-4) var(--spacing-4) 3rem;
+    padding: var(--spacing-4) var(--spacing-10) var(--spacing-4) var(--spacing-5);
     border: 2px solid #e5e7eb;
     border-radius: var(--radius-lg);
     font-size: var(--font-size-base);
@@ -276,10 +276,19 @@ Input fields with icons and interactive elements
     font-family: inherit;
 }
 
+/* Password input with toggle button on the left */
+.input-group input[type="password"] {
+    padding: var(--spacing-4) var(--spacing-10) var(--spacing-4) var(--spacing-5);
+}
+
 .dark .input-group input {
     background-color: #374151;
     color: #f9fafb;
     border-color: #4b5563;
+}
+
+.dark .input-group input[type="password"] {
+    padding: var(--spacing-4) var(--spacing-10) var(--spacing-4) var(--spacing-5);
 }
 
 /* Input focus state */
@@ -335,7 +344,7 @@ Show/hide password functionality
 
 .password-toggle {
     position: absolute;
-    right: var(--spacing-4);
+    left: var(--spacing-4);
     top: 50%;
     transform: translateY(-50%);
     background: none;
@@ -475,7 +484,7 @@ Quick access to demo user accounts
 }
 
 /* Demo account email */
-.demo-email {
+.demo-username {
     font-size: var(--font-size-xs);
     color: var(--text-secondary);
     font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
@@ -589,9 +598,13 @@ Mobile and tablet optimizations
     }
     
     .input-group input {
-        padding: var(--spacing-3) var(--spacing-3) var(--spacing-3) 2.5rem;
+        padding: var(--spacing-4) var(--spacing-10) var(--spacing-4) var(--spacing-5);
         font-size: var(--font-size-sm);
         min-height: 44px;
+    }
+    
+    .input-group input[type="password"] {
+        padding: var(--spacing-4) var(--spacing-10) var(--spacing-4) var(--spacing-5);
     }
     
     .input-icon {
@@ -601,7 +614,7 @@ Mobile and tablet optimizations
     }
     
     .password-toggle {
-        right: var(--spacing-3);
+        left: var(--spacing-3);
         min-width: 36px;
         min-height: 36px;
     }
@@ -626,7 +639,7 @@ Mobile and tablet optimizations
         font-size: var(--font-size-sm);
     }
     
-    .demo-email {
+    .demo-username {
         font-size: 11px;
     }
     

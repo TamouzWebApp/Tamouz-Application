@@ -88,6 +88,7 @@ class DashboardService {
     loadDashboard() {
         console.log('📊 Loading dashboard content...');
         
+        this.updateDateDisplay();
         this.loadRecentEvents();
         this.loadQuickActions();
         this.loadTroopOverview();
@@ -621,10 +622,12 @@ class DashboardService {
      */
     formatDate(dateString) {
         const date = new Date(dateString);
-        return date.toLocaleDateString('en-US', {
-            weekday: 'short',
-            month: 'short',
-            day: 'numeric'
+        return date.toLocaleDateString('ar', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            calendar: 'gregory'
         });
     }
 
@@ -637,6 +640,31 @@ class DashboardService {
         const diffTime = targetDate - today;
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
         return Math.max(0, diffDays);
+    }
+
+    /**
+     * Update Date Display
+     */
+    updateDateDisplay() {
+        const subtitle = document.querySelector('[data-translate="dashboard.subtitle"]');
+        if (subtitle) {
+            const currentDate = this.getCurrentDate();
+            subtitle.textContent = `إليك ما يحدث مع فرقتك اليوم - ${currentDate}`;
+        }
+    }
+
+    /**
+     * Get Current Date in Arabic Gregorian Calendar
+     */
+    getCurrentDate() {
+        const today = new Date();
+        return today.toLocaleDateString('ar', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            calendar: 'gregory'
+        });
     }
 
     /**

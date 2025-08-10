@@ -21,11 +21,12 @@ class UtilityHelpers {
             const dateObj = typeof date === 'string' ? new Date(date) : date;
             const defaultOptions = {
                 year: 'numeric',
-                month: 'short',
-                day: 'numeric'
+                month: 'long',
+                day: 'numeric',
+                calendar: 'gregory'
             };
             
-            return dateObj.toLocaleDateString('en-US', { ...defaultOptions, ...options });
+            return dateObj.toLocaleDateString('ar', { ...defaultOptions, ...options });
         } catch (error) {
             console.warn('⚠️ Date formatting failed:', error);
             return date.toString();

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مكتبة كيليكيا</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="background-animation">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+            <div class="shape shape-5"></div>
+        </div>
+    </div>
+
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <img src="images/logo.png" alt="مكتبة كيليكيا" class="logo-img">
+                <h1>مكتبة كيليكيا</h1>
+            </div>
+            <button class="menu-toggle" id="menuToggle" style="display: none;">
+                <div id="nav-icon4">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </button>
+            <div class="search-container">
+                <div class="search-box">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="searchInput" placeholder="ابحث عن كتاب..." list="searchHistory">
+                    <button class="clear-search-btn" id="clearSearchBtn" style="display: none;">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    <datalist id="searchHistory"></datalist>
+                </div>
+                
+                <div class="filters-container" id="filtersContainer">
+                    <button class="filters-toggle" id="filtersToggle">
+                        <i class="fas fa-filter"></i>
+                        <span>الفلاتر</span>
+                        <i class="fas fa-chevron-down toggle-icon"></i>
+                    </button>
+                    
+                    <div class="filters-panel" id="filtersPanel">
+                        <div class="filters-header">
+                            <h3><i class="fas fa-sliders-h"></i> تصفية الكتب</h3>
+                            <button class="close-filters" id="closeFilters">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="filters-content">
+                            <div class="filter-section">
+                                <div class="filter-section-header">
+                                    <i class="fas fa-tags"></i>
+                                    <h4>الفئة</h4>
+                                </div>
+                                <div class="filter-chips" id="categoryChips">
+                                    <button class="chip active" data-category=""><i class="fas fa-th-large"></i> الكل</button>
+                                    <button class="chip" data-category="أدبي"><i class="fas fa-feather-alt"></i> كتب أدبية</button>
+                                    <button class="chip" data-category="تاريخي"><i class="fas fa-landmark"></i> كتب تاريخية</button>
+                                    <button class="chip" data-category="سياسي"><i class="fas fa-balance-scale"></i> كتب سياسية</button>
+                                    <button class="chip" data-category="ديني"><i class="fas fa-pray"></i> كتب دينية</button>
+                                    <button class="chip" data-category="علمي"><i class="fas fa-atom"></i> كتب علمية</button>
+                                    <button class="chip" data-category="تعليمي"><i class="fas fa-graduation-cap"></i> كتب تعليمية</button>
+                                    <button class="chip" data-category="أطفال"><i class="fas fa-child"></i> كتب أطفال</button>
+                                    <button class="chip" data-category="لغات"><i class="fas fa-language"></i> كتب لغات</button>
+                                </div>
+                            </div>
+                            
+                            <div class="filter-section">
+                                <div class="filter-section-header">
+                                    <i class="fas fa-info-circle"></i>
+                                    <h4>الحالة</h4>
+                                </div>
+                                <div class="filter-chips" id="statusChips">
+                                    <button class="chip active" data-status=""><i class="fas fa-th-large"></i> الكل</button>
+                                    <button class="chip" data-status="جيد"><i class="fas fa-check-circle"></i> جيد</button>
+                                    <button class="chip" data-status="سيء"><i class="fas fa-times-circle"></i> سيء</button>
+                                </div>
+                            </div>
+                            
+                            <div class="filters-actions">
+                                <button class="reset-filters-btn" onclick="resetAllFilters()">
+                                    <i class="fas fa-undo"></i>
+                                    إعادة تعيين
+                                </button>
+                                <button class="apply-filters-btn" onclick="closeFiltersPanel()">
+                                    <i class="fas fa-check"></i>
+                                    تطبيق
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+                
+                <div class="filters-panel" id="filtersPanel">
+                    <div class="filters-header">
+                        <h3><i class="fas fa-sliders-h"></i> تصفية الكتب</h3>
+                        <button class="close-filters" id="closeFilters">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="filters-content">
+                        <div class="filter-section">
+                            <div class="filter-section-header">
+                                <i class="fas fa-tags"></i>
+                                <h4>الفئة</h4>
+                            </div>
+                            <div class="filter-chips" id="categoryChips">
+                                <button class="chip active" data-category=""><i class="fas fa-th-large"></i> الكل</button>
+                                <button class="chip" data-category="أدبي"><i class="fas fa-feather-alt"></i> كتب أدبية</button>
+                                <button class="chip" data-category="تاريخي"><i class="fas fa-landmark"></i> كتب تاريخية</button>
+                                <button class="chip" data-category="سياسي"><i class="fas fa-balance-scale"></i> كتب سياسية</button>
+                                <button class="chip" data-category="ديني"><i class="fas fa-pray"></i> كتب دينية</button>
+                                <button class="chip" data-category="علمي"><i class="fas fa-atom"></i> كتب علمية</button>
+                                <button class="chip" data-category="تعليمي"><i class="fas fa-graduation-cap"></i> كتب تعليمية</button>
+                                <button class="chip" data-category="أطفال"><i class="fas fa-child"></i> كتب أطفال</button>
+                                <button class="chip" data-category="لغات"><i class="fas fa-language"></i> كتب لغات</button>
+                            </div>
+                        </div>
+                        
+                        <div class="filter-section">
+                            <div class="filter-section-header">
+                                <i class="fas fa-info-circle"></i>
+                                <h4>الحالة</h4>
+                            </div>
+                            <div class="filter-chips" id="statusChips">
+                                <button class="chip active" data-status=""><i class="fas fa-th-large"></i> الكل</button>
+                                <button class="chip" data-status="جيد"><i class="fas fa-check-circle"></i> جيد</button>
+                                <button class="chip" data-status="سيء"><i class="fas fa-times-circle"></i> سيء</button>
+                            </div>
+                        </div>
+                        
+                        <div class="filters-actions">
+                            <button class="reset-filters-btn" onclick="resetAllFilters()">
+                                <i class="fas fa-undo"></i>
+                                إعادة تعيين
+                            </button>
+                            <button class="apply-filters-btn" onclick="closeFiltersPanel()">
+                                <i class="fas fa-check"></i>
+                                تطبيق
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="books-grid" id="booksGrid">
+                <!-- الكتب ستظهر هنا -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal تفاصيل الكتاب -->
+    <div id="bookDetailsModal" class="modal" aria-hidden="true">
+        <div class="modal-content" tabindex="-1">
+            <span class="close" aria-label="إغلاق">&times;</span>
+            <div id="bookDetailsContent"></div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
